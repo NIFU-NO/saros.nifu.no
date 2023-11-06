@@ -1,0 +1,80 @@
+---
+title: "For kapittelforfattere"
+editor: visual
+eval: false
+echo: false
+---
+
+# Installasjon og oppsett
+
+-   Sørg for at du har administratorrettigheter (Make Me Admin, etc)
+
+-   Gå til <https://posit.co/download/rstudio-desktop/> og last ned og installer både R og RStudio Desktop.
+
+-   Last ned og installer nyeste versjon av Rtools: <https://cran.r-project.org/bin/windows/Rtools/>
+
+-   Last ned nyeste Pre-release-versjonen av Quarto: <https://quarto.org/docs/download/>
+
+-   Når du går inn på RStudio etter alt ovenfor er installert skriver du in konsollen følgende (og så trykker enter for hver linje):
+
+-   `install.packages(c("tidyverse", "devtools", "gt", "ggiraph"))`
+
+-   `usethis::edit_r_environ()`
+
+    -   Skriv så inn følgende i fila som åpnes, og lagre etterpå. Restart så RStudio.
+
+        -   LC_ALL="nb.utf8"
+
+-   `devtools::install_github("NIFU-NO/saros")`
+
+## Kjente problemer ved installasjon/førstegangsbruk
+
+-   Oppstår problemer, prøv alltid å restarte RStudio før du spør om hjelp. Løser mange problemer - samme med datamaskinen din generelt.
+
+-   Når du trykker Render for et dokument som inneholder R-kode så får du feilmelding om at R ikke finnes. Det kan skyldes at du har installert R i en mappebane som inneholder ÆØÅ, etc. Bugen er meldt, men i mellomtiden kan du prøve å installere i vanlig Programfiler-mappen.
+
+-   
+
+# Litt mer avanserte operasjoner
+
+## Redigere figurer (fra ggplot2/ggiraph)
+
+For de følgende operasjonene antar vi at figuren heter min_figur, og at alle operasjonene settes inn mellom der du leser inn figuren, og der du viser den frem (siste linjen i chunken). Viser i eksemplene nedenfor kun det som skal settes inn. Som du ser er det egentlig bare vanlige filter, mutate, osv, operasjoner du kjenner fra tidyverse. Forskjellen er at vi gjør endringer på datasettet inni figur-objektet.
+
+```{r}
+min_figur <- qs::qread("min_figur.Rds")
+# sett inn her
+ggiraph::girafe(min_figur)
+```
+
+### Fjerne rader fra en figur
+
+```{r}
+min_figur$data <- filter(min_figur$data, .variable_name != "s_901") 
+```
+
+### Endre akselabel (dvs. en variabeletikett) i en figur
+
+```{r}
+min_figur$data <- mutate(min_figur$data, stringr::str_replace(.variable_label_suffix, "En liten skriveleif",  "En liten skrivefeil")) 
+```
+
+### Endre sortering av variablene i figuren
+
+Dette er en litt mer krevende øvelse, og innebærer at vi må endre factor-levels.
+
+### Endre fargepalett for figuren
+
+```{r}
+min_figur <- min_figur + nifutheme::scale_fill_nifu("reds")
+```
+
+### Endre høyden på figuren
+
+Dette er trivielt, bare sjekk innstillingen for figuren under \`yaml fig-height: \` Vil si maks er 20.
+
+## Redigere tabeller
+
+Dette blir som å gjøre vanlige operasjoner på et datasett, benytt mutate, filter, osv. Husk at det ikke er nødvendig å finpusse på layouten, så lenge innholdet er riktig (inkluderer også tabelloverskrifter/kolonneoverskrifter).
+
+# 

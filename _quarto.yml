@@ -1,0 +1,39 @@
+project:
+  type: website
+
+website:
+  title: "Om NIFUs Saros-nettsteder for rapportering av samfunnsvitenskapelige (spørre)undersøkelser"
+  navbar:
+    logo: "https://www.nifu.no/wp-content/uploads/logo_hvit.png"
+    left:
+      - sidebar:Artikler
+    search: true
+  sidebar:
+    - id: Artikler
+      title: "Artikler"
+      contents: "Artikler"
+  page-navigation: true
+  reader-mode: true
+execute:
+  echo: false
+  warning: false
+  freeze: auto
+  cache: true
+
+
+
+lang: "nb"
+license: "CC BY 4.0"
+
+format:
+  html:
+    mainfont: "Calibri"
+    fontsize: "10.5"
+    linestretch: 1.6
+    theme:
+     - yeti
+     - "nifu.scss"
+    css: "nifu.css"
+    toc: true
+    comments:
+      hypothesis: true

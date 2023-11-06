@@ -1,0 +1,42 @@
+---
+title: "NIFUs interaktive rapportnettsteder"
+---
+
+NIFU har introdusert et innovativt, interaktivt, og fleksibelt publiseringssystem for å rapportere fra ulike spørreundersøkelser (og kanskje andre datakilder etter hvert).
+
+Rapportene er primært ment som HTML-baserte nettsider hvor man enkelt kan bla mellom rapporter, mellom kapitler, og mellom underkapitler, søke på tvers og innenfor gjennomføringer, samt etter hvert få tilgang til anonymiserte rådata for egne analyser.
+
+Se lenken til venstre for en oversikt over prosjekter som benytter, eller vil benytte, dette systemet.
+
+## Rapportene finnes (ofte) på tre nivåer
+
+-   **Makro** kaller vi det som rapporteres for hele utvalget av respondenter - og vil i stor grad sammenfalle med dataene publisert i de offisielle rapportene på [nifu.no/publikasjoner](#0). Dersom det er avvik mellom Saros-rapportene og de offisielle rapportene er det sistnevnte som er mest korrekt, da enkelte valg er gjort for Sarosrapportene pga anonymisering og praktiske hensyn. Hver rapports hovedside vil være makronivået.
+
+-   **Mesos** kalles det vi rapporterer for den enkelte deltakende institusjon eller andre utvalgte områder (avhengig av prosjektets behov). Det gir mulighet for å sammenligne "seg selv" med alle andre.
+
+    -   Tilgang: Disse kan i enkelte prosjekter være beskyttet med brukernavn og passord. Innloggingsdetaljer oversendes den respektive institusjons kontaktperson. Institusjonen vil ha ett par med brukernavn/passord for alle sine ansatte, og man bør derfor utvise forsiktighet ved deling. Bytting av innloggingsdetaljer vil koste 2000kr, såfremt dette ikke skyldes NIFUs part. Vi anbefaler å la nettleseren lagre innloggingsdetaljene.
+
+-   **Mikro** utgjør anonymiserte rådata i f.eks. Excel-format, sammen med kodebok, der dette er forenlig med prosjektets personvernpremisser. Dataene vil ofte offentliggjøres noe senere enn Makro og Mesos. Vi tilbyr ingen hjelp med analyser av disse dataene, men vi tar gjerne imot innspill om eventuelle feil eller mangler.
+
+## Tips og triks
+
+-   Ved å holde markøren over en figur får man opp informasjon om antall respondenter, samt spørsmålets fulle formulering.
+-   Ved å klikke på samme sted i figuren vil man få opp variabelnavn, som er nyttig for superbrukere.
+-   Mesos-sidene tillater å sammenligne den utvalgte fokusgruppen med alle andre. Gruppen "Alle andre" er valgt fremfor "Hele utvalget" ettersom "Hele utvalget" er tilgjengelig i Makrorapporten, og for å unngå at en stor fokusgruppe ville visket ut forskjeller mellom fokusgruppen og resten.
+-   Tallene i figurene kan lastes ned i Excel, se figurforklaringen.
+
+## Kjente begrensninger, bugs og svakheter
+
+Saros er under stadig utvikling og har en rekke planer fremover. Noen uheldige feil i starten kan derfor forekomme, som eksempelvis (per 23.10.2023):
+
+-   Noen figurer er for høye, noen sammenklemte. Er teksten uleselig så prøv å holde markøren over figuren for å få frem spørsmålsformuleringen.
+
+-   Spørsmål med enkeltvariabler mangler spørsmålsformuleringen på venstre side.
+
+-   Mesos-rapportene inneholder foreløpig flere bugs.
+
+Meldinger om bugs og forslag til forbedringer samles gjennom involverte aktørers kontaktpersoner og sendes samlet til [stephan.daus\@nifu.no](#0)
+
+## Teknisk informasjon om Saros
+
+Saros bygger helt i bunnen på følgende teknologier: Pandoc, Quarto, R/RStudio og Typst (PDF-genererte rapportversjoner). Saros er en pakke (snart et sett med pakker) i R som sikrer effektiv, fleksibel, kvalitetssikret og systematisk rapportering fra spørreundersøkelser, enten disse er enkle eller komplekse. Systemet har en lang rekke funksjoner. Se mer [her](Om_saros.qmd).

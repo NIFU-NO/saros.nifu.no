@@ -1,0 +1,22 @@
+---
+title: "Teknisk informasjon om Saros"
+---
+
+## Bidragsytere
+
+-   Stephan Daus har stått for prosjektledelse, teknisk design, visuelt design, programmering, utprøving og dokumentasjon.
+-   Henrik Karlstrøm har bidratt med råd og veiledning, samt NIFU-mal for Typst (for PDF-generering).
+-   Siv-Elisabeth Skjelbred har bistått med prosjektmidler, tilbakemeldinger, og støtte.
+-   Cathrine Pedersen har bistått med prosjektmidler, tilbakemeldinger, og støtte.
+-   Ann Cecilie Bergene har bistått med prosjektmidler, utprøving, tilbakemeldinger og støtte.
+-   Cay Gjerustad har bidratt med mye prosjektmidler, tillit og innovasjonsrettet lederstil. 
+-   Torstein de Besche har bistått med maler for metodekapitler og databearbeiding i ulike prosjekter som har vært brukt for utprøving.
+
+
+## Rettigheter og bruk
+
+I Norge er Saros forbeholdt NIFU, og ikke tillatt å benyttes av andre aktører i den samfunnsvitenskapelige instituttsektoren eller UH-sektoren uten tillatelse fra NIFU.
+
+
+## Design
+- Kommer mer senere

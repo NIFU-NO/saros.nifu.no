@@ -1,0 +1,40 @@
+---
+title: "For datavaskere"
+editor: visual
+echo: true
+eval: false
+---
+
+Heisann teknisk-kompetente medarbeider. Så det er du som har fått i oppgaven å faktisk gjøre klart data sånn at Saros skal fungere fint. Her kommer både noen generelle tips, og etter hvert en detaljert sjekkliste.
+
+-   Ta utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes. Det sparer man en del tid på.
+
+-   Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_config_project.R
+
+-   Alle variabler (som skal brukes) må ha unike variabeletiketter. Det kan virke litt omstendelig, men skyldes at Saros får ulike fordeler ved å se etter ting som ser ganske like ut. Har variablene av samme type de samme variabeletikett-prefiksene (altså det som kommer før f.eks. " - " så kan Saros behandle disse som ett batteri.
+
+    -   Følgelig bør ikke variabler som er av samme type men som tilhører ulike batterier dele samme variabeletikett-prefikset. Klassisk eksempel er at flere batterier benytter "Hvor enig eller uenig er du i følgende påstander? - ". Har man slike og det ikke er rimelig å endre disse så må man be Saros om å benytte variabelnavnene for å skille batteriene, og da er det viktig at det i hvert fall for disse er felles variabelnavn-prefikser. For eksempel kan man navngi variablene s_100-s_120 for ett batteri, g_121-g_129 for et annet batteri, osv. og spesifisere at variabel_navn_separator = "\_".
+
+    -   Alle kategoriske variabler bør stå som factor-typen med alle mulige svaralternativer som levels(). Det gjør grafene og tabellene mest mulige korrekte. Se eksempel nedenfor for å korrigere dette dersom du mottar dataene som f.eks. character() eller integer().
+
+        ```{r}
+        data <- mutate(data, across(matches("s_"), ~factor(.x, levels=c("Helt uenig", "Litt uenig", "Litt enig", "Helt enig"), ordered=TRUE)))
+        ```
+
+## Kapitteloversikten
+
+Hver rapport må ha en tabell (typisk lagret i en Excel-fil), der hver linje er et kapittel. Den må inneholde følgende kolonner (som minimum, kan inneholde annet også):
+
+-   chapter: kapitteloverskrift, uten nummerering. Helst ikke veldig lang.
+
+-   dep: avhengige variabler.
+
+Kan også inneholde:
+
+-   author: Forfatter, fullt navn. Dersom flere, så separer med semikolon.
+
+-   indep: uavhengige variabler å bryte ned de avhengige variablene på.
+
+## Passordbeskytte sider (institusjonsspesifikke nettsider)
+
+Dette settes opp av Saros, og forutsetter en liste (Excel) med institusjonsnavn - som må være identiske med slik de forekommer i mappenavnene - med fornavn, etternavn, epost til kontaktpersonene. Det forutsetter også at passordene ligger lagret lokalt - spør Stephan om tilgang til denne filen. Saros vil da generere krypterte passord slik at "plaintext"-passordene aldri legges ut på nettsiden på noe vis. Systemet er sånn passe trygt gitt formålet og praktiske hensyn, men er ikke like trygt som f.eks. tofaktorautentisering.

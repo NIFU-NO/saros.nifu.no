@@ -1,0 +1,180 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "NIFUs interaktive rapportnettsteder",
+    "section": "",
+    "text": "NIFU har introdusert et innovativt, interaktivt, og fleksibelt publiseringssystem for å rapportere fra ulike spørreundersøkelser (og kanskje andre datakilder etter hvert).\nRapportene er primært ment som HTML-baserte nettsider hvor man enkelt kan bla mellom rapporter, mellom kapitler, og mellom underkapitler, søke på tvers og innenfor gjennomføringer, samt etter hvert få tilgang til anonymiserte rådata for egne analyser.\nSe lenken til venstre for en oversikt over prosjekter som benytter, eller vil benytte, dette systemet."
+  },
+  {
+    "objectID": "index.html#rapportene-finnes-ofte-på-tre-nivåer",
+    "href": "index.html#rapportene-finnes-ofte-på-tre-nivåer",
+    "title": "NIFUs interaktive rapportnettsteder",
+    "section": "Rapportene finnes (ofte) på tre nivåer",
+    "text": "Rapportene finnes (ofte) på tre nivåer\n\nMakro kaller vi det som rapporteres for hele utvalget av respondenter - og vil i stor grad sammenfalle med dataene publisert i de offisielle rapportene på nifu.no/publikasjoner. Dersom det er avvik mellom Saros-rapportene og de offisielle rapportene er det sistnevnte som er mest korrekt, da enkelte valg er gjort for Sarosrapportene pga anonymisering og praktiske hensyn. Hver rapports hovedside vil være makronivået.\nMesos kalles det vi rapporterer for den enkelte deltakende institusjon eller andre utvalgte områder (avhengig av prosjektets behov). Det gir mulighet for å sammenligne “seg selv” med alle andre.\n\nTilgang: Disse kan i enkelte prosjekter være beskyttet med brukernavn og passord. Innloggingsdetaljer oversendes den respektive institusjons kontaktperson. Institusjonen vil ha ett par med brukernavn/passord for alle sine ansatte, og man bør derfor utvise forsiktighet ved deling. Bytting av innloggingsdetaljer vil koste 2000kr, såfremt dette ikke skyldes NIFUs part. Vi anbefaler å la nettleseren lagre innloggingsdetaljene.\n\nMikro utgjør anonymiserte rådata i f.eks. Excel-format, sammen med kodebok, der dette er forenlig med prosjektets personvernpremisser. Dataene vil ofte offentliggjøres noe senere enn Makro og Mesos. Vi tilbyr ingen hjelp med analyser av disse dataene, men vi tar gjerne imot innspill om eventuelle feil eller mangler."
+  },
+  {
+    "objectID": "index.html#tips-og-triks",
+    "href": "index.html#tips-og-triks",
+    "title": "NIFUs interaktive rapportnettsteder",
+    "section": "Tips og triks",
+    "text": "Tips og triks\n\nVed å holde markøren over en figur får man opp informasjon om antall respondenter, samt spørsmålets fulle formulering.\nVed å klikke på samme sted i figuren vil man få opp variabelnavn, som er nyttig for superbrukere.\nMesos-sidene tillater å sammenligne den utvalgte fokusgruppen med alle andre. Gruppen “Alle andre” er valgt fremfor “Hele utvalget” ettersom “Hele utvalget” er tilgjengelig i Makrorapporten, og for å unngå at en stor fokusgruppe ville visket ut forskjeller mellom fokusgruppen og resten.\nTallene i figurene kan lastes ned i Excel, se figurforklaringen."
+  },
+  {
+    "objectID": "index.html#kjente-begrensninger-bugs-og-svakheter",
+    "href": "index.html#kjente-begrensninger-bugs-og-svakheter",
+    "title": "NIFUs interaktive rapportnettsteder",
+    "section": "Kjente begrensninger, bugs og svakheter",
+    "text": "Kjente begrensninger, bugs og svakheter\nSaros er under stadig utvikling og har en rekke planer fremover. Noen uheldige feil i starten kan derfor forekomme, som eksempelvis (per 23.10.2023):\n\nNoen figurer er for høye, noen sammenklemte. Er teksten uleselig så prøv å holde markøren over figuren for å få frem spørsmålsformuleringen.\nSpørsmål med enkeltvariabler mangler spørsmålsformuleringen på venstre side.\nMesos-rapportene inneholder foreløpig flere bugs.\n\nMeldinger om bugs og forslag til forbedringer samles gjennom involverte aktørers kontaktpersoner og sendes samlet til stephan.daus@nifu.no"
+  },
+  {
+    "objectID": "index.html#teknisk-informasjon-om-saros",
+    "href": "index.html#teknisk-informasjon-om-saros",
+    "title": "NIFUs interaktive rapportnettsteder",
+    "section": "Teknisk informasjon om Saros",
+    "text": "Teknisk informasjon om Saros\nSaros bygger helt i bunnen på følgende teknologier: Pandoc, Quarto, R/RStudio og Typst (PDF-genererte rapportversjoner). Saros er en pakke (snart et sett med pakker) i R som sikrer effektiv, fleksibel, kvalitetssikret og systematisk rapportering fra spørreundersøkelser, enten disse er enkle eller komplekse. Systemet har en lang rekke funksjoner. Se mer her."
+  },
+  {
+    "objectID": "Artikler/om_saros.html",
+    "href": "Artikler/om_saros.html",
+    "title": "Teknisk informasjon om Saros",
+    "section": "",
+    "text": "Stephan Daus har stått for prosjektledelse, teknisk design, visuelt design, programmering, utprøving og dokumentasjon.\nHenrik Karlstrøm har bidratt med råd og veiledning, samt NIFU-mal for Typst (for PDF-generering).\nSiv-Elisabeth Skjelbred har bistått med prosjektmidler, tilbakemeldinger, og støtte.\nCathrine Pedersen har bistått med prosjektmidler, tilbakemeldinger, og støtte.\nAnn Cecilie Bergene har bistått med prosjektmidler, utprøving, tilbakemeldinger og støtte.\nCay Gjerustad har bidratt med mye prosjektmidler, tillit og innovasjonsrettet lederstil.\nTorstein de Besche har bistått med maler for metodekapitler og databearbeiding i ulike prosjekter som har vært brukt for utprøving.",
+    "crumbs": [
+      "Artikler",
+      "Teknisk informasjon om Saros"
+    ]
+  },
+  {
+    "objectID": "Artikler/om_saros.html#bidragsytere",
+    "href": "Artikler/om_saros.html#bidragsytere",
+    "title": "Teknisk informasjon om Saros",
+    "section": "",
+    "text": "Stephan Daus har stått for prosjektledelse, teknisk design, visuelt design, programmering, utprøving og dokumentasjon.\nHenrik Karlstrøm har bidratt med råd og veiledning, samt NIFU-mal for Typst (for PDF-generering).\nSiv-Elisabeth Skjelbred har bistått med prosjektmidler, tilbakemeldinger, og støtte.\nCathrine Pedersen har bistått med prosjektmidler, tilbakemeldinger, og støtte.\nAnn Cecilie Bergene har bistått med prosjektmidler, utprøving, tilbakemeldinger og støtte.\nCay Gjerustad har bidratt med mye prosjektmidler, tillit og innovasjonsrettet lederstil.\nTorstein de Besche har bistått med maler for metodekapitler og databearbeiding i ulike prosjekter som har vært brukt for utprøving.",
+    "crumbs": [
+      "Artikler",
+      "Teknisk informasjon om Saros"
+    ]
+  },
+  {
+    "objectID": "Artikler/om_saros.html#rettigheter-og-bruk",
+    "href": "Artikler/om_saros.html#rettigheter-og-bruk",
+    "title": "Teknisk informasjon om Saros",
+    "section": "Rettigheter og bruk",
+    "text": "Rettigheter og bruk\nI Norge er Saros forbeholdt NIFU, og ikke tillatt å benyttes av andre aktører i den samfunnsvitenskapelige instituttsektoren eller UH-sektoren uten tillatelse fra NIFU.",
+    "crumbs": [
+      "Artikler",
+      "Teknisk informasjon om Saros"
+    ]
+  },
+  {
+    "objectID": "Artikler/om_saros.html#design",
+    "href": "Artikler/om_saros.html#design",
+    "title": "Teknisk informasjon om Saros",
+    "section": "Design",
+    "text": "Design\n\nKommer mer senere",
+    "crumbs": [
+      "Artikler",
+      "Teknisk informasjon om Saros"
+    ]
+  },
+  {
+    "objectID": "Artikler/for_kapittelforfattere.html",
+    "href": "Artikler/for_kapittelforfattere.html",
+    "title": "For kapittelforfattere",
+    "section": "",
+    "text": "Sørg for at du har administratorrettigheter (Make Me Admin, etc)\nGå til https://posit.co/download/rstudio-desktop/ og last ned og installer både R og RStudio Desktop.\nLast ned og installer nyeste versjon av Rtools: https://cran.r-project.org/bin/windows/Rtools/\nLast ned nyeste Pre-release-versjonen av Quarto: https://quarto.org/docs/download/\nNår du går inn på RStudio etter alt ovenfor er installert skriver du in konsollen følgende (og så trykker enter for hver linje):\ninstall.packages(c(\"tidyverse\", \"devtools\", \"gt\", \"ggiraph\"))\nusethis::edit_r_environ()\n\nSkriv så inn følgende i fila som åpnes, og lagre etterpå. Restart så RStudio.\n\nLC_ALL=“nb.utf8”\n\n\ndevtools::install_github(\"NIFU-NO/saros\")\n\n\n\n\nOppstår problemer, prøv alltid å restarte RStudio før du spør om hjelp. Løser mange problemer - samme med datamaskinen din generelt.\nNår du trykker Render for et dokument som inneholder R-kode så får du feilmelding om at R ikke finnes. Det kan skyldes at du har installert R i en mappebane som inneholder ÆØÅ, etc. Bugen er meldt, men i mellomtiden kan du prøve å installere i vanlig Programfiler-mappen.",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere"
+    ]
+  },
+  {
+    "objectID": "Artikler/for_kapittelforfattere.html#kjente-problemer-ved-installasjonførstegangsbruk",
+    "href": "Artikler/for_kapittelforfattere.html#kjente-problemer-ved-installasjonførstegangsbruk",
+    "title": "For kapittelforfattere",
+    "section": "",
+    "text": "Oppstår problemer, prøv alltid å restarte RStudio før du spør om hjelp. Løser mange problemer - samme med datamaskinen din generelt.\nNår du trykker Render for et dokument som inneholder R-kode så får du feilmelding om at R ikke finnes. Det kan skyldes at du har installert R i en mappebane som inneholder ÆØÅ, etc. Bugen er meldt, men i mellomtiden kan du prøve å installere i vanlig Programfiler-mappen.",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere"
+    ]
+  },
+  {
+    "objectID": "Artikler/for_kapittelforfattere.html#redigere-figurer-fra-ggplot2ggiraph",
+    "href": "Artikler/for_kapittelforfattere.html#redigere-figurer-fra-ggplot2ggiraph",
+    "title": "For kapittelforfattere",
+    "section": "Redigere figurer (fra ggplot2/ggiraph)",
+    "text": "Redigere figurer (fra ggplot2/ggiraph)\nFor de følgende operasjonene antar vi at figuren heter min_figur, og at alle operasjonene settes inn mellom der du leser inn figuren, og der du viser den frem (siste linjen i chunken). Viser i eksemplene nedenfor kun det som skal settes inn. Som du ser er det egentlig bare vanlige filter, mutate, osv, operasjoner du kjenner fra tidyverse. Forskjellen er at vi gjør endringer på datasettet inni figur-objektet.\n\nFjerne rader fra en figur\n\n\nEndre akselabel (dvs. en variabeletikett) i en figur\n\n\nEndre sortering av variablene i figuren\nDette er en litt mer krevende øvelse, og innebærer at vi må endre factor-levels.\n\n\nEndre fargepalett for figuren\n\n\nEndre høyden på figuren\nDette er trivielt, bare sjekk innstillingen for figuren under `yaml fig-height: ` Vil si maks er 20.",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere"
+    ]
+  },
+  {
+    "objectID": "Artikler/for_kapittelforfattere.html#redigere-tabeller",
+    "href": "Artikler/for_kapittelforfattere.html#redigere-tabeller",
+    "title": "For kapittelforfattere",
+    "section": "Redigere tabeller",
+    "text": "Redigere tabeller\nDette blir som å gjøre vanlige operasjoner på et datasett, benytt mutate, filter, osv. Husk at det ikke er nødvendig å finpusse på layouten, så lenge innholdet er riktig (inkluderer også tabelloverskrifter/kolonneoverskrifter).",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere"
+    ]
+  },
+  {
+    "objectID": "Artikler/for_datavaskere.html",
+    "href": "Artikler/for_datavaskere.html",
+    "title": "For datavaskere",
+    "section": "",
+    "text": "Heisann teknisk-kompetente medarbeider. Så det er du som har fått i oppgaven å faktisk gjøre klart data sånn at Saros skal fungere fint. Her kommer både noen generelle tips, og etter hvert en detaljert sjekkliste.",
+    "crumbs": [
+      "Artikler",
+      "For datavaskere"
+    ]
+  },
+  {
+    "objectID": "Artikler/for_datavaskere.html#kapitteloversikten",
+    "href": "Artikler/for_datavaskere.html#kapitteloversikten",
+    "title": "For datavaskere",
+    "section": "Kapitteloversikten",
+    "text": "Kapitteloversikten\nHver rapport må ha en tabell (typisk lagret i en Excel-fil), der hver linje er et kapittel. Den må inneholde følgende kolonner (som minimum, kan inneholde annet også):\n\nchapter: kapitteloverskrift, uten nummerering. Helst ikke veldig lang.\ndep: avhengige variabler.\n\nKan også inneholde:\n\nauthor: Forfatter, fullt navn. Dersom flere, så separer med semikolon.\nindep: uavhengige variabler å bryte ned de avhengige variablene på.",
+    "crumbs": [
+      "Artikler",
+      "For datavaskere"
+    ]
+  },
+  {
+    "objectID": "Artikler/for_datavaskere.html#passordbeskytte-sider-institusjonsspesifikke-nettsider",
+    "href": "Artikler/for_datavaskere.html#passordbeskytte-sider-institusjonsspesifikke-nettsider",
+    "title": "For datavaskere",
+    "section": "Passordbeskytte sider (institusjonsspesifikke nettsider)",
+    "text": "Passordbeskytte sider (institusjonsspesifikke nettsider)\nDette settes opp av Saros, og forutsetter en liste (Excel) med institusjonsnavn - som må være identiske med slik de forekommer i mappenavnene - med fornavn, etternavn, epost til kontaktpersonene. Det forutsetter også at passordene ligger lagret lokalt - spør Stephan om tilgang til denne filen. Saros vil da generere krypterte passord slik at “plaintext”-passordene aldri legges ut på nettsiden på noe vis. Systemet er sånn passe trygt gitt formålet og praktiske hensyn, men er ikke like trygt som f.eks. tofaktorautentisering.",
+    "crumbs": [
+      "Artikler",
+      "For datavaskere"
+    ]
+  },
+  {
+    "objectID": "Artikler/for_prosjektledere.html",
+    "href": "Artikler/for_prosjektledere.html",
+    "title": "For prosjektledere",
+    "section": "",
+    "text": "Førstegangsoppsett av Saros for et prosjekt\n\nGå gjennom en eksisterende konfigurasjonsfil (eller hent fra\nGjør dine valg for prosjektet i _report_configuration.yaml\nSett opp en god mappestruktur for prosjektets data, Saros-rapporter, osv. Ta utgangspunkt i noe eksisterende, eller benytt\nSørg for at datasettene er\n\nRyddige: Alle variabler trenger f.eks. etiketter. Se siden [for datavaskere](for_datavaskere.qmd).\nAvidentifiserte: Saros gir mulighet for å dele data (Mikro), eller lage en app hvor leseren/besøkende selv setter sammen sine figurer. Saros vil kun vise frem variabler som du har eksplisitt bedt om å gjøre tilgjengelig - resten vil alltid droppes. Men for å unngå feil bruk kan det være ok å fjerne de mest personidentifiserende opplysningene - just in case.\nKonsistente: Selv om det ikke er noe tvang er det store fordeler over tid dersom variablene er navngitt på systematisk vis slik at man kan senere lage et mønster for hvilke variabler som er like over tid, hvilke som er endret noe men tilnærmet like, osv. Dette muliggjør trendfremvisninger.\n\n\n\n\n\n\n\nGjenbrukCC BY 4.0",
+    "crumbs": [
+      "Artikler",
+      "For prosjektledere"
+    ]
+  },
+  {
+    "objectID": "Artikler/Saros_prosjekter.html",
+    "href": "Artikler/Saros_prosjekter.html",
+    "title": "Prosjekter som bruker Saros",
+    "section": "",
+    "text": "NIFUs prosjekter som benytter Saros-systemet vil nærmeste året bli\n\nSpørringene til Skole-Norge\nArbeidsgiverundersøkelsen\nKandidatundersøkelsen\nDeltakerundersøkelsene\nCritical Thinking in Sustainability Education\n\n\n\n\n\nGjenbrukCC BY 4.0",
+    "crumbs": [
+      "Artikler",
+      "Prosjekter som bruker Saros"
+    ]
+  }
+]
