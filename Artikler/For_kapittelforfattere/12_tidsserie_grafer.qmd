@@ -22,7 +22,7 @@ fig_tidsserie <-
   dat_figur_tidsserie %>%
   ggplot2::ggplot(mapping = ggplot2::aes(x=kull, y=sysselsatt, 
                                          data_id = kull, tooltip = label)) +
-  ggplot2::geom_smooth(method = 'loess',
+  ggiraph::geom_smooth_interactive(method = 'loess',
                        formula = 'y ~ x', se = TRUE, level = .95,
                        mapping = ggplot2::aes(data_id="smooth",
                                               tooltip = "Glattingsfunksjonen loess med lineære regresjoner mellom hvert segment, og 95% konfidensintervall.")) +
