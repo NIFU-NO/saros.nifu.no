@@ -167,8 +167,8 @@
     ]
   },
   {
-    "objectID": "Artikler/For_kapittelforfattere/99_Feilmeldinger_under_rendering.html#røde-kryss-på-venstre-side.",
-    "href": "Artikler/For_kapittelforfattere/99_Feilmeldinger_under_rendering.html#røde-kryss-på-venstre-side.",
+    "objectID": "Artikler/For_kapittelforfattere/99_Feilmeldinger.html#røde-kryss-på-venstre-side.",
+    "href": "Artikler/For_kapittelforfattere/99_Feilmeldinger.html#røde-kryss-på-venstre-side.",
     "title": "Feilmeldinger under kompilering av kapittel",
     "section": "Røde kryss på venstre side.",
     "text": "Røde kryss på venstre side.",
@@ -179,23 +179,11 @@
     ]
   },
   {
-    "objectID": "Artikler/For_kapittelforfattere/11_Kart.html",
-    "href": "Artikler/For_kapittelforfattere/11_Kart.html",
-    "title": "Kart",
-    "section": "",
-    "text": "Enkleste er å ta utgangspunkt i f.eks. eksempelet nedenfor (hentet fra Spørringenes metodekapittel).\n\n\n\n\n\n\nNote\n\n\n\nMerk at Quarto har per nå en begrensning på antall komplekse/store figurer (slik som kart pleier å være). Har man flere bør derfor disse enten gjøres statiske (ikke-interaktive), eller plasseres på hver sitt dokument.\n\n\nDet du trenger er\n\nEt datasett med bakgrunnskart (konturer av Norge+fylker eller kommuner). Dette ligger i Metode-kanalen, se eksempelet nedenfor.\n\n2A. Et datasett med skolenes/institusjonenes koordinater og det du ønsker å fargelegge,\n2B. OG/ELLER Et datasett med f.eks. fylker der du har informasjon om hva som skal fargelegges (kapitteldatasettet).\n2 er ikke med i eksempelet nedenfor.\n\nlibrary(dplyr)\ndat_bakgrunnskart &lt;- \n  sf::read_sf(file.path(Sys.getenv(\"USERPROFILE\"), \"NIFU\", \"Metode - General\", \"SAROS-core\", \"shared resources\", \"maps\", \"fylker2021.json\"), \n              layer = \"fylker2021\",\n              stringsAsFactors = TRUE, as_tibble = TRUE) %&gt;% \n  dplyr::left_join(y =  \n                  tibble::tibble(Fylkesnavn = c(\"Oslo\", \"Vestland\", \"Viken\", \"Nordland\"),\n                                 utvalgt = nifutheme::nifu_cols(type=\"main\")[1:4]), \n                 by = \"Fylkesnavn\") %&gt;% \n   sf::st_as_sf(coords = c(\"_CX\", \"_CY\"))\nsf::st_crs(dat_bakgrunnskart) &lt;- 25833\nkart1 &lt;-\n  ggplot2::ggplot() +\n  ggplot2::theme_void() +\n  ggiraph::geom_sf_interactive(data = dat_bakgrunnskart,\n                               mapping = ggplot2::aes(fill = utvalgt, \n                                                      data_id = Fylkesnavn, \n                                                      tooltip = Fylkesnavn)) +\n  ggplot2::scale_fill_identity()\n# kart1\nggiraph::girafe(ggobj = kart1)\n\n\n\n\n\n\n\n\nGjenbrukCC BY 4.0",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Kart"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/08_tidsserie_grafer.html",
-    "href": "Artikler/For_kapittelforfattere/08_tidsserie_grafer.html",
+    "objectID": "Artikler/For_kapittelforfattere/12_tidsserie_grafer.html",
+    "href": "Artikler/For_kapittelforfattere/12_tidsserie_grafer.html",
     "title": "Tidsserie-grafer",
     "section": "",
-    "text": "suppressPackageStartupMessages(library(dplyr))\nsuppressPackageStartupMessages(library(ggiraph))\ndat_figur_tidsserie &lt;-\n  \"dat_tidsserie.rds\" %&gt;%\n  readRDS() %&gt;% \n  dplyr::filter(!is.na(kull)) %&gt;%\n  dplyr::summarize(sysselsatt = sum(sysselsatt == \"Sysselsatt\", na.rm=TRUE)/n(), .by=kull) %&gt;% \n  dplyr::mutate(label_over = paste0(round(sysselsatt*100, 0), \"*'%'\"),\n                label_under = paste0(kull),\n                label = paste0(label_over, \",\", label_under),\n                expression = paste0(\"atop(\", label, \")\"))\nfig_tidsserie &lt;-\n  dat_figur_tidsserie %&gt;%\n  ggplot2::ggplot(mapping = ggplot2::aes(x=kull, y=sysselsatt, \n                                         data_id = kull, tooltip = label)) +\n  ggplot2::geom_smooth(method = 'loess',\n                       formula = 'y ~ x', se = TRUE, level = .95,\n                       mapping = ggplot2::aes(data_id=\"smooth\",\n                                              tooltip = \"Konfidensintervall basert på glattingsfunksjon loess med lineære regresjoner mellom hver segment.\")) +\n  ggplot2::geom_line(mapping = ggplot2::aes(group = 1)) +\n  ggiraph::geom_point_interactive() +\n  ggiraph::geom_text_repel_interactive(mapping = ggplot2::aes(label=expression), \n                           parse = TRUE, nudge_y = .06, min.segment.length = 8) +\n  ggplot2::scale_y_continuous(limits = c(.7, 1),\n                              labels = scales::percent, \n                              n.breaks = 10) +\n  ggplot2::theme_classic() + \n  ggplot2::labs(y=\"Sysselsetting (%)\", x=NULL)\nggiraph::girafe(ggobj = fig_tidsserie)\n\n\n\n\nGjenbrukCC BY 4.0",
+    "text": "suppressPackageStartupMessages(library(dplyr))\nsuppressPackageStartupMessages(library(ggiraph))\nsuppressPackageStartupMessages(library(ggrepel))\ndat_figur_tidsserie &lt;-\n  \"dat_tidsserie.rds\" %&gt;%\n  readRDS() %&gt;% \n  dplyr::filter(!is.na(kull)) %&gt;%\n  dplyr::summarize(sysselsatt = sum(sysselsatt == \"Sysselsatt\", na.rm=TRUE)/dplyr::n(), .by=kull) %&gt;% \n  dplyr::mutate(label_over = round(sysselsatt*100, 0),\n                label_under = paste0(kull),\n                label = paste0(label_over, \" %\\n\", label_under),\n                expression = paste0(\"atop(\", label_over, \",\", label_under, \")\"))\n\nfig_tidsserie &lt;-\n  dat_figur_tidsserie %&gt;%\n  ggplot2::ggplot(mapping = ggplot2::aes(x=kull, y=sysselsatt, \n                                         data_id = kull, tooltip = label)) +\n  ggplot2::geom_smooth(method = 'loess',\n                       formula = 'y ~ x', se = TRUE, level = .95,\n                       mapping = ggplot2::aes(data_id=\"smooth\",\n                                              tooltip = \"Glattingsfunksjonen loess med lineære regresjoner mellom hvert segment, og 95% konfidensintervall.\")) +\n  ggplot2::geom_line(mapping = ggplot2::aes(group = 1)) +\n  ggiraph::geom_point_interactive() +\n  ggiraph::geom_text_repel_interactive(mapping = ggplot2::aes(label=expression), \n                           parse = TRUE, nudge_y = .06, min.segment.length = 8) +\n  ggplot2::scale_y_continuous(limits = c(.7, 1),\n                              labels = scales::percent, \n                              n.breaks = 10) +\n  ggplot2::theme_classic() + \n  ggplot2::labs(y=\"Sysselsetting (%)\", x=NULL)\nggiraph::girafe(ggobj = fig_tidsserie)\n\n\n\n\n\n\n\n\nGjenbrukCC BY 4.0",
     "crumbs": [
       "Artikler",
       "For kapittelforfattere",
@@ -203,94 +191,275 @@
     ]
   },
   {
-    "objectID": "Artikler/For_kapittelforfattere/06_Kart.html",
-    "href": "Artikler/For_kapittelforfattere/06_Kart.html",
-    "title": "Kart",
+    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html",
+    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html",
+    "title": "Grunnleggende figurer",
     "section": "",
-    "text": "Enkleste er å ta utgangspunkt i f.eks. eksempelet nedenfor (hentet fra Spørringenes metodekapittel).\n\n\n\n\n\n\nNote\n\n\n\nMerk at Quarto har per nå en begrensning på antall komplekse/store figurer (slik som kart pleier å være). Har man flere bør derfor disse enten gjøres statiske (ikke-interaktive), eller plasseres på hver sitt dokument.\n\n\nDet du trenger er\n\nEt datasett med bakgrunnskart (konturer av Norge+fylker eller kommuner). Dette ligger i Metode-kanalen, se eksempelet nedenfor.\n\n2A. Et datasett med skolenes/institusjonenes koordinater og det du ønsker å fargelegge,\n2B. OG/ELLER Et datasett med f.eks. fylker der du har informasjon om hva som skal fargelegges (kapitteldatasettet).\n2 er ikke med i eksempelet nedenfor.\n\ndat_bakgrunnskart &lt;- \n  sf::read_sf(file.path(Sys.getenv(\"USERPROFILE\"), \"NIFU\", \"Metode - General\", \"SAROS-core\", \"shared resources\", \"maps\", \"fylker2021.json\"), \n              layer = \"fylker2021\",\n              stringsAsFactors = TRUE, as_tibble = TRUE) %&gt;% \n  dplyr::left_join(y =  \n                  tibble::tibble(Fylkesnavn = c(\"Oslo\", \"Vestland\", \"Viken\", \"Nordland\"),\n                                 utvalgt = nifutheme::nifu_cols(type=\"main\")[1:4]), \n                 by = \"Fylkesnavn\") %&gt;% \n   sf::st_as_sf(coords = c(\"_CX\", \"_CY\"))\nsf::st_crs(dat_bakgrunnskart) &lt;- 25833\nkart1 &lt;-\n  ggplot2::ggplot() +\n  ggplot2::theme_void() +\n  ggiraph::geom_sf_interactive(data = dat_bakgrunnskart,\n                               mapping = ggplot2::aes(fill = utvalgt, \n                                                      data_id = Fylkesnavn, \n                                                      tooltip = Fylkesnavn)) +\n  ggplot2::scale_fill_identity()\n# kart1\nggiraph::girafe(ggobj = kart1)\n\n\n\n\n\n\n\n\nGjenbrukCC BY 4.0",
+    "text": "Saros gir kun utkast. Ved nøye justerte innstillinger slipper man å endre på så mye, men kan ta tid å komme til det stadiet. Dessuten, variasjon og tilpasning er viktig. Antar for alle påfølgende eksempler at du har lastet inn tidyverse-pakken, samt et (kapittel)-datasett.\n\nsuppressPackageStartupMessages(library(tidyverse, warn.conflicts = FALSE, quietly = TRUE))\nmine_data &lt;- saros::ex_survey # Eksempeldata",
     "crumbs": [
       "Artikler",
       "For kapittelforfattere",
-      "Kart"
+      "Grunnleggende figurer"
     ]
   },
   {
-    "objectID": "Artikler/For_kapittelforfattere/04_Grunnleggende_formatering.html",
-    "href": "Artikler/For_kapittelforfattere/04_Grunnleggende_formatering.html",
-    "title": "Grunnleggende formatering",
-    "section": "",
-    "text": "Oppsummeringsbokser (på slutten av kapittelet)\nI Visual-modus, klikk Insert ➠ Callout… ➠ Velg tip, og overskrift “Oppsummering”. Ev. se også her.\n\n\nStavekontroll\nHusk å skru på norsk stavekontroll! Tools =&gt; Global options =&gt; Spellchecking. Må installere norsk språk. Etter du har endret, lukk RStudio og åpne det igjen.\n\n\nKryssreferanser\n\nMan kan enkelt referere til overskrifter, figurer, tabeller, siteringer, osv.\n\nhttps://quarto.org/docs/authoring/cross-references.html\n\nFotnoter likeså\n\nhttps://quarto.org/docs/authoring/footnotes-and-citations.html\n\nAlt kan enten gjøres gjennom det grafiske brukergrensesnittet i Visual editor, eller gjennom tastatursnarveier (både i Source og i Visual editor).\nBruk @@ aktivt.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFormål\nAnkeret\nSitere i tekst\n\n\n\n\nBilde i en mappe\n(Bilde av NIFU)[bilder/bilde_av_nifu.png]{#fig-bilde_av_nifu}{#fig-bilde_av_nifu}\n@fig-bilde_av_nifu\n\n\nFigur lagd i R\n#| label: nifus_publikasjonernifu_publikasjon_graf &lt;- embed_cat_prop_plot(data, cols=b_1)\n@fig-nifus_publikasjoner\n\n\nTabell lagd manuelt\n: Andeler per land {#tbl-andel_per_land}\n@tbl-andel_per_land\n\n\nTabell lagd i R\n#| label: andeler_per_ansattNifu_publikasjon_per_ansatt &lt;- data.frame(a=1, b=2)\n@tbl-andeler_per_ansatt\n\n\nOverskrift\n## Bakgrunn for studien{#sec-bakgrunn}\n@sec-bakgrunn\n\n\nLitteraturreferanse\nSpesifiser BibTeX eller Zotero-biblioteket ditt i YAML-hodet:---bibliography: referanser.bib---\n@daus2023 og [@daus2023]\n\n\n\n\n\n\n\n\n\n\n\n\nGjenbrukCC BY 4.0",
+    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#fjerne-rader-fra-en-figur",
+    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#fjerne-rader-fra-en-figur",
+    "title": "Grunnleggende figurer",
+    "section": "Fjerne rader fra en figur",
+    "text": "Fjerne rader fra en figur\n\nfig_a_uni_cat_prop_plot_minimert &lt;- fig_a_uni_cat_prop_plot\nfig_a_uni_cat_prop_plot_minimert$data &lt;- \n  fig_a_uni_cat_prop_plot_minimert$data %&gt;% \n  filter(!.variable_name %in% c(\"a_5\", \"a_6\")) \npatchwork::wrap_plots(list(Old = fig_a_uni_cat_prop_plot,\n                      New = fig_a_uni_cat_prop_plot_minimert),\n                      ncol = 2) %&gt;%\nggiraph::girafe(ggobj = .)",
     "crumbs": [
       "Artikler",
       "For kapittelforfattere",
-      "Grunnleggende formatering"
+      "Grunnleggende figurer"
     ]
   },
   {
-    "objectID": "Artikler/For_kapittelforfattere/02_Navigere_qmd_filer.html",
-    "href": "Artikler/For_kapittelforfattere/02_Navigere_qmd_filer.html",
-    "title": "Navigere QMD (Quarto)-filer generert av Saros",
-    "section": "",
-    "text": "Ta kopi av dine kapitler i utkastgenereringer-mappen til din egen mappe.\nFå med undermappen med samme navn som kapittelet.\nPass på at filene ikke ligger i en mappe med lang stibaner på en Sharepoint/Teams-mappe. Dette vil skape trøbbel.\n\n\n\n\n\n\n\n\n\nNote\n\n\n\n\nChunk\n\nEn bit med R-kode, definert som alt mellom ```{r} og ```. Den kan ha spesielle innstillinger, indikert ved #| (kalt hashpipe), øverst. Ønsker man ikke å kjøre koden midlertidig (for eksempel om man er usikker på om den skal med) kan man kommentere ut selve koden (behold da innstillingene), eller slette det helt, og heller hente det inn igjen fra originalen om ønskelig.\n\nRender/kompilering\n\nKjører alle chunkene og setter sammen dokumentet til f.eks. en HTML-side. Kan også kalles kompilere på norsk.\n\nYAML-hode\n\nYAML er en måte å skrive innstillinger for et dokument (potensielt også for et helt prosjekt) som er lesbart både for mennesker og datamaskinen. Vil aldri synes etter kompilering.\n\nQuarto/QMD\n\nQuarto er teknologien som setter sammen R-kode, vanlig tekst, med YAML-innstillinger, osv. QMD er filetternavnet for et slikt dokument.",
+    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-akse-etiketter-dvs.-en-variabeletikett-i-en-figur",
+    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-akse-etiketter-dvs.-en-variabeletikett-i-en-figur",
+    "title": "Grunnleggende figurer",
+    "section": "Endre akse-etiketter (dvs. en variabeletikett) i en figur",
+    "text": "Endre akse-etiketter (dvs. en variabeletikett) i en figur\nex_survey1-datasettet har en skrivefeil, har du oppdaget den?\n\nfig_b_uni_cat_prop_plot_korrigert &lt;- fig_b_uni_cat_prop_plot\nfig_b_uni_cat_prop_plot_korrigert$data &lt;- \n  fig_b_uni_cat_prop_plot_korrigert$data %&gt;% \n  mutate(.variable_label =\n         forcats::fct_relabel(\n           .variable_label, ~stringr::str_replace_all(.x,\n           pattern = \"Bejing\", \n           replacement = \"Beijing\")))\npatchwork::wrap_plots(Old = fig_b_uni_cat_prop_plot,\n                      New = fig_b_uni_cat_prop_plot_korrigert,\n                      ncol = 2) %&gt;%\n  ggiraph::girafe(ggobj = .)",
     "crumbs": [
       "Artikler",
       "For kapittelforfattere",
-      "Navigere QMD (Quarto)-filer generert av Saros"
+      "Grunnleggende figurer"
     ]
   },
   {
-    "objectID": "Artikler/For_kapittelforfattere/02_Navigere_qmd_filer.html#ordliste",
-    "href": "Artikler/For_kapittelforfattere/02_Navigere_qmd_filer.html#ordliste",
-    "title": "Navigere QMD (Quarto)-filer generert av Saros",
-    "section": "",
-    "text": "Note\n\n\n\n\nChunk\n\nEn bit med R-kode, definert som alt mellom ```{r} og ```. Den kan ha spesielle innstillinger, indikert ved #| (kalt hashpipe), øverst. Ønsker man ikke å kjøre koden midlertidig (for eksempel om man er usikker på om den skal med) kan man kommentere ut selve koden (behold da innstillingene), eller slette det helt, og heller hente det inn igjen fra originalen om ønskelig.\n\nRender/kompilering\n\nKjører alle chunkene og setter sammen dokumentet til f.eks. en HTML-side. Kan også kalles kompilere på norsk.\n\nYAML-hode\n\nYAML er en måte å skrive innstillinger for et dokument (potensielt også for et helt prosjekt) som er lesbart både for mennesker og datamaskinen. Vil aldri synes etter kompilering.\n\nQuarto/QMD\n\nQuarto er teknologien som setter sammen R-kode, vanlig tekst, med YAML-innstillinger, osv. QMD er filetternavnet for et slikt dokument.",
+    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#reversere-vertikalt-snu-variablene-opp-ned",
+    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#reversere-vertikalt-snu-variablene-opp-ned",
+    "title": "Grunnleggende figurer",
+    "section": "Reversere vertikalt (snu variablene opp-ned)",
+    "text": "Reversere vertikalt (snu variablene opp-ned)\nMerk at det er x-aksen man reverserer, fordi figuren allerede er snudd om (x=&gt;y, y=&gt;x). Merk at man bruker + symbolet om du slår sammen figurkomponenter, mens det er %&gt;% når du piper et datasett.\n\nfig_a_uni_cat_prop_plot_reversert &lt;- fig_a_uni_cat_prop_plot\nfig_a_uni_cat_prop_plot_reversert$data &lt;- \n  fig_a_uni_cat_prop_plot_reversert$data %&gt;% \n  mutate(.variable_label = forcats::fct_rev(.variable_label))\npatchwork::wrap_plots(Old = fig_a_uni_cat_prop_plot,\n                      New = fig_a_uni_cat_prop_plot_reversert,\n                      ncol = 2) %&gt;%\n  ggiraph::girafe(ggobj = .)",
     "crumbs": [
       "Artikler",
       "For kapittelforfattere",
-      "Navigere QMD (Quarto)-filer generert av Saros"
+      "Grunnleggende figurer"
     ]
   },
   {
-    "objectID": "Artikler/For_datavaskere/index.html",
-    "href": "Artikler/For_datavaskere/index.html",
-    "title": "For datavasker",
-    "section": "",
-    "text": "GjenbrukCC BY 4.0"
+    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#skreddersydd-sortering-av-variablene-i-figuren",
+    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#skreddersydd-sortering-av-variablene-i-figuren",
+    "title": "Grunnleggende figurer",
+    "section": "Skreddersydd sortering av variablene i figuren",
+    "text": "Skreddersydd sortering av variablene i figuren\nAlle som har jobbet litt med ggplot2 vet at det ikke bare er å sortere datasettet man sender til ggplot() - den tar alltid utgangspunkt i factor levels for variabelen (og er det ikke en factor så omgjøres den til det). Trikset er å stille inn rekkefølgen på factor levels manuelt. forcats-pakken har også mange andre funksjoner for å jobbe med factor-variabler!\n\nfig_b_uni_cat_prop_plot_v2 &lt;- fig_b_uni_cat_prop_plot\nfig_b_uni_cat_prop_plot_v2$data &lt;-\n  fig_b_uni_cat_prop_plot_v2$data %&gt;% \n  mutate(.variable_label = \n           forcats::fct_relevel(.variable_label,\n                                \"Bejing\",\n                                \"Budapest\",\n                                \"Brussels\"))\npatchwork::wrap_plots(Old=fig_b_uni_cat_prop_plot,\n                      New=fig_b_uni_cat_prop_plot_v2, \n                      ncol=2) %&gt;%\n  ggiraph::girafe(ggobj = .)",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere",
+      "Grunnleggende figurer"
+    ]
   },
   {
-    "objectID": "Artikler/For_datavaskere/08_Passordbeskytte_mesos.html",
-    "href": "Artikler/For_datavaskere/08_Passordbeskytte_mesos.html",
-    "title": "Passordbeskytte sider",
+    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-høyden-på-figuren",
+    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-høyden-på-figuren",
+    "title": "Grunnleggende figurer",
+    "section": "Endre høyden på figuren",
+    "text": "Endre høyden på figuren\nDette er trivielt, bare sjekk innstillingen for figuren. Vil si maks er 20, minimum er 1. Merk at størrelsen først er synlig etter kompilering. Trykker du på forhåndsvisning endres ikke (nødvendigvis) figurens størrelse. Bredde skal du “aldri” justere, det går automatisk.\n\nggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_v2)",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere",
+      "Grunnleggende figurer"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#få-inn-all-variabeltekst-i-bivariate-stolpediagrammer",
+    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#få-inn-all-variabeltekst-i-bivariate-stolpediagrammer",
+    "title": "Grunnleggende figurer",
+    "section": "Få inn all variabeltekst i bivariate stolpediagrammer",
+    "text": "Få inn all variabeltekst i bivariate stolpediagrammer\nProblemer med at noe tekst kuttes av helt til venstre? Sett først makshøyde ovenfor. Så dette, og eventuelt juster\n\nfig_b_bi_catcat_prop_plot &lt;-   \n  mine_data |&gt;   \n  saros::embed_cat_prop_plot(dep = b_1:b_3, \n                             indep = x1_sex) + \n  nifutheme::scale_fill_nifu(\"reds\") +\n  ggplot2::labs(fill=NULL) +\n  # Mindre tekst på uavhengig variabel\n  ggplot2::theme(axis.text = element_text(size = 6), \n                 #Mindre tekst på avhengig variabel (helt til venstre):\n                strip.text.y = element_text(size = 5), \n  # Tillat overlapp på avhengig variabel-tekst uten å kutte brått\n                strip.clip = \"off\") + \n  ggiraph::facet_grid_interactive(rows = vars(.variable_label), \n                      switch = \"both\", \n                       # Juster 15 til det blir perfekt\n                      labeller = ggplot2::label_wrap_gen(width = 15))\nggiraph::girafe(ggobj = fig_b_bi_catcat_prop_plot)",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere",
+      "Grunnleggende figurer"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#få-inn-hele-figurforklaringen-i-figuren",
+    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#få-inn-hele-figurforklaringen-i-figuren",
+    "title": "Grunnleggende figurer",
+    "section": "Få inn hele figurforklaringen i figuren",
+    "text": "Få inn hele figurforklaringen i figuren\nMed mange svarkategorier, som har lang tekst, så kan det være at siste kategorien kuttes. Det gjelder særlig for docx-versjonen. Prøv følgende:\n\nfig_b_uni_cat_prop_plot_v2 &lt;-\n  fig_b_uni_cat_prop_plot +\n  ggplot2::guides(fill = ggiraph::guide_legend_interactive(nrow=1,\n                                                           byrow=TRUE,\n                                                           title = NULL)) + # sett nrow=2 dersom du har mange kategorier\n  ggplot2::theme(legend.key.size = ggplot2::unit(4, \"mm\"), # Litt mindre figurnøkkel (kvadratet med farge i)\n                 legend.justification = c(1,0)) # Skyver 1 enhet til venstre. Ofte nok.\nggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_v2)",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere",
+      "Grunnleggende figurer"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-fargeskala",
+    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-fargeskala",
+    "title": "Grunnleggende figurer",
+    "section": "Endre fargeskala",
+    "text": "Endre fargeskala\nNormalt benyttes innstillingene i _52_ressurser/YAML/_report_generation_setup.yaml slik at colour_palette_nominal: og colour_palette_ordinal: brukes for nominelle og ordinale (ordered) variabler, der NIFUs rødtone-mal benyttes for ordinale. Dette kan overstyres for den enkelte figur:\n\nfig_b_uni_cat_prop_plot_blue &lt;-    \n  fig_b_uni_cat_prop_plot +    \n  nifutheme::scale_fill_nifu(\"blues\")\n# Alternativt \"main\" eller \"reds\" \nggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_blue)",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere",
+      "Grunnleggende figurer"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_kapittelforfattere/03_PISVEEP.html",
+    "href": "Artikler/For_kapittelforfattere/03_PISVEEP.html",
+    "title": "PISVEEP (manuelt arbeid)",
     "section": "",
-    "text": "Passordbeskytte hver Mesos-side (institusjonsspesifikke rapporter)\nDette settes opp av Saros, og forutsetter en liste (Excel) med institusjonsnavn - som må være identiske med slik de forekommer i mappenavnene - og inneholde Fornavn, Etternavn og email til kontaktpersonene. Det forutsetter også at passordene ligger lagret lokalt - spør Stephan om tilgang til denne master-passordfilen. Saros vil da generere krypterte passord slik at “plaintext”-passordene aldri legges ut på nettsiden på noe vis. Systemet er sånn passe trygt gitt formålet og praktiske hensyn, men er ikke like trygt som f.eks. tofaktorautentisering.\n\n\nPassordbeskytte et utkast til vanlig rapport (Makro)\nPrinsippielt det samme som for mesos, men man endrer på mappebanen i render_and_publish.R-skriptet. Eventuelt kan man bare legge inn manuelt: (kommer) Man vil da få typisk muligheten til å ha ett spesifikt passord for akkurat den rapporten (som man kan gi til eksterne kvalitetssikrere), et til oppdragsgiver, og et for NIFU-ansatte.\n\n\n\n\nGjenbrukCC BY 4.0",
+    "text": "Nå som figurer og tabeller er lagd for deg kan du konsentrere deg om følgende.\n\nPlukk ut det som er interessant.\nInspiser funnene: Gir det mening? Er tallene rimelige?\nSammenfatt funnene i teksten.\nVarier språket, gjør det interessant.\nElaborer med dine egne figurer, tabeller og analyser det du tenker er nødvendig for å belyse interessante forskningsspørsmål.\nEksemplifiser hva en koeffisient på 0,4 betyr i praksis for en person/institusjon.\nPosisjoner funnene i en større sammenheng. Hva har dette å si for det kostbare offentlige tiltaket? Hva har dette å si for andre prosjekter?\n\n\n\n\nGjenbrukCC BY 4.0",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere",
+      "PISVEEP (manuelt arbeid)"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_kapittelforfattere/01_Installasjon.html",
+    "href": "Artikler/For_kapittelforfattere/01_Installasjon.html",
+    "title": "Installasjon, for kapittelforfattere",
+    "section": "",
+    "text": "Sørg for at du har administratorrettigheter (Make Me Admin, etc)\nGå til https://posit.co/download/rstudio-desktop/ og last ned og installer både R og RStudio Desktop.\n\nPrøv så godt det lar seg gjøre å installere R i Programfiler eller Program Files (ikke i AppData - det gjelder særlig dersom du har et brukernavn i Windows med ø,æ,å.\nDu trenger ikke snarveier på skrivebordet til R, vi bruker bare RStudio.\n(R er motoren, RStudio er bilen)\n\nLast ned og installer nyeste versjon av Rtools: https://cran.r-project.org/bin/windows/Rtools/\nLast ned nyeste Pre-release-versjonen av Quarto: https://quarto.org/docs/download/\n\nViktigst om man skal sette sammen nettstedet. Ikke så kritisk om du bare skriver kapitler.\n\nNår du går inn på RStudio etter alt ovenfor er installert skriver du i konsollen følgende (og så trykker enter for hver linje):\ninstall.packages(c(\"tidyverse\", \"devtools\", \"gt\", \"ggiraph\", \"webshot2\"))\nusethis::edit_r_environ()\n\nSkriv så inn følgende i fila som åpnes, og lagre etterpå. Restart så RStudio.\n\nLC_ALL=\"nb.utf8\"\n\n\ndevtools::install_github(\"NIFU-NO/saros\")\n\nDenne pakken, saros, må oppdateres hyppigere (ukentlig) da den er under utvikling.\n\nwebshot::install_phantomjs()\nGå ut av RStudio og så inn igjen, alt skal være klart.",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere",
+      "Installasjon, for kapittelforfattere"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_kapittelforfattere/01_Installasjon.html#kjente-problemer-ved-installasjonførstegangsbruk",
+    "href": "Artikler/For_kapittelforfattere/01_Installasjon.html#kjente-problemer-ved-installasjonførstegangsbruk",
+    "title": "Installasjon, for kapittelforfattere",
+    "section": "Kjente problemer ved installasjon/førstegangsbruk",
+    "text": "Kjente problemer ved installasjon/førstegangsbruk\n\nOppstår problemer, prøv alltid å restarte RStudio før du spør om hjelp. Løser mange problemer - samme med datamaskinen din generelt.\nNår du trykker Render for et dokument som inneholder R-kode så får du kanskje feilmelding om at R ikke finnes. Det kan skyldes at du har installert R i en mappebane som inneholder ÆØÅ, etc. Bugen er meldt, men i mellomtiden kan du prøve å installere i vanlig Programfiler-mappen.\nError: unable to open file [bla bla] for writing [eller reading]\n\nDette skyldes at Microsoft har satt en sperre på at filbaner i Sharepoint ikke kan overstige 260 tegn… Helt idiotisk. Og problemet blir verre av at mange nyansatte ved NIFU får hele navnet som brukernavn, som gjør at tegnene brukes opp raskt… Flytt til en kortere mappebane så vil det fungere. Uansett, ingen vedvarende problem når vi setter sammen kapitlene, bare frustrerende når man jobber med det selv.",
+    "crumbs": [
+      "Artikler",
+      "For kapittelforfattere",
+      "Installasjon, for kapittelforfattere"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_datavaskere/99_Feilmeldinger_og_OSS.html",
+    "href": "Artikler/For_datavaskere/99_Feilmeldinger_og_OSS.html",
+    "title": "Feilmeldinger og Ofte Stilte Spørsmål",
+    "section": "",
+    "text": "Rendering\n\nQuarto stopper opp midt i rendering og klager på at den ikke finner en figur eller en annen fil.\n\nDette skyldes mest sannsynlig at du har kjørt Render mens du er i en mappe som har for lang stibane, på en Sharepoint/Teams-mappe. Flytt alt sammen til f.eks. C:/users/py128/AppData/temp/Saros/SSN/ og prøv igjen.\n\nQuarto finner ikke R?\n\nDu har R installert i en AppData-mappebane. Avinstaller R, gjør deg til administrator, åpne R-installasjonsfila som administrator og installer heller i Programfiler eller Program Files.\n\n\n\n\nGjenbrukCC BY 4.0",
     "crumbs": [
       "Artikler",
       "For datavasker",
-      "Passordbeskytte sider"
+      "Feilmeldinger og Ofte Stilte Spørsmål"
     ]
   },
   {
-    "objectID": "Artikler/For_datavaskere/06_Lage_utkast.html",
-    "href": "Artikler/For_datavaskere/06_Lage_utkast.html",
-    "title": "Lage utkast",
+    "objectID": "Artikler/For_datavaskere/07_metodekapittel.html",
+    "href": "Artikler/For_datavaskere/07_metodekapittel.html",
+    "title": "Metodekapittel",
     "section": "",
-    "text": "Etter at alle dataene er vasket, kapitteloversikten er laget, og eventuelle justeringer i malene i 52_ressurser er gjort så kan vi endelig lage rapportutkast!\n\nDet er naturlig å sette opp et RStudio Project (*.rproj) for Saros-mappen som husker ulagrede R-filer, noen personlige preferanser for prosjektet, osv. Men unngå å lagre arbeidsminnet (Environment) til disk (.RData), så den funksjonaliteten kan skrus av i Project options… Grunnen er at over tid kan det bli mange store objekter, og mest mulig bør kunne kjøres fra scratch når man trenger det.\nGitt at alt er satt opp riktig er det egentlig kun 2-3 syntaksfiler man skal trenge å jobbe med hver gjennomføring.\n\nconfig_project.R: Etablerer globale stibaner, og lister som skal fylles med datasett, etc for hvert år. Opplegget er satt opp slik at man skal enkelt kunne håndtere flere årganger (gjennomføringer) uten at man uheldigvis overskriver hverandre. Man er faktisk garantert at våren 2024 alltid vil være våren 2024 når man looper over flere år - gitt at datasettene er lagret i riktige mapper.\nconfig_report.R: Denne fila er på sett og vis hovedfila man styrer det aller meste fra. Fra denne kan men velge seg ut en årgang/gjennomføring man ønsker å kjøre, eller loope samtidig over flere (til og med flere respondentgrupper, slik som i Deltakerundersøkelsene). Den første loopen er ment å kjøres for å generere utkast. Lengre nede er ferdige skript for å kompilere nettsidene/PDF-filene, samt generere tilgangsbeskyttelse og sende ut passordtilgang til institusjoner.\nspecify_params.R: Lite brukt enn så lenge. Brukes som lagring av årgangspesifikk informasjon som kan brukes til å fylle ut rapportens faste punkter, slik som rapportnummer, spørreundersøkelsens åpningsperiode, osv.\nget_paths.R: Her skal man sjelden trenge å endre noe, så fremt det ikke er rare unntak et år.\nprepare_data_{AARGANG}.R: Man kan velge om man ønsker å gjøre all vasking av post-datainnsamlingdata utenfor Sarosprosessen, eller inni.\n\nØnsker man å gjøre all datavaskingen før Saros involveres (for eksempel at det gjøres av en Stata-bruker) bør man likevel beholde dette R-skriptet for å lese inn igjen de faktiske variabel-lablene fra rådataene ettersom Stata og SPSS kutter av variabel-labels. Dessuten oppdager man en del ting når man holder på å kjøre saros, som er enklest å fikse i dette skriptet. Typisk gjelder det variabel-labels og lignende “estetikk”.\nØnsker man å gjøre alt i Saros-prosessen kan det være naturlig å dele opp data-preppingen i flere skript og legge i en undermappe for den gitte årgangen/gjennomføringen slik at man holder orden (må da oppdatere i get_paths-skriptet).\nUansett hvilken retning bør man holde muligheten åpen for at det ved en gjennomføring kan veksles mellom de to, for økt robusthet. Dessuten er det viktig å lagre datasettene mellom hvert steg for dokumentasjon, praktiske hensyn (en kapittelforfatter ønsker alle dataene, etc).\n\ndraft_saros_reports.R: Her innhentes kapitteloversikten og innstillinger man har i _report_generation_setup.yaml (som kan overstyres for en spesifikk gjennomføring, eller for bare mesos-rapportene).\nrender_and_publish.R: I dette skriptet flyttes alt fra mappen med ferdige utkast til en midlertidig mappe (temp). Sistnevnte mappe bør ikke ligge på OneDrive/skyløsning/Sharepoint da det er mange filer som kopieres og lages som går tregt når OneDrive skal synkronisere underveis. MEN ENDA VIKTIGERE ER AT SHAREPOINT HAR EN BEGRENSNING PÅ ANTALL TEGN I STIBANENE SOM GJØR AT FILER PLUTSELIG IKKE KAN FINNES OG GIR RARE FEILMELDINGER.\nemail_credentials.R: Dette er kun for mesos-rapporter. Med en oversikt over epostinformasjon til kontaktpersoner ved institusjonene som skal ha hver sin rapport kan disse få tilsendt brukernavn/passord. Sett send_emails &lt;- FALSE for å bare lage utkast i din Outlook-mappe for dette. Sett som TRUE for å faktisk sende ut med det samme (påvirker ikke utkastene du måtte ha allerede lagd i Outlook-mappen).\n\n\n\n\n\nGjenbrukCC BY 4.0",
+    "text": "Du kan selvsagt skrive metodekapittelet manuelt selv i Quarto.\nSaros-teamet er derimot ute etter å lage generiske funksjoner og maler for dette da mye går igjen på tvers av rapporter og prosjekter. Dersom Spørringenes mal for ‘Beskrivelse av utvalg og gjennomføring’ passer eller ikke, kontakt gjerne Stephan for å se på potensialet for synergieffekter.\n\n\n\nGjenbrukCC BY 4.0",
     "crumbs": [
       "Artikler",
       "For datavasker",
-      "Lage utkast"
+      "Metodekapittel"
     ]
   },
   {
-    "objectID": "Artikler/For_datavaskere/04_kapitteloversikt.html",
-    "href": "Artikler/For_datavaskere/04_kapitteloversikt.html",
-    "title": "Kapitteloversikt",
+    "objectID": "Artikler/For_datavaskere/05_justere_saros_innstillinger.html",
+    "href": "Artikler/For_datavaskere/05_justere_saros_innstillinger.html",
+    "title": "Juster innstillinger i _report_generation_setup.yaml",
     "section": "",
-    "text": "Denne kapitteloversikten kan lages helt fra når undersøkelsen er åpnet for respondenter, altså at variabelnavn er fastsatt.\nHver rapport må ha en tabell, der hver linje er et kapittel. Dette er typisk en Excel-fil som er enkel å redigere manuelt. Se et eksempel her:\n\nFørste rad inneholder kolonneoverskrifter. Den må inneholde følgende kolonner (som minimum, kan inneholde annet også):\n\nchapter: kapitteloverskrift, uten nummerering. Helst ikke veldig lang.\ndep: avhengige variabler. Du vil kunne få univariater for variabler du lister opp her. Ønsker du univariater for hva du vil anse som uavhengige variabler må du også liste disse opp her (eksperimentelt, ikke testet ut enda).\n\nDenne (og indep nedenfor) følger såkalt tidyselect-syntaks. Det vil si at man skriver inn i en celle slik som dette: matches('^s_3'), s_405, s_406. Merk at man skiller mellom variabler (eller sett med variabler) med komma. Merk at måten man ville skrevet matches() på i Stata ikke ville fungert (s_3*).\n\n\nKan også inneholde:\n\nindep: uavhengige variabler å bryte ned de avhengige variablene på.\nauthor: Forfatter, fullt navn. Dersom flere, så separer med semikolon.\nEller andre variabler du måtte ha - kan være greit om man trenger å bruke samme kapitteloversikt til å holde styr på hvem hos oppdragsgiver som har ansvaret for temaet, hvor i spørreskjemaet spørsmålene finnes, osv. Disse blir ignorert av saros.\n\nsaros::draft_report() vil produsere en logg over hvilke variabler som eksisterer i datasettet men som ikke er benyttet i kapitteloversikt, auxiliary_variables eller mesos_var.\n\n\n\nGjenbrukCC BY 4.0",
+    "text": "Se for øvrig punkt 2 her.\n\n\n\n\n\n\nIdentifiser og spesifiser variabler som alltid skal stå nederst i figurer og tabeller, typisk “Annet”, “Vet ikke”, osv i batterier der dette er et avkrysningsmulighet.\n\nvariables_always_at_bottom\n\n\n\n\n\n\nGjenbrukCC BY 4.0",
     "crumbs": [
       "Artikler",
       "For datavasker",
-      "Kapitteloversikt"
+      "Juster innstillinger i _report_generation_setup.yaml"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_datavaskere/03_nifu_standard_variabelnavn.html",
+    "href": "Artikler/For_datavaskere/03_nifu_standard_variabelnavn.html",
+    "title": "NIFUs standard for variabelnavnsetting i longitudinelle prosjekter",
+    "section": "",
+    "text": "Under utarbeiding\nGjøremål: - Sjekke eksisterende standarder og prinsipper som for eksempel IEA, OECD og SSB benytter.\nSelv om det ikke er noe tvang er det store fordeler over tid dersom variablene er navngitt på systematisk vis slik at man kan senere lage et mønster for hvilke variabler som er like over tid, hvilke som er endret noe men tilnærmet like, osv. Dette muliggjør trendfremvisninger.",
+    "crumbs": [
+      "Artikler",
+      "For datavasker",
+      "NIFUs standard for variabelnavnsetting i longitudinelle prosjekter"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_datavaskere/03_nifu_standard_variabelnavn.html#generelle-råd",
+    "href": "Artikler/For_datavaskere/03_nifu_standard_variabelnavn.html#generelle-råd",
+    "title": "NIFUs standard for variabelnavnsetting i longitudinelle prosjekter",
+    "section": "Generelle råd",
+    "text": "Generelle råd\n\nBruk engelsk så langt det lar seg gjøre\nUnderstrek for å skille ord, ikke små/store bokstaver. Men tall vs bokstav kan skille\nUnngå årstall. En survey kan gå over nyttår. Er det publiseringsåret, datainnhenting, eller “kullet” man har indikert?!…\nBruk enten syklus-nummerering, eller aller helst kohort (fødselsår), som er mer stabilt. Ev. mer informasjon i datasettets metadata.",
+    "crumbs": [
+      "Artikler",
+      "For datavasker",
+      "NIFUs standard for variabelnavnsetting i longitudinelle prosjekter"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_datavaskere/01_Forstegangsoppsett.html",
+    "href": "Artikler/For_datavaskere/01_Forstegangsoppsett.html",
+    "title": "Førstegangsoppsett (teknisk gjennomføring)",
+    "section": "",
+    "text": "Alternativ A: Ta gjerne utgangspunkt i et eksisterende prosjekt, og helst et som ligner i struktur mtp mesos-rapporter. Kopier alt av filer fra Saros-mappen til ditt eget prosjekt. Gå gjennom alle R-filer i 51_skript og YAML-filer i 52_ressurser/YAML for å justere det man måtte ønske.\nAlternativ B: Kjør alt fra scratch (se Seksjon 2 nedenfor).\n\n\nTa utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes. Det sparer man en del tid på. Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_config_project.R",
+    "crumbs": [
+      "Artikler",
+      "For datavasker",
+      "Førstegangsoppsett (teknisk gjennomføring)"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#anbefaling",
+    "href": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#anbefaling",
+    "title": "Førstegangsoppsett (teknisk gjennomføring)",
+    "section": "",
+    "text": "Ta utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes. Det sparer man en del tid på. Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_config_project.R",
+    "crumbs": [
+      "Artikler",
+      "For datavasker",
+      "Førstegangsoppsett (teknisk gjennomføring)"
+    ]
+  },
+  {
+    "objectID": "Artikler/Brukerveiledning.html",
+    "href": "Artikler/Brukerveiledning.html",
+    "title": "Brukerveiledning",
+    "section": "",
+    "text": "NIFU har introdusert et innovativt, interaktivt, og fleksibelt publiseringssystem for å rapportere fra ulike spørreundersøkelser (og kanskje andre datakilder etter hvert).\nRapportene er primært ment som HTML-baserte nettsider hvor man enkelt kan bla mellom rapporter, mellom kapitler, og mellom underkapitler, søke på tvers og innenfor gjennomføringer, samt etter hvert få tilgang til anonymiserte rådata for egne analyser.\nSe oversikten over prosjekter som bruker Saros eller kommer til å bruke det.",
+    "crumbs": [
+      "Artikler",
+      "Brukerveiledning"
+    ]
+  },
+  {
+    "objectID": "Artikler/Brukerveiledning.html#rapportene-finnes-ofte-på-tre-fire-nivåer",
+    "href": "Artikler/Brukerveiledning.html#rapportene-finnes-ofte-på-tre-fire-nivåer",
+    "title": "Brukerveiledning",
+    "section": "Rapportene finnes (ofte) på tre-fire nivåer",
+    "text": "Rapportene finnes (ofte) på tre-fire nivåer\n\nMakro kaller vi det som rapporteres for hele utvalget av respondenter - og vil i stor grad sammenfalle med dataene publisert i de offisielle rapportene på nifu.no/publikasjoner. Dersom det er avvik mellom Saros-rapportene og de offisielle rapportene er det sistnevnte som er mest korrekt, da enkelte valg er gjort for Sarosrapportene pga anonymisering og praktiske hensyn. Hver rapports hovedside vil være makronivået.\nMesos kalles det vi rapporterer for den enkelte deltakende institusjon eller andre utvalgte områder (avhengig av prosjektets behov). Det gir mulighet for å sammenligne “seg selv” med alle andre.\n\nTilgang: Disse kan i enkelte prosjekter være beskyttet med brukernavn og passord. Innloggingsdetaljer oversendes den respektive institusjons kontaktperson. Institusjonen vil ha ett sett brukernavn/passord for alle sine ansatte, og man bør derfor utvise forsiktighet ved deling. Vi anbefaler å la nettleseren lagre innloggingsdetaljene. Dersom man ikke får opp innloggingsvinduet bør man bytte fra Edge til Chrome. Bytting av innloggingsdetaljer vil koste 2000kr, såfremt dette ikke skyldes NIFUs part.\nMesos-sidene tillater å sammenligne den utvalgte fokusgruppen med alle andre. Gruppen “Alle andre” er valgt fremfor “Hele utvalget” ettersom “Hele utvalget” er tilgjengelig i Makrorapporten, og for å unngå at en stor fokusgruppe ville visket ut forskjeller mellom fokusgruppen og resten.\n\nDet er foreløpig ikke mulig å laste ned tabeller for institusjon og sammenligningsgrunnlaget samtidig, dette kommer til våren 2024.\n\nIblant kommer innspill på at “Kunne vi fått brutt ned svarene på avdeling/tilbud/fag/osv da dette kan være nyttig for lokalt utviklingsarbeid.” Dessverre er våre undersøkelser mer nasjonalt rettede og vi må forholde oss til anonymitetshensyn (antall respondenter per gruppe man inndeler på) og også hvilke avdelinger/tilbud/fag/osv som er felles på tvers av institusjoner. Lokale evalueringer er nok mer egnet til lokalt utviklingsarbeid Ev. endringsforslag til undersøkelsen kan tas med oppdragsgiver for prosjektet, eller dersom man går sammen med flere institusjoner som deltar i undersøkelsen kan man fremme et felles forslag til NIFU med sannsynliggjøring at det er mer enn 10 individer som har svart i hver avdeling/tilbud/fag på tvers av institusjonene.\nFungerer ikke innlogging, prøv å bytte fra Edge til Chrome.\n\nMikro utgjør anonymiserte rådata i f.eks. Excel-format, sammen med kodebok, der dette er forenlig med prosjektets personvernpremisser. Dataene vil ofte offentliggjøres noe senere enn Makro og Mesos. Vi tilbyr ingen hjelp med analyser av disse dataene, men vi tar gjerne imot innspill om eventuelle feil eller mangler.\nFlexi er en liten app som lar leseren lage sine egne figurer, innenfor anonymitetens grenser. Denne er under utvikling.",
+    "crumbs": [
+      "Artikler",
+      "Brukerveiledning"
+    ]
+  },
+  {
+    "objectID": "Artikler/Brukerveiledning.html#tips-og-triks-for-brukere",
+    "href": "Artikler/Brukerveiledning.html#tips-og-triks-for-brukere",
+    "title": "Brukerveiledning",
+    "section": "Tips og triks for brukere",
+    "text": "Tips og triks for brukere\n\nVed å holde markøren over en figur får man opp informasjon om antall respondenter, samt spørsmålets fulle formulering.\nTallene i figurene kan lastes ned i Excel, se figurforklaringen.\nVed å klikke på samme sted i figuren vil man få opp variabelnavn, som er nyttig for superbrukere.\nNoen figurer kan være for høye, noen sammenklemte (problemet er under utbedring). Er teksten uleselig så hold markøren over figuren for å få frem spørsmålsformuleringen.",
+    "crumbs": [
+      "Artikler",
+      "Brukerveiledning"
+    ]
+  },
+  {
+    "objectID": "Artikler/Brukerveiledning.html#kjente-begrensninger-bugs-og-svakheter",
+    "href": "Artikler/Brukerveiledning.html#kjente-begrensninger-bugs-og-svakheter",
+    "title": "Brukerveiledning",
+    "section": "Kjente begrensninger, bugs og svakheter",
+    "text": "Kjente begrensninger, bugs og svakheter\nSaros er under stadig utvikling og har en rekke planer fremover. Noen uheldige feil i starten kan derfor forekomme. Meldinger om bugs og forslag til forbedringer samles gjennom involverte aktørers kontaktpersoner og sendes samlet til stephan.daus@nifu.no eller til din prosjektleder ved NIFU.\nDersom det er uoverensstemmelser mellom tallene i Saros-baserte rapportnettsteder og offisielle rapporter publisert på www.nifu.no er det sistnevnte som gjelder. Slike forskjeller kan forekommer dersom det gjøres forskjellige valg i hvilke respondenter som skal inkluderes, utvalgsvekting, håndtering av manglende responser, osv.",
+    "crumbs": [
+      "Artikler",
+      "Brukerveiledning"
     ]
   },
   {
@@ -342,443 +511,94 @@
     ]
   },
   {
-    "objectID": "Artikler/Brukerveiledning.html",
-    "href": "Artikler/Brukerveiledning.html",
-    "title": "Brukerveiledning",
+    "objectID": "Artikler/For_datavaskere/04_kapitteloversikt.html",
+    "href": "Artikler/For_datavaskere/04_kapitteloversikt.html",
+    "title": "Kapitteloversikt",
     "section": "",
-    "text": "NIFU har introdusert et innovativt, interaktivt, og fleksibelt publiseringssystem for å rapportere fra ulike spørreundersøkelser (og kanskje andre datakilder etter hvert).\nRapportene er primært ment som HTML-baserte nettsider hvor man enkelt kan bla mellom rapporter, mellom kapitler, og mellom underkapitler, søke på tvers og innenfor gjennomføringer, samt etter hvert få tilgang til anonymiserte rådata for egne analyser.\nSe oversikten over prosjekter som bruker Saros eller kommer til å bruke det.",
-    "crumbs": [
-      "Artikler",
-      "Brukerveiledning"
-    ]
-  },
-  {
-    "objectID": "Artikler/Brukerveiledning.html#rapportene-finnes-ofte-på-tre-fire-nivåer",
-    "href": "Artikler/Brukerveiledning.html#rapportene-finnes-ofte-på-tre-fire-nivåer",
-    "title": "Brukerveiledning",
-    "section": "Rapportene finnes (ofte) på tre-fire nivåer",
-    "text": "Rapportene finnes (ofte) på tre-fire nivåer\n\nMakro kaller vi det som rapporteres for hele utvalget av respondenter - og vil i stor grad sammenfalle med dataene publisert i de offisielle rapportene på nifu.no/publikasjoner. Dersom det er avvik mellom Saros-rapportene og de offisielle rapportene er det sistnevnte som er mest korrekt, da enkelte valg er gjort for Sarosrapportene pga anonymisering og praktiske hensyn. Hver rapports hovedside vil være makronivået.\nMesos kalles det vi rapporterer for den enkelte deltakende institusjon eller andre utvalgte områder (avhengig av prosjektets behov). Det gir mulighet for å sammenligne “seg selv” med alle andre.\n\nTilgang: Disse kan i enkelte prosjekter være beskyttet med brukernavn og passord. Innloggingsdetaljer oversendes den respektive institusjons kontaktperson. Institusjonen vil ha ett sett brukernavn/passord for alle sine ansatte, og man bør derfor utvise forsiktighet ved deling. Vi anbefaler å la nettleseren lagre innloggingsdetaljene. Dersom man ikke får opp innloggingsvinduet bør man bytte fra Edge til Chrome. Bytting av innloggingsdetaljer vil koste 2000kr, såfremt dette ikke skyldes NIFUs part.\nMesos-sidene tillater å sammenligne den utvalgte fokusgruppen med alle andre. Gruppen “Alle andre” er valgt fremfor “Hele utvalget” ettersom “Hele utvalget” er tilgjengelig i Makrorapporten, og for å unngå at en stor fokusgruppe ville visket ut forskjeller mellom fokusgruppen og resten.\n\nDet er foreløpig ikke mulig å laste ned tabeller for institusjon og sammenligningsgrunnlaget samtidig, dette kommer til våren 2024.\n\nIblant kommer innspill på at “Kunne vi fått brutt ned svarene på avdeling/tilbud/fag/osv da dette kan være nyttig for lokalt utviklingsarbeid.” Dessverre er våre undersøkelser mer nasjonalt rettede og vi må forholde oss til anonymitetshensyn (antall respondenter per gruppe man inndeler på) og også hvilke avdelinger/tilbud/fag/osv som er felles på tvers av institusjoner. Lokale evalueringer er nok mer egnet til lokalt utviklingsarbeid Ev. endringsforslag til undersøkelsen kan tas med oppdragsgiver for prosjektet, eller dersom man går sammen med flere institusjoner som deltar i undersøkelsen kan man fremme et felles forslag til NIFU med sannsynliggjøring at det er mer enn 10 individer som har svart i hver avdeling/tilbud/fag på tvers av institusjonene.\nFungerer ikke innlogging, prøv å bytte fra Edge til Chrome.\n\nMikro utgjør anonymiserte rådata i f.eks. Excel-format, sammen med kodebok, der dette er forenlig med prosjektets personvernpremisser. Dataene vil ofte offentliggjøres noe senere enn Makro og Mesos. Vi tilbyr ingen hjelp med analyser av disse dataene, men vi tar gjerne imot innspill om eventuelle feil eller mangler.\nFlexi er en liten app som lar leseren lage sine egne figurer, innenfor anonymitetens grenser. Denne er under utvikling.",
-    "crumbs": [
-      "Artikler",
-      "Brukerveiledning"
-    ]
-  },
-  {
-    "objectID": "Artikler/Brukerveiledning.html#tips-og-triks-for-brukere",
-    "href": "Artikler/Brukerveiledning.html#tips-og-triks-for-brukere",
-    "title": "Brukerveiledning",
-    "section": "Tips og triks for brukere",
-    "text": "Tips og triks for brukere\n\nVed å holde markøren over en figur får man opp informasjon om antall respondenter, samt spørsmålets fulle formulering.\nTallene i figurene kan lastes ned i Excel, se figurforklaringen.\nVed å klikke på samme sted i figuren vil man få opp variabelnavn, som er nyttig for superbrukere.\nNoen figurer kan være for høye, noen sammenklemte (problemet er under utbedring). Er teksten uleselig så hold markøren over figuren for å få frem spørsmålsformuleringen.",
-    "crumbs": [
-      "Artikler",
-      "Brukerveiledning"
-    ]
-  },
-  {
-    "objectID": "Artikler/Brukerveiledning.html#kjente-begrensninger-bugs-og-svakheter",
-    "href": "Artikler/Brukerveiledning.html#kjente-begrensninger-bugs-og-svakheter",
-    "title": "Brukerveiledning",
-    "section": "Kjente begrensninger, bugs og svakheter",
-    "text": "Kjente begrensninger, bugs og svakheter\nSaros er under stadig utvikling og har en rekke planer fremover. Noen uheldige feil i starten kan derfor forekomme. Meldinger om bugs og forslag til forbedringer samles gjennom involverte aktørers kontaktpersoner og sendes samlet til stephan.daus@nifu.no eller til din prosjektleder ved NIFU.\nDersom det er uoverensstemmelser mellom tallene i Saros-baserte rapportnettsteder og offisielle rapporter publisert på www.nifu.no er det sistnevnte som gjelder. Slike forskjeller kan forekommer dersom det gjøres forskjellige valg i hvilke respondenter som skal inkluderes, utvalgsvekting, håndtering av manglende responser, osv.",
-    "crumbs": [
-      "Artikler",
-      "Brukerveiledning"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_datavaskere/01_Forstegangsoppsett.html",
-    "href": "Artikler/For_datavaskere/01_Forstegangsoppsett.html",
-    "title": "Førstegangsoppsett (teknisk gjennomføring)",
-    "section": "",
-    "text": "Alternativ A: Ta gjerne utgangspunkt i et eksisterende prosjekt, og helst et som ligner i struktur mtp mesos-rapporter. Kopier alt av filer fra Saros-mappen til ditt eget prosjekt. Gå gjennom alle R-filer i 51_skript og YAML-filer i 52_ressurser/YAML for å justere det man måtte ønske.\nAlternativ B: Kjør alt fra scratch (se Seksjon 2 nedenfor).\n\n\nTa utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes. Det sparer man en del tid på. Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_config_project.R",
+    "text": "Denne kapitteloversikten kan lages helt fra når undersøkelsen er åpnet for respondenter, altså at variabelnavn er fastsatt.\nHver rapport må ha en tabell, der hver linje er et kapittel. Dette er typisk en Excel-fil som er enkel å redigere manuelt. Se et eksempel her:\n\nFørste rad inneholder kolonneoverskrifter. Den må inneholde følgende kolonner (som minimum, kan inneholde annet også):\n\nchapter: kapitteloverskrift, uten nummerering. Helst ikke veldig lang.\ndep: avhengige variabler. Du vil kunne få univariater for variabler du lister opp her. Ønsker du univariater for hva du vil anse som uavhengige variabler må du også liste disse opp her (eksperimentelt, ikke testet ut enda).\n\nDenne (og indep nedenfor) følger såkalt tidyselect-syntaks. Det vil si at man skriver inn i en celle slik som dette: matches('^s_3'), s_405, s_406. Merk at man skiller mellom variabler (eller sett med variabler) med komma. Merk at måten man ville skrevet matches() på i Stata ikke ville fungert (s_3*).\n\n\nKan også inneholde:\n\nindep: uavhengige variabler å bryte ned de avhengige variablene på.\nauthor: Forfatter, fullt navn. Dersom flere, så separer med semikolon.\nEller andre variabler du måtte ha - kan være greit om man trenger å bruke samme kapitteloversikt til å holde styr på hvem hos oppdragsgiver som har ansvaret for temaet, hvor i spørreskjemaet spørsmålene finnes, osv. Disse blir ignorert av saros.\n\nsaros::draft_report() vil produsere en logg over hvilke variabler som eksisterer i datasettet men som ikke er benyttet i kapitteloversikt, auxiliary_variables eller mesos_var.\n\n\n\nGjenbrukCC BY 4.0",
     "crumbs": [
       "Artikler",
       "For datavasker",
-      "Førstegangsoppsett (teknisk gjennomføring)"
+      "Kapitteloversikt"
     ]
   },
   {
-    "objectID": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#anbefaling",
-    "href": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#anbefaling",
-    "title": "Førstegangsoppsett (teknisk gjennomføring)",
+    "objectID": "Artikler/For_datavaskere/06_Lage_utkast.html",
+    "href": "Artikler/For_datavaskere/06_Lage_utkast.html",
+    "title": "Lage utkast",
     "section": "",
-    "text": "Ta utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes. Det sparer man en del tid på. Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_config_project.R",
+    "text": "Etter at alle dataene er vasket, kapitteloversikten er laget, og eventuelle justeringer i malene i 52_ressurser er gjort så kan vi endelig lage rapportutkast!\n\nDet er naturlig å sette opp et RStudio Project (*.rproj) for Saros-mappen som husker ulagrede R-filer, noen personlige preferanser for prosjektet, osv. Men unngå å lagre arbeidsminnet (Environment) til disk (.RData), så den funksjonaliteten kan skrus av i Project options… Grunnen er at over tid kan det bli mange store objekter, og mest mulig bør kunne kjøres fra scratch når man trenger det.\nGitt at alt er satt opp riktig er det egentlig kun 2-3 syntaksfiler man skal trenge å jobbe med hver gjennomføring.\n\nconfig_project.R: Etablerer globale stibaner, og lister som skal fylles med datasett, etc for hvert år. Opplegget er satt opp slik at man skal enkelt kunne håndtere flere årganger (gjennomføringer) uten at man uheldigvis overskriver hverandre. Man er faktisk garantert at våren 2024 alltid vil være våren 2024 når man looper over flere år - gitt at datasettene er lagret i riktige mapper.\nconfig_report.R: Denne fila er på sett og vis hovedfila man styrer det aller meste fra. Fra denne kan men velge seg ut en årgang/gjennomføring man ønsker å kjøre, eller loope samtidig over flere (til og med flere respondentgrupper, slik som i Deltakerundersøkelsene). Den første loopen er ment å kjøres for å generere utkast. Lengre nede er ferdige skript for å kompilere nettsidene/PDF-filene, samt generere tilgangsbeskyttelse og sende ut passordtilgang til institusjoner.\nspecify_params.R: Lite brukt enn så lenge. Brukes som lagring av årgangspesifikk informasjon som kan brukes til å fylle ut rapportens faste punkter, slik som rapportnummer, spørreundersøkelsens åpningsperiode, osv.\nget_paths.R: Her skal man sjelden trenge å endre noe, så fremt det ikke er rare unntak et år.\nprepare_data_{AARGANG}.R: Man kan velge om man ønsker å gjøre all vasking av post-datainnsamlingdata utenfor Sarosprosessen, eller inni.\n\nØnsker man å gjøre all datavaskingen før Saros involveres (for eksempel at det gjøres av en Stata-bruker) bør man likevel beholde dette R-skriptet for å lese inn igjen de faktiske variabel-lablene fra rådataene ettersom Stata og SPSS kutter av variabel-labels. Dessuten oppdager man en del ting når man holder på å kjøre saros, som er enklest å fikse i dette skriptet. Typisk gjelder det variabel-labels og lignende “estetikk”.\nØnsker man å gjøre alt i Saros-prosessen kan det være naturlig å dele opp data-preppingen i flere skript og legge i en undermappe for den gitte årgangen/gjennomføringen slik at man holder orden (må da oppdatere i get_paths-skriptet).\nUansett hvilken retning bør man holde muligheten åpen for at det ved en gjennomføring kan veksles mellom de to, for økt robusthet. Dessuten er det viktig å lagre datasettene mellom hvert steg for dokumentasjon, praktiske hensyn (en kapittelforfatter ønsker alle dataene, etc).\n\ndraft_saros_reports.R: Her innhentes kapitteloversikten og innstillinger man har i _report_generation_setup.yaml (som kan overstyres for en spesifikk gjennomføring, eller for bare mesos-rapportene).\nrender_and_publish.R: I dette skriptet flyttes alt fra mappen med ferdige utkast til en midlertidig mappe (temp). Sistnevnte mappe bør ikke ligge på OneDrive/skyløsning/Sharepoint da det er mange filer som kopieres og lages som går tregt når OneDrive skal synkronisere underveis. MEN ENDA VIKTIGERE ER AT SHAREPOINT HAR EN BEGRENSNING PÅ ANTALL TEGN I STIBANENE SOM GJØR AT FILER PLUTSELIG IKKE KAN FINNES OG GIR RARE FEILMELDINGER.\nemail_credentials.R: Dette er kun for mesos-rapporter. Med en oversikt over epostinformasjon til kontaktpersoner ved institusjonene som skal ha hver sin rapport kan disse få tilsendt brukernavn/passord. Sett send_emails &lt;- FALSE for å bare lage utkast i din Outlook-mappe for dette. Sett som TRUE for å faktisk sende ut med det samme (påvirker ikke utkastene du måtte ha allerede lagd i Outlook-mappen).\n\n\n\n\n\nGjenbrukCC BY 4.0",
     "crumbs": [
       "Artikler",
       "For datavasker",
-      "Førstegangsoppsett (teknisk gjennomføring)"
+      "Lage utkast"
     ]
   },
   {
-    "objectID": "Artikler/For_datavaskere/03_nifu_standard_variabelnavn.html",
-    "href": "Artikler/For_datavaskere/03_nifu_standard_variabelnavn.html",
-    "title": "NIFUs standard for variabelnavnsetting i longitudinelle prosjekter",
+    "objectID": "Artikler/For_datavaskere/08_Passordbeskytte_mesos.html",
+    "href": "Artikler/For_datavaskere/08_Passordbeskytte_mesos.html",
+    "title": "Passordbeskytte sider",
     "section": "",
-    "text": "Under utarbeiding\nGjøremål: - Sjekke eksisterende standarder og prinsipper som for eksempel IEA, OECD og SSB benytter.\nSelv om det ikke er noe tvang er det store fordeler over tid dersom variablene er navngitt på systematisk vis slik at man kan senere lage et mønster for hvilke variabler som er like over tid, hvilke som er endret noe men tilnærmet like, osv. Dette muliggjør trendfremvisninger.",
+    "text": "Passordbeskytte hver Mesos-side (institusjonsspesifikke rapporter)\nDette settes opp av Saros, og forutsetter en liste (Excel) med institusjonsnavn - som må være identiske med slik de forekommer i mappenavnene - og inneholde Fornavn, Etternavn og email til kontaktpersonene. Det forutsetter også at passordene ligger lagret lokalt - spør Stephan om tilgang til denne master-passordfilen. Saros vil da generere krypterte passord slik at “plaintext”-passordene aldri legges ut på nettsiden på noe vis. Systemet er sånn passe trygt gitt formålet og praktiske hensyn, men er ikke like trygt som f.eks. tofaktorautentisering.\n\n\nPassordbeskytte et utkast til vanlig rapport (Makro)\nPrinsippielt det samme som for mesos, men man endrer på mappebanen i render_and_publish.R-skriptet. Eventuelt kan man bare legge inn manuelt: (kommer) Man vil da få typisk muligheten til å ha ett spesifikt passord for akkurat den rapporten (som man kan gi til eksterne kvalitetssikrere), et til oppdragsgiver, og et for NIFU-ansatte.\n\n\n\n\nGjenbrukCC BY 4.0",
     "crumbs": [
       "Artikler",
       "For datavasker",
-      "NIFUs standard for variabelnavnsetting i longitudinelle prosjekter"
+      "Passordbeskytte sider"
     ]
   },
   {
-    "objectID": "Artikler/For_datavaskere/03_nifu_standard_variabelnavn.html#generelle-råd",
-    "href": "Artikler/For_datavaskere/03_nifu_standard_variabelnavn.html#generelle-råd",
-    "title": "NIFUs standard for variabelnavnsetting i longitudinelle prosjekter",
-    "section": "Generelle råd",
-    "text": "Generelle råd\n\nBruk engelsk så langt det lar seg gjøre\nUnderstrek for å skille ord, ikke små/store bokstaver. Men tall vs bokstav kan skille\nUnngå årstall. En survey kan gå over nyttår. Er det publiseringsåret, datainnhenting, eller “kullet” man har indikert?!…\nBruk enten syklus-nummerering, eller aller helst kohort (fødselsår), som er mer stabilt. Ev. mer informasjon i datasettets metadata.",
-    "crumbs": [
-      "Artikler",
-      "For datavasker",
-      "NIFUs standard for variabelnavnsetting i longitudinelle prosjekter"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_datavaskere/05_justere_saros_innstillinger.html",
-    "href": "Artikler/For_datavaskere/05_justere_saros_innstillinger.html",
-    "title": "Juster innstillinger i _report_generation_setup.yaml",
+    "objectID": "Artikler/For_datavaskere/index.html",
+    "href": "Artikler/For_datavaskere/index.html",
+    "title": "For datavasker",
     "section": "",
-    "text": "Se for øvrig punkt 2 her.\n\n\n\n\n\n\nIdentifiser og spesifiser variabler som alltid skal stå nederst i figurer og tabeller, typisk “Annet”, “Vet ikke”, osv i batterier der dette er et avkrysningsmulighet.\n\nvariables_always_at_bottom\n\n\n\n\n\n\nGjenbrukCC BY 4.0",
-    "crumbs": [
-      "Artikler",
-      "For datavasker",
-      "Juster innstillinger i _report_generation_setup.yaml"
-    ]
+    "text": "GjenbrukCC BY 4.0"
   },
   {
-    "objectID": "Artikler/For_datavaskere/07_metodekapittel.html",
-    "href": "Artikler/For_datavaskere/07_metodekapittel.html",
-    "title": "Metodekapittel",
+    "objectID": "Artikler/For_kapittelforfattere/02_Navigere_qmd_filer.html",
+    "href": "Artikler/For_kapittelforfattere/02_Navigere_qmd_filer.html",
+    "title": "Navigere QMD (Quarto)-filer generert av Saros",
     "section": "",
-    "text": "Du kan selvsagt skrive metodekapittelet manuelt selv i Quarto.\nSaros-teamet er derimot ute etter å lage generiske funksjoner og maler for dette da mye går igjen på tvers av rapporter og prosjekter. Dersom Spørringenes mal for ‘Beskrivelse av utvalg og gjennomføring’ passer eller ikke, kontakt gjerne Stephan for å se på potensialet for synergieffekter.\n\n\n\nGjenbrukCC BY 4.0",
+    "text": "Ta kopi av dine kapitler i utkastgenereringer-mappen til din egen mappe.\nFå med undermappen med samme navn som kapittelet.\nPass på at filene ikke ligger i en mappe med lang stibaner på en Sharepoint/Teams-mappe. Dette vil skape trøbbel.\n\n\n\n\n\n\n\n\n\nNote\n\n\n\n\nChunk\n\nEn bit med R-kode, definert som alt mellom ```{r} og ```. Den kan ha spesielle innstillinger, indikert ved #| (kalt hashpipe), øverst. Ønsker man ikke å kjøre koden midlertidig (for eksempel om man er usikker på om den skal med) kan man kommentere ut selve koden (behold da innstillingene), eller slette det helt, og heller hente det inn igjen fra originalen om ønskelig.\n\nRender/kompilering\n\nKjører alle chunkene og setter sammen dokumentet til f.eks. en HTML-side. Kan også kalles kompilere på norsk.\n\nYAML-hode\n\nYAML er en måte å skrive innstillinger for et dokument (potensielt også for et helt prosjekt) som er lesbart både for mennesker og datamaskinen. Vil aldri synes etter kompilering.\n\nQuarto/QMD\n\nQuarto er teknologien som setter sammen R-kode, vanlig tekst, med YAML-innstillinger, osv. QMD er filetternavnet for et slikt dokument.",
     "crumbs": [
       "Artikler",
-      "For datavasker",
-      "Metodekapittel"
+      "For kapittelforfattere",
+      "Navigere QMD (Quarto)-filer generert av Saros"
     ]
   },
   {
-    "objectID": "Artikler/For_datavaskere/99_Feilmeldinger_og_OSS.html",
-    "href": "Artikler/For_datavaskere/99_Feilmeldinger_og_OSS.html",
-    "title": "Feilmeldinger og Ofte Stilte Spørsmål",
+    "objectID": "Artikler/For_kapittelforfattere/02_Navigere_qmd_filer.html#ordliste",
+    "href": "Artikler/For_kapittelforfattere/02_Navigere_qmd_filer.html#ordliste",
+    "title": "Navigere QMD (Quarto)-filer generert av Saros",
     "section": "",
-    "text": "Rendering\n\nQuarto stopper opp midt i rendering og klager på at den ikke finner en figur eller en annen fil.\n\nDette skyldes mest sannsynlig at du har kjørt Render mens du er i en mappe som har for lang stibane, på en Sharepoint/Teams-mappe. Flytt alt sammen til f.eks. C:/users/py128/AppData/temp/Saros/SSN/ og prøv igjen.\n\nQuarto finner ikke R?\n\nDu har R installert i en AppData-mappebane. Avinstaller R, gjør deg til administrator, åpne R-installasjonsfila som administrator og installer heller i Programfiler eller Program Files.\n\n\n\n\nGjenbrukCC BY 4.0",
+    "text": "Note\n\n\n\n\nChunk\n\nEn bit med R-kode, definert som alt mellom ```{r} og ```. Den kan ha spesielle innstillinger, indikert ved #| (kalt hashpipe), øverst. Ønsker man ikke å kjøre koden midlertidig (for eksempel om man er usikker på om den skal med) kan man kommentere ut selve koden (behold da innstillingene), eller slette det helt, og heller hente det inn igjen fra originalen om ønskelig.\n\nRender/kompilering\n\nKjører alle chunkene og setter sammen dokumentet til f.eks. en HTML-side. Kan også kalles kompilere på norsk.\n\nYAML-hode\n\nYAML er en måte å skrive innstillinger for et dokument (potensielt også for et helt prosjekt) som er lesbart både for mennesker og datamaskinen. Vil aldri synes etter kompilering.\n\nQuarto/QMD\n\nQuarto er teknologien som setter sammen R-kode, vanlig tekst, med YAML-innstillinger, osv. QMD er filetternavnet for et slikt dokument.",
     "crumbs": [
       "Artikler",
-      "For datavasker",
-      "Feilmeldinger og Ofte Stilte Spørsmål"
+      "For kapittelforfattere",
+      "Navigere QMD (Quarto)-filer generert av Saros"
     ]
   },
   {
-    "objectID": "Artikler/For_kapittelforfattere/01_Installasjon.html",
-    "href": "Artikler/For_kapittelforfattere/01_Installasjon.html",
-    "title": "Installasjon, for kapittelforfattere",
+    "objectID": "Artikler/For_kapittelforfattere/04_Grunnleggende_formatering.html",
+    "href": "Artikler/For_kapittelforfattere/04_Grunnleggende_formatering.html",
+    "title": "Grunnleggende formatering",
     "section": "",
-    "text": "Sørg for at du har administratorrettigheter (Make Me Admin, etc)\nGå til https://posit.co/download/rstudio-desktop/ og last ned og installer både R og RStudio Desktop.\n\nPrøv så godt det lar seg gjøre å installere R i Programfiler eller Program Files (ikke i AppData - det gjelder særlig dersom du har et brukernavn i Windows med ø,æ,å.\nDu trenger ikke snarveier på skrivebordet til R, vi bruker bare RStudio.\n(R er motoren, RStudio er bilen)\n\nLast ned og installer nyeste versjon av Rtools: https://cran.r-project.org/bin/windows/Rtools/\nLast ned nyeste Pre-release-versjonen av Quarto: https://quarto.org/docs/download/\n\nViktigst om man skal sette sammen nettstedet. Ikke så kritisk om du bare skriver kapitler.\n\nNår du går inn på RStudio etter alt ovenfor er installert skriver du i konsollen følgende (og så trykker enter for hver linje):\ninstall.packages(c(\"tidyverse\", \"devtools\", \"gt\", \"ggiraph\", \"webshot2\"))\nusethis::edit_r_environ()\n\nSkriv så inn følgende i fila som åpnes, og lagre etterpå. Restart så RStudio.\n\nLC_ALL=\"nb.utf8\"\n\n\ndevtools::install_github(\"NIFU-NO/saros\")\n\nDenne pakken, saros, må oppdateres hyppigere (ukentlig) da den er under utvikling.\n\nwebshot::install_phantomjs()\nGå ut av RStudio og så inn igjen, alt skal være klart.",
+    "text": "Oppsummeringsbokser (på slutten av kapittelet)\nI Visual-modus, klikk Insert ➠ Callout… ➠ Velg tip, og overskrift “Oppsummering”. Ev. se også her.\n\n\nStavekontroll\nHusk å skru på norsk stavekontroll! Tools =&gt; Global options =&gt; Spellchecking. Må installere norsk språk. Etter du har endret, lukk RStudio og åpne det igjen.\n\n\nKryssreferanser\n\nMan kan enkelt referere til overskrifter, figurer, tabeller, siteringer, osv.\n\nhttps://quarto.org/docs/authoring/cross-references.html\n\nFotnoter likeså\n\nhttps://quarto.org/docs/authoring/footnotes-and-citations.html\n\nAlt kan enten gjøres gjennom det grafiske brukergrensesnittet i Visual editor, eller gjennom tastatursnarveier (både i Source og i Visual editor).\nBruk @@ aktivt.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFormål\nAnkeret\nSitere i tekst\n\n\n\n\nBilde i en mappe\n(Bilde av NIFU)[bilder/bilde_av_nifu.png]{#fig-bilde_av_nifu}{#fig-bilde_av_nifu}\n@fig-bilde_av_nifu\n\n\nFigur lagd i R\n#| label: nifus_publikasjonernifu_publikasjon_graf &lt;- embed_cat_prop_plot(data, cols=b_1)\n@fig-nifus_publikasjoner\n\n\nTabell lagd manuelt\n: Andeler per land {#tbl-andel_per_land}\n@tbl-andel_per_land\n\n\nTabell lagd i R\n#| label: andeler_per_ansattNifu_publikasjon_per_ansatt &lt;- data.frame(a=1, b=2)\n@tbl-andeler_per_ansatt\n\n\nOverskrift\n## Bakgrunn for studien{#sec-bakgrunn}\n@sec-bakgrunn\n\n\nLitteraturreferanse\nSpesifiser BibTeX eller Zotero-biblioteket ditt i YAML-hodet:---bibliography: referanser.bib---\n@daus2023 og [@daus2023]\n\n\n\n\n\n\n\n\n\n\n\n\nGjenbrukCC BY 4.0",
     "crumbs": [
       "Artikler",
       "For kapittelforfattere",
-      "Installasjon, for kapittelforfattere"
+      "Grunnleggende formatering"
     ]
   },
   {
-    "objectID": "Artikler/For_kapittelforfattere/01_Installasjon.html#kjente-problemer-ved-installasjonførstegangsbruk",
-    "href": "Artikler/For_kapittelforfattere/01_Installasjon.html#kjente-problemer-ved-installasjonførstegangsbruk",
-    "title": "Installasjon, for kapittelforfattere",
-    "section": "Kjente problemer ved installasjon/førstegangsbruk",
-    "text": "Kjente problemer ved installasjon/førstegangsbruk\n\nOppstår problemer, prøv alltid å restarte RStudio før du spør om hjelp. Løser mange problemer - samme med datamaskinen din generelt.\nNår du trykker Render for et dokument som inneholder R-kode så får du kanskje feilmelding om at R ikke finnes. Det kan skyldes at du har installert R i en mappebane som inneholder ÆØÅ, etc. Bugen er meldt, men i mellomtiden kan du prøve å installere i vanlig Programfiler-mappen.\nError: unable to open file [bla bla] for writing [eller reading]\n\nDette skyldes at Microsoft har satt en sperre på at filbaner i Sharepoint ikke kan overstige 260 tegn… Helt idiotisk. Og problemet blir verre av at mange nyansatte ved NIFU får hele navnet som brukernavn, som gjør at tegnene brukes opp raskt… Flytt til en kortere mappebane så vil det fungere. Uansett, ingen vedvarende problem når vi setter sammen kapitlene, bare frustrerende når man jobber med det selv.",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Installasjon, for kapittelforfattere"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/03_PISVEEP.html",
-    "href": "Artikler/For_kapittelforfattere/03_PISVEEP.html",
-    "title": "PISVEEP (manuelt arbeid)",
+    "objectID": "Artikler/For_kapittelforfattere/11_Kart.html",
+    "href": "Artikler/For_kapittelforfattere/11_Kart.html",
+    "title": "Kart",
     "section": "",
-    "text": "Nå som figurer og tabeller er lagd for deg kan du konsentrere deg om følgende.\n\nPlukk ut det som er interessant.\nInspiser funnene: Gir det mening? Er tallene rimelige?\nSammenfatt funnene i teksten.\nVarier språket, gjør det interessant.\nElaborer med dine egne figurer, tabeller og analyser det du tenker er nødvendig for å belyse interessante forskningsspørsmål.\nEksemplifiser hva en koeffisient på 0,4 betyr i praksis for en person/institusjon.\nPosisjoner funnene i en større sammenheng. Hva har dette å si for det kostbare offentlige tiltaket? Hva har dette å si for andre prosjekter?\n\n\n\n\nGjenbrukCC BY 4.0",
+    "text": "Enkleste er å ta utgangspunkt i f.eks. eksempelet nedenfor (hentet fra Spørringenes metodekapittel).\n\n\n\n\n\n\nNote\n\n\n\nMerk at Quarto har per nå en begrensning på antall komplekse/store figurer (slik som kart pleier å være). Har man flere bør derfor disse enten gjøres statiske (ikke-interaktive), eller plasseres på hver sitt dokument.\n\n\nDet du trenger er\n\nEt datasett med bakgrunnskart (konturer av Norge+fylker eller kommuner). Dette ligger i Metode-kanalen, se eksempelet nedenfor.\n\n2A. Et datasett med skolenes/institusjonenes koordinater og det du ønsker å fargelegge,\n2B. OG/ELLER Et datasett med f.eks. fylker der du har informasjon om hva som skal fargelegges (kapitteldatasettet).\n2 er ikke med i eksempelet nedenfor.\n\nlibrary(dplyr)\ndat_bakgrunnskart &lt;- \n  sf::read_sf(file.path(Sys.getenv(\"USERPROFILE\"), \"NIFU\", \"Metode - General\", \"SAROS-core\", \"shared resources\", \"maps\", \"fylker2021.json\"), \n              layer = \"fylker2021\",\n              stringsAsFactors = TRUE, as_tibble = TRUE) %&gt;% \n  dplyr::left_join(y =  \n                  tibble::tibble(Fylkesnavn = c(\"Oslo\", \"Vestland\", \"Viken\", \"Nordland\"),\n                                 utvalgt = nifutheme::nifu_cols(type=\"main\")[1:4]), \n                 by = \"Fylkesnavn\") %&gt;% \n   sf::st_as_sf(coords = c(\"_CX\", \"_CY\"))\nsf::st_crs(dat_bakgrunnskart) &lt;- 25833\nkart1 &lt;-\n  ggplot2::ggplot() +\n  ggplot2::theme_void() +\n  ggiraph::geom_sf_interactive(data = dat_bakgrunnskart,\n                               mapping = ggplot2::aes(fill = utvalgt, \n                                                      data_id = Fylkesnavn, \n                                                      tooltip = Fylkesnavn)) +\n  ggplot2::scale_fill_identity()\n# kart1\nggiraph::girafe(ggobj = kart1)\n\n\n\n\n\n\n\n\nGjenbrukCC BY 4.0",
     "crumbs": [
       "Artikler",
       "For kapittelforfattere",
-      "PISVEEP (manuelt arbeid)"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html",
-    "title": "Figurer",
-    "section": "",
-    "text": "Saros gir kun utkast. Ved nøye justerte innstillinger slipper man å endre på så mye, men kan ta tid å komme til det stadiet. Dessuten, variasjon og tilpasning er viktig. Antar for alle påfølgende eksempler at du har lastet inn tidyverse-pakken, samt et (kapittel)-datasett.\n\nsuppressPackageStartupMessages(library(tidyverse, warn.conflicts = FALSE, quietly = TRUE))\nmine_data &lt;- saros::ex_survey1 # Eksempeldata",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html#fjerne-rader-fra-en-figur",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html#fjerne-rader-fra-en-figur",
-    "title": "Figurer",
-    "section": "Fjerne rader fra en figur",
-    "text": "Fjerne rader fra en figur\n\nfig_a_uni_cat_prop_plot_minimert &lt;- fig_a_uni_cat_prop_plot\nfig_a_uni_cat_prop_plot_minimert$data &lt;- \n  fig_a_uni_cat_prop_plot_minimert$data %&gt;% \n  filter(!.variable_name %in% c(\"a_5\", \"a_6\")) \npatchwork::wrap_plots(list(Old = fig_a_uni_cat_prop_plot,\n                      New = fig_a_uni_cat_prop_plot_minimert),\n                      ncol = 2) %&gt;%\nggiraph::girafe(ggobj = .)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html#endre-akse-etiketter-dvs.-en-variabeletikett-i-en-figur",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html#endre-akse-etiketter-dvs.-en-variabeletikett-i-en-figur",
-    "title": "Figurer",
-    "section": "Endre akse-etiketter (dvs. en variabeletikett) i en figur",
-    "text": "Endre akse-etiketter (dvs. en variabeletikett) i en figur\nex_survey1-datasettet har en skrivefeil, har du oppdaget den?\n\nfig_b_uni_cat_prop_plot_korrigert &lt;- fig_b_uni_cat_prop_plot\nfig_b_uni_cat_prop_plot_korrigert$data &lt;- \n  fig_b_uni_cat_prop_plot_korrigert$data %&gt;% \n  mutate(.variable_label =\n         forcats::fct_relabel(\n           .variable_label, ~stringr::str_replace_all(.x,\n           pattern = \"Bejing\", \n           replacement = \"Beijing\")))\npatchwork::wrap_plots(Old = fig_b_uni_cat_prop_plot,\n                      New = fig_b_uni_cat_prop_plot_korrigert,\n                      ncol = 2) %&gt;%\n  ggiraph::girafe(ggobj = .)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html#reversere-vertikalt-snu-variablene-opp-ned",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html#reversere-vertikalt-snu-variablene-opp-ned",
-    "title": "Figurer",
-    "section": "Reversere vertikalt (snu variablene opp-ned)",
-    "text": "Reversere vertikalt (snu variablene opp-ned)\nMerk at det er x-aksen man reverserer, fordi figuren allerede er snudd om (x=&gt;y, y=&gt;x). Merk at man bruker + symbolet om du slår sammen figurkomponenter, mens det er %&gt;% når du piper et datasett.\n\nfig_a_uni_cat_prop_plot_reversert &lt;- fig_a_uni_cat_prop_plot\nfig_a_uni_cat_prop_plot_reversert$data &lt;- \n  fig_a_uni_cat_prop_plot_reversert$data %&gt;% \n  mutate(.variable_label = forcats::fct_rev(.variable_label))\npatchwork::wrap_plots(Old = fig_a_uni_cat_prop_plot,\n                      New = fig_a_uni_cat_prop_plot_reversert,\n                      ncol = 2) %&gt;%\n  ggiraph::girafe(ggobj = .)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html#skreddersydd-sortering-av-variablene-i-figuren",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html#skreddersydd-sortering-av-variablene-i-figuren",
-    "title": "Figurer",
-    "section": "Skreddersydd sortering av variablene i figuren",
-    "text": "Skreddersydd sortering av variablene i figuren\nAlle som har jobbet litt med ggplot2 vet at det ikke bare er å sortere datasettet man sender til ggplot() - den tar alltid utgangspunkt i factor levels for variabelen (og er det ikke en factor så omgjøres den til det). Trikset er å stille inn rekkefølgen på factor levels manuelt. forcats-pakken har også mange andre funksjoner for å jobbe med factor-variabler!\n\nfig_b_uni_cat_prop_plot_v2 &lt;- fig_b_uni_cat_prop_plot\nfig_b_uni_cat_prop_plot_v2$data &lt;-\n  fig_b_uni_cat_prop_plot_v2$data %&gt;% \n  mutate(.variable_label = \n           forcats::fct_relevel(.variable_label,\n                                \"Bejing\",\n                                \"Budapest\",\n                                \"Brussels\"))\npatchwork::wrap_plots(Old=fig_b_uni_cat_prop_plot,\n                      New=fig_b_uni_cat_prop_plot_v2, \n                      ncol=2) %&gt;%\n  ggiraph::girafe(ggobj = .)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html#endre-høyden-på-figuren",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html#endre-høyden-på-figuren",
-    "title": "Figurer",
-    "section": "Endre høyden på figuren",
-    "text": "Endre høyden på figuren\nDette er trivielt, bare sjekk innstillingen for figuren. Vil si maks er 20, minimum er 1. Merk at størrelsen først er synlig etter kompilering. Trykker du på forhåndsvisning endres ikke (nødvendigvis) figurens størrelse. Bredde skal du “aldri” justere, det går automatisk.\n\nggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_v2)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html#få-inn-all-variabeltekst-i-bivariate-stolpediagrammer",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html#få-inn-all-variabeltekst-i-bivariate-stolpediagrammer",
-    "title": "Figurer",
-    "section": "Få inn all variabeltekst i bivariate stolpediagrammer",
-    "text": "Få inn all variabeltekst i bivariate stolpediagrammer\nProblemer med at noe tekst kuttes av helt til venstre? Sett først makshøyde ovenfor. Så dette, og eventuelt juster\n\nfig_b_bi_catcat_prop_plot &lt;-   \n  saros::ex_survey1 |&gt;   \n  saros::embed_cat_prop_plot(dep=b_1:b_3, \n                             indep=x1_sex) + \n  nifutheme::scale_fill_nifu(\"reds\") +\n  ggplot2::labs(fill=NULL) +\n  # Mindre tekst på uavhengig variabel\n  ggplot2::theme(axis.text = element_text(size = 6), \n                 #Mindre tekst på avhengig variabel (helt til venstre):\n                strip.text.y = element_text(size = 5), \n  # Tillat overlapp på avhengig variabel-tekst uten å kutte brått\n                strip.clip = \"off\") + \n  ggiraph::facet_grid_interactive(rows = vars(.variable_label), \n                      switch = \"both\", \n                       # Juster 15 til det blir perfekt\n                      labeller = ggplot2::label_wrap_gen(width = 15))\nggiraph::girafe(ggobj = fig_b_bi_catcat_prop_plot)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html#få-inn-hele-figurforklaringen-i-figuren",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html#få-inn-hele-figurforklaringen-i-figuren",
-    "title": "Figurer",
-    "section": "Få inn hele figurforklaringen i figuren",
-    "text": "Få inn hele figurforklaringen i figuren\nMed mange svarkategorier, som har lang tekst, så kan det være at siste kategorien kuttes. Det gjelder særlig for docx-versjonen. Prøv følgende:\n\nfig_b_uni_cat_prop_plot_v2 &lt;-\n  fig_b_uni_cat_prop_plot +\n  ggplot2::guides(fill = ggiraph::guide_legend_interactive(nrow=1,\n                                                           byrow=TRUE,\n                                                           title = NULL)) + # sett nrow=2 dersom du har mange kategorier\n  ggplot2::theme(legend.key.size = ggplot2::unit(4, \"mm\"), # Litt mindre figurnøkkel (kvadratet med farge i)\n                 legend.justification = c(1,0)) # Skyver 1 enhet til venstre. Ofte nok.\nggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_v2)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html#endre-fargeskala",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html#endre-fargeskala",
-    "title": "Figurer",
-    "section": "Endre fargeskala",
-    "text": "Endre fargeskala\nNormalt benyttes innstillingene i _52_ressurser/YAML/_report_generation_setup.yaml slik at colour_palette_nominal: og colour_palette_ordinal: brukes for nominelle og ordinale (ordered) variabler, der NIFUs rødtone-mal benyttes for ordinale. Dette kan overstyres for den enkelte figur:\n\nfig_b_uni_cat_prop_plot_blue &lt;-    \n  fig_b_uni_cat_prop_plot +    \n  nifutheme::scale_fill_nifu(\"blues\")\n# Alternativt \"main\" eller \"reds\" \nggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_blue)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/05_Figurer.html#rotere-tekst-på-spørsmål-fasettene-helt-til-venstre-i-bivariate-figurer",
-    "href": "Artikler/For_kapittelforfattere/05_Figurer.html#rotere-tekst-på-spørsmål-fasettene-helt-til-venstre-i-bivariate-figurer",
-    "title": "Figurer",
-    "section": "Rotere tekst på spørsmål (fasettene helt til venstre) i bivariate figurer",
-    "text": "Rotere tekst på spørsmål (fasettene helt til venstre) i bivariate figurer\nÅ ha teksten vertikal kan spare en del plass horisontalt om man har mange svarkategorier, men er litt vanskeligere å lese, og tar mer plass vertikalt.\n\nfig_b_bi_catcat_prop_plot_snudd &lt;-\n  fig_b_bi_catcat_prop_plot + # Sett teksten horisontal\n  ggplot2::theme(strip.text.y.left = ggplot2::element_text(angle = 0))\nggiraph::girafe(ggobj = fig_b_bi_catcat_prop_plot_snudd)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/07_Tabeller.html",
-    "href": "Artikler/For_kapittelforfattere/07_Tabeller.html",
-    "title": "Tabeller",
-    "section": "",
-    "text": "Tabeller er egentlig bare data frame, altså datasett (ikke rådata men sammendrag). Forskjellen er at vi i Saros globalt presenterer alle disse som såkalt gt-tabeller (se helt nederst), som ser mye penere ut enn det man får i de neste eksemplene. Alternativt kan man helt fra starten konvertere til gt, og så gjøre videre manipulasjoner der (litt annen syntaks, men gir flere muligheter for formattering, slå sammen celler, osv).",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Tabeller"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/07_Tabeller.html#fjerne-rader",
-    "href": "Artikler/For_kapittelforfattere/07_Tabeller.html#fjerne-rader",
-    "title": "Tabeller",
-    "section": "Fjerne rader",
-    "text": "Fjerne rader\nHusk at selv om det står `52` i tabellen kan det være at tallet er lagret som tekst.\n\nmin_tabell &lt;-\n  min_tabell %&gt;%\n  filter(`How much do you like living in` != \"Bejing\" & !is.na(`How much do you like living in`))  \nmin_tabell\n\n# A tibble: 4 × 6\n  How much do you like liv…¹ `Is respondent human?` `Not at all (%)` `A bit (%)`\n  &lt;ord&gt;                      &lt;fct&gt;                  &lt;chr&gt;            &lt;chr&gt;      \n1 Budapest                   Definitely humanoid    48               37         \n2 Budapest                   Robot?                 42               48         \n3 Brussels                   Definitely humanoid    37               52         \n4 Brussels                   Robot?                 44               44         \n# ℹ abbreviated name: ¹​`How much do you like living in`\n# ℹ 2 more variables: `A lot (%)` &lt;chr&gt;, `Total (N)` &lt;int&gt;",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Tabeller"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/07_Tabeller.html#endre-kolonneoverskrift",
-    "href": "Artikler/For_kapittelforfattere/07_Tabeller.html#endre-kolonneoverskrift",
-    "title": "Tabeller",
-    "section": "Endre kolonneoverskrift",
-    "text": "Endre kolonneoverskrift\n\nmin_tabell &lt;-    \n  min_tabell %&gt;%    \n  rename(Sted = `How much do you like living in`,\n         Menneske = `Is respondent human?`)\nmin_tabell\n\n# A tibble: 4 × 6\n  Sted     Menneske         `Not at all (%)` `A bit (%)` `A lot (%)` `Total (N)`\n  &lt;ord&gt;    &lt;fct&gt;            &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;             &lt;int&gt;\n1 Budapest Definitely huma… 48               37          15                   52\n2 Budapest Robot?           42               48          10                   48\n3 Brussels Definitely huma… 37               52          12                   52\n4 Brussels Robot?           44               44          12                   48",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Tabeller"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/07_Tabeller.html#endre-tekst-i-en-kolonnes-innhold",
-    "href": "Artikler/For_kapittelforfattere/07_Tabeller.html#endre-tekst-i-en-kolonnes-innhold",
-    "title": "Tabeller",
-    "section": "Endre tekst i en kolonnes innhold",
-    "text": "Endre tekst i en kolonnes innhold\n\nmin_tabell &lt;-\n  min_tabell %&gt;%\n  mutate(Menneske = \n           case_when(Menneske == \"Definitely humanoid\" ~ \"Ja\",\n                     Menneske == \"Robot?\" ~ \"Nei\"))\nmin_tabell\n\n# A tibble: 4 × 6\n  Sted     Menneske `Not at all (%)` `A bit (%)` `A lot (%)` `Total (N)`\n  &lt;ord&gt;    &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;             &lt;int&gt;\n1 Budapest Ja       48               37          15                   52\n2 Budapest Nei      42               48          10                   48\n3 Brussels Ja       37               52          12                   52\n4 Brussels Nei      44               44          12                   48",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Tabeller"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html",
-    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html",
-    "title": "Figurer",
-    "section": "",
-    "text": "Saros gir kun utkast. Ved nøye justerte innstillinger slipper man å endre på så mye, men kan ta tid å komme til det stadiet. Dessuten, variasjon og tilpasning er viktig. Antar for alle påfølgende eksempler at du har lastet inn tidyverse-pakken, samt et (kapittel)-datasett.\n\nsuppressPackageStartupMessages(library(tidyverse, warn.conflicts = FALSE, quietly = TRUE))\nmine_data &lt;- saros::ex_survey # Eksempeldata",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#fjerne-rader-fra-en-figur",
-    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#fjerne-rader-fra-en-figur",
-    "title": "Figurer",
-    "section": "Fjerne rader fra en figur",
-    "text": "Fjerne rader fra en figur\n\nfig_a_uni_cat_prop_plot_minimert &lt;- fig_a_uni_cat_prop_plot\nfig_a_uni_cat_prop_plot_minimert$data &lt;- \n  fig_a_uni_cat_prop_plot_minimert$data %&gt;% \n  filter(!.variable_name %in% c(\"a_5\", \"a_6\")) \npatchwork::wrap_plots(list(Old = fig_a_uni_cat_prop_plot,\n                      New = fig_a_uni_cat_prop_plot_minimert),\n                      ncol = 2) %&gt;%\nggiraph::girafe(ggobj = .)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-akse-etiketter-dvs.-en-variabeletikett-i-en-figur",
-    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-akse-etiketter-dvs.-en-variabeletikett-i-en-figur",
-    "title": "Figurer",
-    "section": "Endre akse-etiketter (dvs. en variabeletikett) i en figur",
-    "text": "Endre akse-etiketter (dvs. en variabeletikett) i en figur\nex_survey1-datasettet har en skrivefeil, har du oppdaget den?\n\nfig_b_uni_cat_prop_plot_korrigert &lt;- fig_b_uni_cat_prop_plot\nfig_b_uni_cat_prop_plot_korrigert$data &lt;- \n  fig_b_uni_cat_prop_plot_korrigert$data %&gt;% \n  mutate(.variable_label =\n         forcats::fct_relabel(\n           .variable_label, ~stringr::str_replace_all(.x,\n           pattern = \"Bejing\", \n           replacement = \"Beijing\")))\npatchwork::wrap_plots(Old = fig_b_uni_cat_prop_plot,\n                      New = fig_b_uni_cat_prop_plot_korrigert,\n                      ncol = 2) %&gt;%\n  ggiraph::girafe(ggobj = .)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#reversere-vertikalt-snu-variablene-opp-ned",
-    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#reversere-vertikalt-snu-variablene-opp-ned",
-    "title": "Figurer",
-    "section": "Reversere vertikalt (snu variablene opp-ned)",
-    "text": "Reversere vertikalt (snu variablene opp-ned)\nMerk at det er x-aksen man reverserer, fordi figuren allerede er snudd om (x=&gt;y, y=&gt;x). Merk at man bruker + symbolet om du slår sammen figurkomponenter, mens det er %&gt;% når du piper et datasett.\n\nfig_a_uni_cat_prop_plot_reversert &lt;- fig_a_uni_cat_prop_plot\nfig_a_uni_cat_prop_plot_reversert$data &lt;- \n  fig_a_uni_cat_prop_plot_reversert$data %&gt;% \n  mutate(.variable_label = forcats::fct_rev(.variable_label))\npatchwork::wrap_plots(Old = fig_a_uni_cat_prop_plot,\n                      New = fig_a_uni_cat_prop_plot_reversert,\n                      ncol = 2) %&gt;%\n  ggiraph::girafe(ggobj = .)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#skreddersydd-sortering-av-variablene-i-figuren",
-    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#skreddersydd-sortering-av-variablene-i-figuren",
-    "title": "Figurer",
-    "section": "Skreddersydd sortering av variablene i figuren",
-    "text": "Skreddersydd sortering av variablene i figuren\nAlle som har jobbet litt med ggplot2 vet at det ikke bare er å sortere datasettet man sender til ggplot() - den tar alltid utgangspunkt i factor levels for variabelen (og er det ikke en factor så omgjøres den til det). Trikset er å stille inn rekkefølgen på factor levels manuelt. forcats-pakken har også mange andre funksjoner for å jobbe med factor-variabler!\n\nfig_b_uni_cat_prop_plot_v2 &lt;- fig_b_uni_cat_prop_plot\nfig_b_uni_cat_prop_plot_v2$data &lt;-\n  fig_b_uni_cat_prop_plot_v2$data %&gt;% \n  mutate(.variable_label = \n           forcats::fct_relevel(.variable_label,\n                                \"Bejing\",\n                                \"Budapest\",\n                                \"Brussels\"))\npatchwork::wrap_plots(Old=fig_b_uni_cat_prop_plot,\n                      New=fig_b_uni_cat_prop_plot_v2, \n                      ncol=2) %&gt;%\n  ggiraph::girafe(ggobj = .)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-høyden-på-figuren",
-    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-høyden-på-figuren",
-    "title": "Figurer",
-    "section": "Endre høyden på figuren",
-    "text": "Endre høyden på figuren\nDette er trivielt, bare sjekk innstillingen for figuren. Vil si maks er 20, minimum er 1. Merk at størrelsen først er synlig etter kompilering. Trykker du på forhåndsvisning endres ikke (nødvendigvis) figurens størrelse. Bredde skal du “aldri” justere, det går automatisk.\n\nggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_v2)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#få-inn-all-variabeltekst-i-bivariate-stolpediagrammer",
-    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#få-inn-all-variabeltekst-i-bivariate-stolpediagrammer",
-    "title": "Figurer",
-    "section": "Få inn all variabeltekst i bivariate stolpediagrammer",
-    "text": "Få inn all variabeltekst i bivariate stolpediagrammer\nProblemer med at noe tekst kuttes av helt til venstre? Sett først makshøyde ovenfor. Så dette, og eventuelt juster\n\nfig_b_bi_catcat_prop_plot &lt;-   \n  mine_data |&gt;   \n  saros::embed_cat_prop_plot(dep = b_1:b_3, \n                             indep = x1_sex) + \n  nifutheme::scale_fill_nifu(\"reds\") +\n  ggplot2::labs(fill=NULL) +\n  # Mindre tekst på uavhengig variabel\n  ggplot2::theme(axis.text = element_text(size = 6), \n                 #Mindre tekst på avhengig variabel (helt til venstre):\n                strip.text.y = element_text(size = 5), \n  # Tillat overlapp på avhengig variabel-tekst uten å kutte brått\n                strip.clip = \"off\") + \n  ggiraph::facet_grid_interactive(rows = vars(.variable_label), \n                      switch = \"both\", \n                       # Juster 15 til det blir perfekt\n                      labeller = ggplot2::label_wrap_gen(width = 15))\nggiraph::girafe(ggobj = fig_b_bi_catcat_prop_plot)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#få-inn-hele-figurforklaringen-i-figuren",
-    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#få-inn-hele-figurforklaringen-i-figuren",
-    "title": "Figurer",
-    "section": "Få inn hele figurforklaringen i figuren",
-    "text": "Få inn hele figurforklaringen i figuren\nMed mange svarkategorier, som har lang tekst, så kan det være at siste kategorien kuttes. Det gjelder særlig for docx-versjonen. Prøv følgende:\n\nfig_b_uni_cat_prop_plot_v2 &lt;-\n  fig_b_uni_cat_prop_plot +\n  ggplot2::guides(fill = ggiraph::guide_legend_interactive(nrow=1,\n                                                           byrow=TRUE,\n                                                           title = NULL)) + # sett nrow=2 dersom du har mange kategorier\n  ggplot2::theme(legend.key.size = ggplot2::unit(4, \"mm\"), # Litt mindre figurnøkkel (kvadratet med farge i)\n                 legend.justification = c(1,0)) # Skyver 1 enhet til venstre. Ofte nok.\nggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_v2)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
-    ]
-  },
-  {
-    "objectID": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-fargeskala",
-    "href": "Artikler/For_kapittelforfattere/10_Grunnleggende_figurer.html#endre-fargeskala",
-    "title": "Figurer",
-    "section": "Endre fargeskala",
-    "text": "Endre fargeskala\nNormalt benyttes innstillingene i _52_ressurser/YAML/_report_generation_setup.yaml slik at colour_palette_nominal: og colour_palette_ordinal: brukes for nominelle og ordinale (ordered) variabler, der NIFUs rødtone-mal benyttes for ordinale. Dette kan overstyres for den enkelte figur:\n\nfig_b_uni_cat_prop_plot_blue &lt;-    \n  fig_b_uni_cat_prop_plot +    \n  nifutheme::scale_fill_nifu(\"blues\")\n# Alternativt \"main\" eller \"reds\" \nggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_blue)",
-    "crumbs": [
-      "Artikler",
-      "For kapittelforfattere",
-      "Figurer"
+      "Kart"
     ]
   },
   {

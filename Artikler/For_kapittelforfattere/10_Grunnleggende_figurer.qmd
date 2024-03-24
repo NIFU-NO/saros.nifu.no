@@ -1,5 +1,5 @@
 ---
-title: "Figurer"
+title: "Grunnleggende figurer"
 editor: visual
 eval: true
 cache: false
@@ -235,4 +235,3 @@ fig_b_uni_cat_prop_plot_blue <-
 # Alternativt "main" eller "reds" 
 ggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_blue)
 ```
-
