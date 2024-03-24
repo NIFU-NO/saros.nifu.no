@@ -33,7 +33,7 @@ title: 'Innvendinger og bekymringer'
 
 # Fjerner vi de artige oppgavene? Gjør vi oss selv arbeidsledige?
 
--   Absolutt ikke, se [fordeler med Saros](Suksesskriterier_for_saros.qmd) om du ikke alt har innsett det.
+-   Absolutt ikke, se [fordeler med Saros](Artikler/Om_Saros_systemet/02_Suksesskriterier.qmd) om du ikke alt har innsett det.
 
 -   Alltid nok for oss å gjøre. Hør med områdeleder, direktør eller Saros-utviklerne om du kjeder deg...
 
