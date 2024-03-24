@@ -1,16 +1,13 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Om NIFUs Saros-nettsteder for rapportering av samfunnsvitenskapelige (spørre)undersøkelser"
   navbar:
     logo: "https://www.nifu.no/wp-content/uploads/logo_hvit.png"
-    # left:
-      # - sidebar:articles
     search: true
   sidebar:
-    # - id: articles
-      # title: "Artikler"
       contents: "Artikler"
   page-navigation: true
   reader-mode: true

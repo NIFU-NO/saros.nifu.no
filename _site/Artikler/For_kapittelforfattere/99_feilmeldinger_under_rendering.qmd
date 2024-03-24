@@ -1,8 +1,0 @@
----
-title: Feilmeldinger under kompilering av kapittel
----
-
-
-## Finner ikke figur.png eller annen slik fil i en undermappe
-
-## Røde kryss på venstre side. 
