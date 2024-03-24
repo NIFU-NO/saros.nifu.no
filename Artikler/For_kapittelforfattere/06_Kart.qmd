@@ -1,0 +1,45 @@
+---
+title: "Kart"
+editor: visual
+eval: true
+---
+
+
+Enkleste er å ta utgangspunkt i f.eks. eksempelet nedenfor (hentet fra Spørringenes metodekapittel). 
+
+::: callout-note
+Merk at Quarto har per nå en begrensning på antall komplekse/store figurer (slik som kart pleier å være). Har man flere bør derfor disse enten gjøres statiske (ikke-interaktive), eller plasseres på hver sitt dokument.
+:::
+
+Det du trenger er
+
+1.  Et datasett med bakgrunnskart (konturer av Norge+fylker eller kommuner). Dette ligger i Metode-kanalen, se eksempelet nedenfor.
+
+2A.  Et datasett med skolenes/institusjonenes koordinater og det du ønsker å fargelegge,
+
+2B.  OG/ELLER Et datasett med f.eks. fylker der du har informasjon om hva som skal fargelegges (kapitteldatasettet).
+
+2 er ikke med i eksempelet nedenfor.
+
+```{r}
+dat_bakgrunnskart <- 
+  sf::read_sf(file.path(Sys.getenv("USERPROFILE"), "NIFU", "Metode - General", "SAROS-core", "shared resources", "maps", "fylker2021.json"), 
+              layer = "fylker2021",
+              stringsAsFactors = TRUE, as_tibble = TRUE) %>% 
+  dplyr::left_join(y =  
+                  tibble::tibble(Fylkesnavn = c("Oslo", "Vestland", "Viken", "Nordland"),
+                                 utvalgt = nifutheme::nifu_cols(type="main")[1:4]), 
+                 by = "Fylkesnavn") %>% 
+   sf::st_as_sf(coords = c("_CX", "_CY"))
+sf::st_crs(dat_bakgrunnskart) <- 25833
+kart1 <-
+  ggplot2::ggplot() +
+  ggplot2::theme_void() +
+  ggiraph::geom_sf_interactive(data = dat_bakgrunnskart,
+                               mapping = ggplot2::aes(fill = utvalgt, 
+                                                      data_id = Fylkesnavn, 
+                                                      tooltip = Fylkesnavn)) +
+  ggplot2::scale_fill_identity()
+# kart1
+ggiraph::girafe(ggobj = kart1)
+```

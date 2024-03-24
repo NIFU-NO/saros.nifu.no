@@ -1,0 +1,13 @@
+---
+title: "Juster innstillinger i _report_generation_setup.yaml"
+---
+
+Se for øvrig [punkt 2 her](01_Forstegangsoppsett.qmd).
+
+![](https://www.azquotes.com/picture-quotes/quote-i-m-the-decider-and-i-decide-what-is-best-george-w-bush-64-47-33.jpg){fig-align="center"}
+
+-   Identifiser og spesifiser variabler som alltid skal stå nederst i figurer og tabeller, typisk "Annet", "Vet ikke", osv i batterier der dette er et avkrysningsmulighet.
+
+    -   variables_always_at_bottom
+
+-   

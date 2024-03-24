@@ -1,0 +1,50 @@
+---
+title: "Installasjon, for kapittelforfattere"
+editor: visual
+---
+
+-   Sørg for at du har administratorrettigheter (Make Me Admin, etc)
+
+-   Gå til <https://posit.co/download/rstudio-desktop/> og last ned og installer både R og RStudio Desktop.
+
+    -   Prøv så godt det lar seg gjøre å installere R i Programfiler eller Program Files (ikke i AppData - det gjelder særlig dersom du har et brukernavn i Windows med ø,æ,å.
+
+    -   Du trenger ikke snarveier på skrivebordet til R, vi bruker bare RStudio.
+
+    -   (R er motoren, RStudio er bilen)
+
+-   Last ned og installer nyeste versjon av Rtools: <https://cran.r-project.org/bin/windows/Rtools/>
+
+-   Last ned nyeste Pre-release-versjonen av Quarto: <https://quarto.org/docs/download/>
+
+    -   Viktigst om man skal sette sammen nettstedet. Ikke så kritisk om du bare skriver kapitler.
+
+-   Når du går inn på RStudio etter alt ovenfor er installert skriver du i konsollen følgende (og så trykker enter for hver linje):
+
+-   `install.packages(c("tidyverse", "devtools", "gt", "ggiraph", "webshot2"))`
+
+-   `usethis::edit_r_environ()`
+
+    -   Skriv så inn følgende i fila som åpnes, og lagre etterpå. Restart så RStudio.
+
+        -   `LC_ALL="nb.utf8"`
+
+-   `devtools::install_github("NIFU-NO/saros")`
+
+    -   Denne pakken, saros, må oppdateres hyppigere (ukentlig) da den er under utvikling.
+
+-   `webshot::install_phantomjs()`
+
+-   Gå ut av RStudio og så inn igjen, alt skal være klart.
+
+## Kjente problemer ved installasjon/førstegangsbruk
+
+-   Oppstår problemer, prøv alltid å restarte RStudio før du spør om hjelp. Løser mange problemer - samme med datamaskinen din generelt.
+
+-   Når du trykker Render for et dokument som inneholder R-kode så får du kanskje feilmelding om at R ikke finnes. Det kan skyldes at du har installert R i en mappebane som inneholder ÆØÅ, etc. Bugen er meldt, men i mellomtiden kan du prøve å installere i vanlig Programfiler-mappen.
+
+-   Error: unable to open file \[bla bla\] for writing \[eller reading\]
+
+    -   Dette skyldes at Microsoft har satt en sperre på at filbaner i Sharepoint ikke kan overstige 260 tegn... Helt idiotisk. Og problemet blir verre av at mange nyansatte ved NIFU får hele navnet som brukernavn, som gjør at tegnene brukes opp raskt... Flytt til en kortere mappebane så vil det fungere. Uansett, ingen vedvarende problem når vi setter sammen kapitlene, bare frustrerende når man jobber med det selv.
+
+-   

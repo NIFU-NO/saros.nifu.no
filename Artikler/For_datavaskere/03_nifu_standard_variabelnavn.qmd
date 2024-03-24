@@ -1,0 +1,19 @@
+---
+format: html
+title: 'NIFUs standard for variabelnavnsetting i longitudinelle prosjekter'
+---
+
+
+Under utarbeiding
+
+Gjøremål:
+- Sjekke eksisterende standarder og prinsipper som for eksempel IEA, OECD og SSB benytter.
+
+Selv om det ikke er noe tvang er det store fordeler over tid dersom variablene er navngitt på systematisk vis slik at man kan senere lage et mønster for hvilke variabler som er like over tid, hvilke som er endret noe men tilnærmet like, osv. Dette muliggjør trendfremvisninger.
+
+## Generelle råd
+
+- Bruk engelsk så langt det lar seg gjøre
+- Understrek for å skille ord, ikke små/store bokstaver. Men tall vs bokstav kan skille
+- Unngå årstall. En survey kan gå over nyttår. Er det publiseringsåret, datainnhenting, eller "kullet" man har indikert?!...
+- Bruk enten syklus-nummerering, eller aller helst kohort (fødselsår), som er mer stabilt. Ev. mer informasjon i datasettets metadata.

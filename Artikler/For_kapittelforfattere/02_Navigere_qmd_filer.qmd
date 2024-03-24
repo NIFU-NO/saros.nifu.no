@@ -1,0 +1,53 @@
+---
+title: Navigere QMD (Quarto)-filer generert av Saros
+---
+
+# Før du begynner
+
+-   Ta kopi av dine kapitler i utkastgenereringer-mappen til din egen mappe.
+-   Få med undermappen med samme navn som kapittelet.
+-   Pass på at filene ikke ligger i en mappe med lang stibaner på en Sharepoint/Teams-mappe. Dette vil skape trøbbel.
+
+## Ordliste
+
+::: callout-note
+
+Chunk
+
+:   En bit med R-kode, definert som alt mellom ```` ```{r} ```` og ```` ``` ````. Den kan ha spesielle innstillinger, indikert ved `#|` (kalt hashpipe), øverst. Ønsker man ikke å kjøre koden midlertidig (for eksempel om man er usikker på om den skal med) kan man kommentere ut selve koden (behold da innstillingene), eller slette det helt, og heller hente det inn igjen fra originalen om ønskelig.
+
+Render/kompilering
+
+:   Kjører alle chunkene og setter sammen dokumentet til f.eks. en HTML-side. Kan også kalles kompilere på norsk.
+
+YAML-hode
+
+:   YAML er en måte å skrive innstillinger for et dokument (potensielt også for et helt prosjekt) som er lesbart både for mennesker og datamaskinen. Vil aldri synes etter kompilering.
+
+Quarto/QMD
+
+:   Quarto er teknologien som setter sammen R-kode, vanlig tekst, med YAML-innstillinger, osv. QMD er filetternavnet for et slikt dokument.
+:::
+
+# Åpne QMD-filen
+
+1.  Trykk først på Edit ➠ Folding ➠ Collapse all.
+2.  Åpne en og en chunk ved å trykke på den. Lukke dem gjerne etterpå (pil på venstre side av chunken).
+3.  Forhåndsvis figurer, grafer, etc ved å trykke på grønn knapp til høyre på chunken.
+4.  Trykk på Show in new window over forhåndsvisningen for figurer som er større enn forhåndsvisningen. Juster eventuelt vinduet for å se alt.
+5.  Skriv tekst til resultatene.
+6.  Ønsker du å se hvordan alt ser ut til slutt? Trykk Render-knappen, og en HTML-side åpnes etter hvert. Får du feilmeldinger, les disse nøye og sjekk med [denne listen](../For_kapittelforfattere/99_feilmeldinger_under_rendering.qmd).
+    1.  For å spare tid i det lange løp bør du vurdere å sette på caching, som betyr at figurer og tabeller mellomlagres og gjenbrukes. Det tar ekstra lang tid (5x vanlig) å kjøre første gang, men så kan disse mellomlagrede versjonene benyttes senere om det ikke er noen endringer. Det vil være veldig nyttig dersom du bare jobber med en figur om gangen, eller bare med tekst. Dersom du gjør små endringer på mange figurer samtidig, i flere omganger, vil det ikke lønne seg tidsmessig.
+
+        ``` yaml
+        execute: 
+          cache: true # Plasseres under execute som du allerede har.
+        ```
+7.  Figurer som er så sammenpresset at man ikke kan lese teksten (eller motsatt, for stor), juster
+
+``` yaml
+#| fig-height: 4
+```
+
+9.  Utover høyde på figuren, farger i figurene og lignende, ikke overtenk layout. Veldig mye som skjer automatisk vil endres globalt når hele nettsiden kompileres. Men, figurer på se bra ut både i HTML-versjon (ganske enkelt) og Word (litt vanskeligere).
+10. 

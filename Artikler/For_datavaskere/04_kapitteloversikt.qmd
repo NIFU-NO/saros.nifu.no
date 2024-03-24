@@ -1,0 +1,27 @@
+---
+title: 'Kapitteloversikt'
+---
+
+Denne kapitteloversikten kan lages helt fra når undersøkelsen er åpnet for respondenter, altså at variabelnavn er fastsatt.
+
+Hver rapport må ha en tabell, der hver linje er et kapittel. Dette er typisk en Excel-fil som er enkel å redigere manuelt. Se et eksempel [her](kapitteloversikt.xlsx):
+
+![](images/clipboard-1776084714.png)
+
+Første rad inneholder kolonneoverskrifter. Den må inneholde følgende kolonner (som minimum, kan inneholde annet også):
+
+-   chapter: kapitteloverskrift, uten nummerering. Helst ikke veldig lang.
+
+-   dep: avhengige variabler. Du vil kunne få univariater for variabler du lister opp her. Ønsker du univariater for hva du vil anse som uavhengige variabler må du også liste disse opp her (eksperimentelt, ikke testet ut enda).
+
+    -   Denne (og indep nedenfor) følger såkalt tidyselect-syntaks. Det vil si at man skriver inn i en celle slik som dette: `matches('^s_3'), s_405, s_406`. Merk at man skiller mellom variabler (eller sett med variabler) med komma. Merk at måten man ville skrevet matches() på i Stata ikke ville fungert (`s_3*`).
+
+Kan også inneholde:
+
+-   indep: uavhengige variabler å bryte ned de avhengige variablene på.
+
+-   author: Forfatter, fullt navn. Dersom flere, så separer med semikolon.
+
+-   Eller andre variabler du måtte ha - kan være greit om man trenger å bruke samme kapitteloversikt til å holde styr på hvem hos oppdragsgiver som har ansvaret for temaet, hvor i spørreskjemaet spørsmålene finnes, osv. Disse blir ignorert av saros.
+
+`saros::draft_report()` vil produsere en logg over hvilke variabler som eksisterer i datasettet men som ikke er benyttet i kapitteloversikt, auxiliary_variables eller mesos_var.

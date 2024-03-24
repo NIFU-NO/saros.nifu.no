@@ -1,0 +1,20 @@
+---
+title: 'Bugs og begrensninger'
+---
+
+IKKE ENDA IMPLEMENTERT: Se [saros-pakkens Github Issues-sider](www.github.com/NIFU-NO/saros/issues) for oversikt over kjente bugs og forbedringsforslag.
+
+## Begrensninger som sannsynligvis vil være der i uoverskuelig fremtid
+-   Å lære noe nytt er vanskelig.
+-   Mangler samskrivingsfunksjonalitet og kommentarfelttråder
+    -   Men en Quarto-fil er en txt-fil så kan åpnes og redigeres i Word
+-   Det som klargjøres for manuell gjennomgang (PISVEEP) vil være i QMD, DOCX og/eller PDF, men redigeringer må gjøres i QMD slik at post-PISVEEP kan omgjøre til nettsted. QMD kan enkelt åpnes i en vilkårlig tekstbehandler (eller Rstudio for visuell editor og samtidig "rendering").
+-   Kapitler og rapporter med mye (interaktivt) innhold vil kunne bli ganske store nettsider, men det tar ikke lang tid å laste dem inn i nettleseren. 
+-   Gjennomsnittsgrafer og –tabeller, og disse vil bli etter statistiske anbefalinger
+-   Pivotere(?)/transponere tabeller slik man ønsker
+    -   Rediger tabell selv i kapittelet ditt enkelt med tidyr (og dplyr)
+-   Bryte ned på to variabler samtidig
+    -   Lag interaksjoner mellom brytningsvariabler på forhånd, før SAROS lager utkast. Se f.eks. SSN.
+-   Sortering i grafer/tabeller er ganske fleksibel, men "descending" innebærer per nå revers på alle sorteringsvariabler
+-   Ytterliggende figurtekster (fasetter) står nå loddrett
+

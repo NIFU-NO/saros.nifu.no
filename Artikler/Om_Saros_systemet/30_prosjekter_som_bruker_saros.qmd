@@ -1,0 +1,31 @@
+---
+title: "Prosjekter som bruker Saros"
+format: html
+---
+
+# NIFUs prosjekter som benytter Saros-systemet vil nærmeste året bli
+
+-   [Spørringene til Skole-Norge](http://ssn.nifu.no)
+
+    -   Halvårlig
+
+-   [Arbeidsgiverundersøkelsen](http://agu.nifu.no)
+
+    -   Sporadisk
+
+-   [Kandidatundersøkelsen](http://ku.nifu.no)
+
+    -   Årlig (halvtårlig oddetall, spesial partall)
+
+-   [Deltakerundersøkelsen](http://du.nifu.no)
+
+    -   Halvårlig, varierer: Lærere, yrkesfagslærere, barnehagestyrere, rektorer, modulbasert
+
+-   [Critical Thinking in Sustainability Education](http://crithise.nifu.no)
+
+# Prosjekter som planlegger å bruke det senere
+
+-   [HeaLS](http://heals.nifu.no)
+-   ArcED
+-   Kompetansebarometeret
+-   

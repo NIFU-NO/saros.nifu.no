@@ -1,0 +1,29 @@
+---
+title: 'Ta i bruk Saros for et prosjekt'
+---
+
+# Gjør deg kjent med hvorfor og hvordan
+
+-   Usikker på om du vil bruke Saros? Se [her](../Om_Saros_systemet/01_Maal.qmd)
+-   
+
+# Hvordan gjøre det i praksis (for prosjektledere)
+
+1.  Finn en litt over snittet teknisk interessert medarbeider og gi denne 5 timer for å
+
+    1.  Kopiere struktur fra et eksisterende prosjekt, eventuelt følge oppskriften [her](../For_datavaskere/01_Forstegangsoppsett.qmd).
+
+    2.  Tilpasse mappestruktur og innstillinger til ditt prosjekt.
+
+    3.  Gå gjennom med prosjektleder og andre prosjektmedarbeidere eventuelle innstillinger som må avgjøres.
+
+2.  For hver gjennomføring må datavasker gjøre seg kjent med [relevant informasjon](../For_datavaskere/02_Klargjore_datasettet.qmd). Sørg for at datasettene og mappebaner er ryddige, avidentifiserte, og gjerne konsistente. Avsett en del timer ekstra første gang for å gjøre skriptene mest mulig gjenbrukbare over flere gjennomføringer.
+
+3. Du, sammen med datavasker, må sette opp [kapitteloversikt](../For_datavaskere/04_kapitteloversikt.qmd) sammen. Dette går vanligvis ganske raskt om man vet hva man vil. Gjør man ikke dette vil alt havne i ett stort kapittel.
+
+4. Gjør noen valg, som legges inn som innstillinger i rapporten(es) [rapport-genereringsfunksjon](https://nifu-no.github.io/saros/reference/draft_report.html).
+
+
+4. Datavasker lager utkast som havner i en mappe for genererte utkast.
+
+3.  Kapittelforfatterne må sette seg inn i informasjon for disse.

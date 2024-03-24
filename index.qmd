@@ -1,11 +1,39 @@
 ---
-title: "saros.nifu.no"
+title: "NIFUs interaktive rapportnettsteder"
+format: html
 ---
 
-This is a Quarto website.
+NIFU har introdusert et innovativt, interaktivt, og fleksibelt publiseringssystem for å rapportere fra ulike spørreundersøkelser (og kanskje andre datakilder etter hvert).
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Rapportene er primært ment som HTML-baserte nettsider hvor man enkelt kan bla mellom rapporter, mellom kapitler, og mellom underkapitler, søke på tvers og innenfor gjennomføringer, samt etter hvert få tilgang til anonymiserte rådata for egne analyser.
 
-```{r}
-1 + 1
-```
+Se [oversikten over prosjekter](Artikler/Om_Saros_systemet/30_prosjekter_som_bruker_saros.html) som bruker Saros eller kommer til å bruke det.
+
+## Rapportene finnes (ofte) på tre-fire nivåer
+
+-   **Makro** kaller vi det som rapporteres for hele utvalget av respondenter - og vil i stor grad sammenfalle med dataene publisert i de offisielle rapportene på [nifu.no/publikasjoner](#0). Dersom det er avvik mellom Saros-rapportene og de offisielle rapportene er det sistnevnte som er mest korrekt, da enkelte valg er gjort for Sarosrapportene pga anonymisering og praktiske hensyn. Hver rapports hovedside vil være makronivået.
+
+-   **Mesos** kalles det vi rapporterer for den enkelte deltakende institusjon eller andre utvalgte områder (avhengig av prosjektets behov). Det gir mulighet for å sammenligne "seg selv" med alle andre.
+
+    -   Tilgang: Disse kan i enkelte prosjekter være beskyttet med brukernavn og passord. Innloggingsdetaljer oversendes den respektive institusjons kontaktperson. Institusjonen vil ha ett sett brukernavn/passord for alle sine ansatte, og man bør derfor utvise forsiktighet ved deling. Vi anbefaler å la nettleseren lagre innloggingsdetaljene. Dersom man ikke får opp innloggingsvinduet bør man bytte fra Edge til Chrome. Bytting av innloggingsdetaljer vil koste 2000kr, såfremt dette ikke skyldes NIFUs part.
+    -   Mesos-sidene tillater å sammenligne den utvalgte fokusgruppen med alle andre. Gruppen "Alle andre" er valgt fremfor "Hele utvalget" ettersom "Hele utvalget" er tilgjengelig i Makrorapporten, og for å unngå at en stor fokusgruppe ville visket ut forskjeller mellom fokusgruppen og resten.
+        -   Det er foreløpig ikke mulig å laste ned tabeller for institusjon og sammenligningsgrunnlaget samtidig, dette kommer til våren 2024.
+    -   Iblant kommer innspill på at "Kunne vi fått brutt ned svarene på avdeling/tilbud/fag/osv da dette kan være nyttig for lokalt utviklingsarbeid." Dessverre er våre undersøkelser mer nasjonalt rettede og vi må forholde oss til anonymitetshensyn (antall respondenter per gruppe man inndeler på) og også hvilke avdelinger/tilbud/fag/osv som er felles på tvers av institusjoner. Lokale evalueringer er nok mer egnet til lokalt utviklingsarbeid Ev. endringsforslag til undersøkelsen kan tas med oppdragsgiver for prosjektet, eller dersom man går sammen med flere institusjoner som deltar i undersøkelsen kan man fremme et felles forslag til NIFU med sannsynliggjøring at det er mer enn 10 individer som har svart i hver avdeling/tilbud/fag på tvers av institusjonene.
+    -   Fungerer ikke innlogging, prøv å bytte fra Edge til Chrome.
+
+-   **Mikro** utgjør anonymiserte rådata i f.eks. Excel-format, sammen med kodebok, der dette er forenlig med prosjektets personvernpremisser. Dataene vil ofte offentliggjøres noe senere enn Makro og Mesos. Vi tilbyr ingen hjelp med analyser av disse dataene, men vi tar gjerne imot innspill om eventuelle feil eller mangler.
+
+-   **Flexi** er en liten app som lar leseren lage sine egne figurer, innenfor anonymitetens grenser. Denne er under utvikling.
+
+## Tips og triks for brukere
+
+-   Ved å holde markøren over en figur får man opp informasjon om antall respondenter, samt spørsmålets fulle formulering.
+-   Tallene i figurene kan lastes ned i Excel, se figurforklaringen.
+-   Ved å klikke på samme sted i figuren vil man få opp variabelnavn, som er nyttig for superbrukere.
+-   Noen figurer kan være for høye, noen sammenklemte (problemet er under utbedring). Er teksten uleselig så hold markøren over figuren for å få frem spørsmålsformuleringen.
+
+## Kjente begrensninger, bugs og svakheter
+
+Saros er under stadig utvikling og har en rekke planer fremover. Noen uheldige feil i starten kan derfor forekomme. Meldinger om bugs og forslag til forbedringer samles gjennom involverte aktørers kontaktpersoner og sendes samlet til [stephan.daus\@nifu.no](#0) eller til din prosjektleder ved NIFU.
+
+Dersom det er uoverensstemmelser mellom tallene i Saros-baserte rapportnettsteder og offisielle rapporter publisert på [www.nifu.no](www.nifu.no) er det sistnevnte som gjelder. Slike forskjeller kan forekommer dersom det gjøres forskjellige valg i hvilke respondenter som skal inkluderes, utvalgsvekting, håndtering av manglende responser, osv.

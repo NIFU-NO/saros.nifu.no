@@ -1,0 +1,106 @@
+---
+title: Hvordan Saros fungerer (overordnet)
+eval: true
+echo: false
+mermaid: 
+ theme: default
+---
+
+## Semi-Automatiserte Rapporter fra Ordinære Spørreundersøkelser (SAROS) / Semi-Automated Reports from Ordinary Surveys (SAROS)
+
+Saros er en pakke (snart et sett med pakker) som sikrer effektiv, fleksibel, kvalitetssikret og systematisk rapportering fra spørreundersøkelser, enten disse er enkle eller komplekse.
+
+```{mermaid}
+flowchart TD
+  Input --> Pre-PISVEEP-automatikk
+  Pre-PISVEEP-automatikk --> PISVEEP-manuelt
+  PISVEEP-manuelt --> Post-PISVEEP-automatikk
+  Post-PISVEEP-automatikk --> Output-nettsted
+  A1[Vit] --> B1
+  A2[Velg] --> B2
+  A3[Vask] -.-> B3
+  A3[Vask] --> B4
+  A4[Hent] --> B4
+  A4[Hent] -.-> B5
+  
+  subgraph Input
+  B1[Kapitteloversikt.xlsx]
+  B2[Konfigurasjonsfiler og maler]
+  B3[Populasjonsdata]
+  B4[Surveydata]
+  B5[Støttedata]
+  style Input text-align:left
+  end
+  
+  subgraph Pre-PISVEEP-automatikk
+  C1[Last inn stibaner og bearbeid data]
+  C2[Lag kapitteloversikt]
+  C3[Hent inn innstillinger og kapitteloversikt]
+  C4[Generer utkast i utkastgenereringer]
+  C5[Kopiere fra 'Utkastgenereringer' til 'Utkast_under_utarbeiding']
+  C1 --> C4
+  C2 --> C3
+  C3 --> C4
+  C4 --> C5
+  style C1 text-align:left
+  style C2 text-align:left
+  style C3 text-align:left
+  style C4 text-align:left
+  end
+  
+  subgraph PISVEEP-manuelt
+  D[Plukk ut\nInspiser\nSammenfatt\nVarier\nElaborer\nEksemplifiser\nPosisjoner]
+  style D text-align:left
+  end
+  
+  subgraph Post-PISVEEP-automatikk
+  E1[Kopier fra 'Utkast_under_utarbeiding' til 'Ferdigstilt']
+  E2[Generer nettsted, DOCX og PDF]
+  E3[Lag og send ut passord til Mesos-rapporter]
+  E4[Arkiver]
+  E1 --> E2
+  E2 -.-> E3
+  E2 --> E4
+  style E1 text-align:left
+  style E2 text-align:left
+  style E3 text-align:left
+  style E4 text-align:left
+  end
+  
+  subgraph Output-nettsted
+  F1[Om prosjektet]
+  F2[Rapporter]
+  F3[2024-Vår]
+  F4[2024-Høst]
+  F5[Alle rapporter og spørreskjema]
+  F1 --- F2
+  F2 --- F3
+  F3 --- F4
+  F4 --- F5
+  end
+```
+
+## Stegvis prosess for en spørreundersøkelse
+
+Noen av disse stegene ville vært relevante uavhengig av Saros. Noen er midnre relevante dersom man for eksempel ikke har et populasjonsregister.
+
+\[TODO: Legge til konkret hva Saros hjelper med på hvert steg\]
+
+\[TODO: Endre navn fra datavasker til dataanalytiker, forskningsassistent, eller lignende?\]
+
+1.  Datavasker vasker populasjonsdata og trekke respondenter. Lagre dette.
+2.  Gjennomføre spørreundersøkelse
+    1.  Datavasker sørg for at variabelnummerering og spørsmålsformuleringer er i tråd med beste praksis, særlig mtp Saros.
+    2.  Datavasker innhenter data fra Qualtrics, SurveyXact eller Nettskjema.
+3.  Datavasker vasker surveydata.
+4.  Datavasker oppdaterer populasjonsdata med responsstatus, for metodekapittel.
+5.  Prosjektleder og datavasker justerer rapportinnstillinger i Saros.
+6.  Prosjektleder og datavasker forbereder kapitteloversikt.
+7.  Datavasker genererer rapportutkast med Saros.
+8.  Kapittelforfatterne jobber med [PISVEEP](../For_kapittelforfattere/03_PISVEEP.qmd).
+9.  Kapittelforfatterne legger alle ferdige utkaster i 55_ferdige_utkast
+10. Datavasker syr sammen hele rapporten for nettsted, PDF, DOCX, osv
+11. Datavasker, ved behov, genererer passordbeskyttelse av Mesos-sider.
+12. Datavasker kopierer over hele \_site til FTP-serveren, med FileZilla
+13. Datavasker, ved behov, sender ut passord til institusjoner.
+14. Datavasker fryser og cacher nettstedet, arkiverer data, og avslutter.

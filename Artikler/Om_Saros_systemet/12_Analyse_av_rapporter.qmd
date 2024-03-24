@@ -1,0 +1,29 @@
+---
+title: 'Analyse av det tradisjonelle rapportformatet'
+---
+
+# Hva er en god/typisk struktur for et metodekapittel (om survey)
+
+Kommer mer...
+
+-   Inkluderte temaer i rapporten (\~avhengige variabler)
+-   Utvelgelse og prosedyrer
+-   Kart over utvalg hvis kluster/fylker/kommuner
+-   Bakgrunnsvariabler (\~uavhengige variabler)
+-   Respondenter og svarprosent
+-   Representativitet
+
+Spørsmål til Skole-Norge har et godt utgangspunkt for en slik mal.
+
+# Hva er et typisk rapportkapittel om en spørreundersøkelse
+
+Kommer mer...
+
+-   For hvert sett med avhengige variabler
+    -   Univariat tabell
+    -   Univariat søylediagram (vertikal/horisontal, frekvens om \<100 ellers prosent)
+    -   Univariate tekstbeskrivelser
+        -   Introdusere batteriet, min og maks (for kombinert kategori), spenn på tvers av indikatorer, ikke-brukt kategorier, lavest/høyest spredning på tvers av indikatorer
+    -   For hver uavhengig variabel - Bivariat tabell - Bivariat søylediagram (med snitt?) - Bivariat signifikanstest (kjikvadrat, t-test, korrelasjon; med korrigering for tester) - Bivariater: respondentgruppe, endring siden sist, faste bakgrunnsvariabler
+-   Oppsummering
+    -   Ramme med kulepunkter (manuelt arbeid)

@@ -2,18 +2,37 @@ project:
   type: website
 
 website:
-  title: "saros.nifu.no"
+  title: "Om NIFUs Saros-nettsteder for rapportering av samfunnsvitenskapelige (spørre)undersøkelser"
   navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+    logo: "https://www.nifu.no/wp-content/uploads/logo_hvit.png"
+    # left:
+      # - sidebar:articles
+    search: true
+  sidebar:
+    # - id: articles
+      # title: "Artikler"
+      contents: "Artikler"
+  page-navigation: true
+  reader-mode: true
+execute:
+  echo: true
+  eval: false
+  warning: false
+  freeze: auto
+  cache: true
+
+lang: "nb"
+license: "CC BY 4.0"
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    mainfont: "Calibri"
+    fontsize: "10.5"
+    linestretch: 1.6
+    theme:
+     - yeti
+     - "nifu.scss"
+    css: "nifu.css"
     toc: true
-
-
-
+    comments:
+      hypothesis: true
