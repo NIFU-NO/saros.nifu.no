@@ -1,0 +1,238 @@
+---
+title: "Figurer"
+editor: visual
+eval: true
+cache: false
+---
+
+# Alle utkast har forbedringspotensiale
+
+Saros gir kun utkast. Ved nøye justerte innstillinger slipper man å endre på så mye, men kan ta tid å komme til det stadiet. Dessuten, variasjon og tilpasning er viktig. Antar for alle påfølgende eksempler at du har lastet inn tidyverse-pakken, samt et (kapittel)-datasett.
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse, warn.conflicts = FALSE, quietly = TRUE))
+mine_data <- saros::ex_survey # Eksempeldata
+```
+
+# Lage vanlige stolpediagrammer for ordinale (matrise)spørsmål
+
+```{r}
+fig_b_uni_cat_prop_plot <- # Prøv å gi et unikt navn til figuren   
+  mine_data |>   
+  saros::embed_cat_prop_plot(dep = b_1:b_3,
+                             data_label = "percentage_bare",
+                             digits=0) + # Ev. også indep 
+  nifutheme::scale_fill_nifu("reds") +
+  ggplot2::labs(fill=NULL) 
+ggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot)
+```
+
+# Lage stolpediagram for (matrise)spørsmål der det er avkrysningsbokser (Valgt/Ikke valgt)
+
+Dette skal etter hvert genereres automatisk av Saros dersom man har variabelsett med maks to svarkategorier (+ missing), der man har i `52_ressurser/YAML/report_generation_setup.yaml`
+
+```{r}
+fig_a_uni_cat_prop_plot <-  
+  mine_data %>% # Bytt ut med eget datasett   
+  rowwise() %>%  
+  mutate(a_99 = sum(as.integer(c_across(matches("a_[1-9]$")))-1),
+         across(matches("a_[1-9]$"), 
+                ~factor(ifelse(a_99==0,
+                               NA_character_,
+                               as.character(.x)), 
+                        levels=c("Yes", "No")))) %>%
+  ungroup() %>%
+  labelled::copy_labels_from(mine_data) %>% # Må kopiere tilbake variabeletiketter som forsvinner når man bruker mutate
+  saros::embed_cat_prop_plot(dep=matches("a_[1-9]$"), 
+                             data_label="percentage_bare",
+                             digits=0) +   
+  ggplot2::labs(fill=NULL) +   
+  ggplot2::scale_fill_manual(values = c("No" = "white", 
+                                        "Yes" = "#C84957")) +  
+  ggplot2::guides(fill = "none") 
+fig_a_uni_cat_prop_plot$data <-   
+  fig_a_uni_cat_prop_plot$data %>%   
+  mutate(.data_label = ifelse(as.character(.category) == "No", 
+                              NA, .data_label),  
+         .variable_label = forcats::fct_reorder(.variable_label,
+                                                .mean)) # Sorter etter snittet
+ggiraph::girafe(ggobj = fig_a_uni_cat_prop_plot)
+```
+
+# Lage boxplot-figur for (matrise)spørsmål med kontinuerlige data
+
+Dette vil i fremtiden genereres automatisk av saros.
+
+```{r}
+fig_c_uni_int_prop_plot <-   
+  mine_data %>%   
+  select(matches("c_")) %>%    
+  tidyr::pivot_longer(cols=matches("c_"), 
+                      names_to = "variable") %>%  
+  left_join(y=labelled::look_for(mine_data, 
+                                 "c_", details=F), 
+            by="variable") %>%   
+  tidyr::separate(col = label,                    
+                  sep = " - ",                   
+                  into = c("prefix", "suffix")) %>% 
+  filter(!is.na(suffix)) %>% 
+  mutate(tooltip = paste0("Snitt = ", 
+                          round(mean(value, na.rm=TRUE), 1),
+                          "\nN = ", 
+                          sum(!is.na(value))),
+         .by=c(suffix)) %>%
+  ggplot2::ggplot(mapping=ggplot2::aes(x=suffix, 
+                                       y=value, 
+                                       tooltip=tooltip,
+                                       fill = suffix)) +
+  ggiraph::geom_boxplot_interactive() + 
+  ggiraph::scale_fill_manual_interactive(name="",
+                                         values=nifutheme::nifu_cols()[c(1,5)],
+        data_id = function(x) x,
+        tooltip = function(x) x) +
+  ggplot2::guides(fill=ggiraph::guide_legend_interactive()) +
+  ggplot2::theme(axis.title.x = ggiraph::element_text_interactive(hjust = .5)) + 
+  ggplot2::coord_flip() + 
+  ggplot2::theme_classic() + 
+  ggplot2::labs(x=NULL, y="Years experience")
+
+ggiraph::girafe(ggobj = fig_c_uni_int_prop_plot)
+```
+
+# Redigere figurer (fra ggplot2/ggiraph)
+
+For de følgende operasjonene antar vi at figuren heter min_figur, og at alle operasjonene settes inn mellom der du leser inn figuren, og der du viser den frem (siste linjen i chunken). Viser i eksemplene nedenfor kun det som skal settes inn. Som du ser er det egentlig bare vanlige filter, mutate, osv, operasjoner du kjenner fra tidyverse. Forskjellen er at vi gjør endringer på datasettet inni figur-objektet.
+
+```{r}
+#| eval: false
+min_figur <- qs::qread("min_figur.Rds")
+# sett inn etter du har lest inn eksisterende figur, og før du ber ggiraph om å lage den for deg
+ggiraph::girafe(ggobj = min_figur)
+```
+
+## Fjerne rader fra en figur
+
+```{r}
+fig_a_uni_cat_prop_plot_minimert <- fig_a_uni_cat_prop_plot
+fig_a_uni_cat_prop_plot_minimert$data <- 
+  fig_a_uni_cat_prop_plot_minimert$data %>% 
+  filter(!.variable_name %in% c("a_5", "a_6")) 
+patchwork::wrap_plots(list(Old = fig_a_uni_cat_prop_plot,
+                      New = fig_a_uni_cat_prop_plot_minimert),
+                      ncol = 2) %>%
+ggiraph::girafe(ggobj = .)
+```
+
+## Endre akse-etiketter (dvs. en variabeletikett) i en figur
+
+ex_survey1-datasettet har en skrivefeil, har du oppdaget den?
+
+```{r}
+fig_b_uni_cat_prop_plot_korrigert <- fig_b_uni_cat_prop_plot
+fig_b_uni_cat_prop_plot_korrigert$data <- 
+  fig_b_uni_cat_prop_plot_korrigert$data %>% 
+  mutate(.variable_label =
+         forcats::fct_relabel(
+           .variable_label, ~stringr::str_replace_all(.x,
+           pattern = "Bejing", 
+           replacement = "Beijing")))
+patchwork::wrap_plots(Old = fig_b_uni_cat_prop_plot,
+                      New = fig_b_uni_cat_prop_plot_korrigert,
+                      ncol = 2) %>%
+  ggiraph::girafe(ggobj = .)
+```
+
+## Reversere vertikalt (snu variablene opp-ned)
+
+Merk at det er x-aksen man reverserer, fordi figuren allerede er snudd om (x=\>y, y=\>x). Merk at man bruker `+` symbolet om du slår sammen figurkomponenter, mens det er `%>%` når du piper et datasett.
+
+```{r}
+fig_a_uni_cat_prop_plot_reversert <- fig_a_uni_cat_prop_plot
+fig_a_uni_cat_prop_plot_reversert$data <- 
+  fig_a_uni_cat_prop_plot_reversert$data %>% 
+  mutate(.variable_label = forcats::fct_rev(.variable_label))
+patchwork::wrap_plots(Old = fig_a_uni_cat_prop_plot,
+                      New = fig_a_uni_cat_prop_plot_reversert,
+                      ncol = 2) %>%
+  ggiraph::girafe(ggobj = .)
+```
+
+## Skreddersydd sortering av variablene i figuren
+
+Alle som har jobbet litt med ggplot2 vet at det ikke bare er å sortere datasettet man sender til ggplot() - den tar alltid utgangspunkt i factor levels for variabelen (og er det ikke en factor så omgjøres den til det). Trikset er å stille inn rekkefølgen på factor levels manuelt. forcats-pakken har også mange andre funksjoner for å jobbe med factor-variabler!
+
+```{r}
+fig_b_uni_cat_prop_plot_v2 <- fig_b_uni_cat_prop_plot
+fig_b_uni_cat_prop_plot_v2$data <-
+  fig_b_uni_cat_prop_plot_v2$data %>% 
+  mutate(.variable_label = 
+           forcats::fct_relevel(.variable_label,
+                                "Bejing",
+                                "Budapest",
+                                "Brussels"))
+patchwork::wrap_plots(Old=fig_b_uni_cat_prop_plot,
+                      New=fig_b_uni_cat_prop_plot_v2, 
+                      ncol=2) %>%
+  ggiraph::girafe(ggobj = .)
+```
+
+## Endre høyden på figuren
+
+Dette er trivielt, bare sjekk innstillingen for figuren. Vil si maks er 20, minimum er 1. Merk at størrelsen først er synlig etter kompilering. Trykker du på forhåndsvisning endres ikke (nødvendigvis) figurens størrelse. Bredde skal du "aldri" justere, det går automatisk.
+
+```{r}
+#| fig-height: 7 # maks høyde for NIFUs Word-mal?
+ggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_v2)
+```
+
+## Få inn all variabeltekst i bivariate stolpediagrammer
+
+Problemer med at noe tekst kuttes av helt til venstre? Sett først makshøyde ovenfor. Så dette, og eventuelt juster
+
+```{r}
+fig_b_bi_catcat_prop_plot <-   
+  mine_data |>   
+  saros::embed_cat_prop_plot(dep = b_1:b_3, 
+                             indep = x1_sex) + 
+  nifutheme::scale_fill_nifu("reds") +
+  ggplot2::labs(fill=NULL) +
+  # Mindre tekst på uavhengig variabel
+  ggplot2::theme(axis.text = element_text(size = 6), 
+                 #Mindre tekst på avhengig variabel (helt til venstre):
+                strip.text.y = element_text(size = 5), 
+  # Tillat overlapp på avhengig variabel-tekst uten å kutte brått
+                strip.clip = "off") + 
+  ggiraph::facet_grid_interactive(rows = vars(.variable_label), 
+                      switch = "both", 
+                       # Juster 15 til det blir perfekt
+                      labeller = ggplot2::label_wrap_gen(width = 15))
+ggiraph::girafe(ggobj = fig_b_bi_catcat_prop_plot)
+```
+
+## Få inn hele figurforklaringen i figuren
+
+Med mange svarkategorier, som har lang tekst, så kan det være at siste kategorien kuttes. Det gjelder særlig for docx-versjonen. Prøv følgende:
+
+```{r}
+fig_b_uni_cat_prop_plot_v2 <-
+  fig_b_uni_cat_prop_plot +
+  ggplot2::guides(fill = ggiraph::guide_legend_interactive(nrow=1,
+                                                           byrow=TRUE,
+                                                           title = NULL)) + # sett nrow=2 dersom du har mange kategorier
+  ggplot2::theme(legend.key.size = ggplot2::unit(4, "mm"), # Litt mindre figurnøkkel (kvadratet med farge i)
+                 legend.justification = c(1,0)) # Skyver 1 enhet til venstre. Ofte nok.
+ggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_v2)
+```
+
+## Endre fargeskala
+
+Normalt benyttes innstillingene i `_52_ressurser/YAML/_report_generation_setup.yaml` slik at `colour_palette_nominal:` og `colour_palette_ordinal:` brukes for nominelle og ordinale (ordered) variabler, der NIFUs rødtone-mal benyttes for ordinale. Dette kan overstyres for den enkelte figur:
+
+```{r}
+fig_b_uni_cat_prop_plot_blue <-    
+  fig_b_uni_cat_prop_plot +    
+  nifutheme::scale_fill_nifu("blues")
+# Alternativt "main" eller "reds" 
+ggiraph::girafe(ggobj = fig_b_uni_cat_prop_plot_blue)
+```
+

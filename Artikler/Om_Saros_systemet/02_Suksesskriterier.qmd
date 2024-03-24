@@ -1,0 +1,43 @@
+---
+title: 'Suksesskriterier'
+---
+
+-   Modulbasert og backupløsninger
+
+    -   Backupløsning: Feiler en modul bytter man lett til gammeldags alternativ for den modulen
+
+    -   Standardisering: av modulers input og output, slik at man enkelt kan bytte ut en modul
+
+    -   Implementeringsnøytralitet: Spiller liten rolle om det er R, Stata, Python (langsiktig mål)
+
+-   Beste praksis
+
+    -   Erfaringer fra lignende organisasjonserfaringer
+
+    -   Statistiske anbefalinger: Kan oppdatere praksis for hele rapport (eller prinsipielt alle rapporter, dog ikke anbefalt) relativt enkelt.
+
+-   Fleksibilitet
+
+    -   I tillegg til modulfleksibilitet, må det også være preferanse/behovsfleksibilitet i funksjoner
+
+    -   Gode standardvalg, med mulighet for å overkjøre disse om man vet bedre.
+
+-   Forankring
+
+    -   Sakte implementering og lavthengende epler først (MEN, se punktet om kostnytte)
+
+    -   Involvering av flere aktører, sikre godt brukergrensesnitt/logisk system
+
+    -   God dokumentasjon og opplæring, med eksempler
+
+    -   Standardisering der det er mulig
+
+-   Kostnytte
+
+    -   Nytten/synergieffekten må være langt større enn omstillingen
+
+    -   Lavt-hengende fruktene først
+
+-   Strategisk gjennomføring
+
+    -   Helst stabil finansiering av omstilling (gjerne fra eksterne kilder)

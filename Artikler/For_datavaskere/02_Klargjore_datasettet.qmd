@@ -1,0 +1,161 @@
+---
+title: 'Klargjøre datasett'
+editor: visual
+echo: true
+eval: false
+---
+
+Heisann teknisk-kompetente medarbeider. Så det er du som har fått i oppgaven å faktisk gjøre klart data sånn at Saros skal fungere fint.
+
+Selv om dette er krav for effektiv Saros-bruk så er det også generelle gode anbefalinger for dokumentasjon av data. Man bør derfor implementere sjekkpunktene fra dag 1, det vil si allerede ved programmering av spørreskjema, dokumentasjon av instrumenter brukt, samt innhenting av registerdata brukt for å trekke utvalg.
+
+# Hvilke variabler trenger Saros?
+
+Datasettet trenger de variablene som er oppgitt i [kapitteloversikten](04_kapitteloversikt.qmd), og eventuelt mesos-variabelen om mesos-rapporter skal lages. Variabler som ikke blir brukt ignoreres, men logges i en txt-fil (og i R-konsollen) når man kjører draft_report() slik at man kan kontrollere at ting gikk som man forventet - kanskje skrev man inn feil variabelnavn.
+
+# Variabelnavn {#sec-variabelnavn}
+
+Prinsippene om variabelnavn og variabeletiketter har som mål å tillate Saros å automatisk håndtere lignende variabler samlet, og forskjellige variabler adskilt. De kan virke drakoniske men sikrer at man unngår forvirring og Saros får flere fordeler ved å rydde outputen for deg.
+
+-   R håndterer variabelnavn med mellomrom, nordiske bokstaver, skiller mellom små og store bokstaver, rare tegn, osv. og har ingen begrensning på antall tegn. MEN, mange andre program har det så vis respekt.
+
+    -   Hold variabelnavn til max 8-10 tegn
+
+    -   Bruk kun engelske små bokstaver, tall og understrek
+
+    -   Variabelnavn må begynne på en bokstav
+
+    -   Unngå gjerne bokstaver som ser like ut små og store (mindre viktig)
+
+    -   se \[NIFUs standard for variabelnavn i longitudinelle prosjekter\](nifu_standard_variabelnavn.qmd)
+
+-   Optimalt sett bør alle batterier dele samme prefiks i variabelnavnet, som er unikt fra alle andre batterier/variabler. For eksempel kan man navngi variablene s_100-s_120 for ett batteri, g_121-g_129 for et annet batteri, osv. og spesifisere at `variabel_navn_separator = "_"`.
+
+# Variabeletiketter (variable labels) {#sec-variabeletiketter}
+
+Variabeletiketter er typisk selve spørsmålsformuleringen i et spørreskjema, eller en definisjon om hvordan data har blitt samlet inn.
+
+-   Alle variabler som skal benyttes må ha en etikett, det gjelder også f.eks. uavhengige variabler man har laget selv. Se [`{labelled}`](https://cran.r-project.org/web/packages/labelled/index.html)-pakken, ev. [`{sjLabelled}`](https://cran.r-project.org/web/packages/sjlabelled/index.html) for funksjoner for å enkelt sette labels om noe mangler. `{saros}`-pakken har også noen verktøy for å endre mange variabeletiketter samtidig.
+
+-   Merk at i R anses ikke variabeletiketter å fortsatt være gyldig dersom man har endret på variablenes innhold (med f.eks. `mutate()`), og etikettene forsvinner derfor dessverre. Man kan derimot kopiere dem inn igjen etterpå med `labelled::copy_labels_from()`.
+
+    ```{r}
+    #| eval: false
+    library(dplyr)
+    library(labelled)
+    originale_data <- readRDS("test.rds")
+    modifiserte_data <-
+      originale_data %>%
+      mutate(kjonn = forcats::fct_rev(kjonn)) %>%
+      copy_labels_from(from=originale_data)
+
+    ```
+
+-   Alle etiketter for variablene man bruker må være unike (prefiks+suffiks totalt sett). `saros::draft_report()` vil gi advarsel om den oppdager flere variabler som deler helt identiske etiketter. Dersom f.eks. en avhengig kategorisk variabel (`factor` eller `ordered`) og en avhengig tekstvariabel (åpent tekstfelt, `character`) har identiske etiketter (som man ikke kan/ønsker å endre på) må man altså be saros gruppere output på også `variable_type_dep`.
+
+-   Etiketter for variabler som henger sammen (batterier) må ha felles prefiks (prefiks og suffiks skilles typisk med `" - "`. Matrisespørsmål i Qualtrics, SurveyXact, osv vil nærmest alltid ordne dette for deg. Men har ett av spørsmålene et ekstra mellomrom vil variablene behandles som om de kommer fra ulike batterier.
+
+    -   Etikettene bør ikke ha doble separatorer (" - ") om det ikke er tiltenkt. Kan skape krøll.
+
+-   Men som med variabelnavnene må ulike batterier ikke dele samme etikettprefiks. Har man veldig mange batterier med "I hvilken grad er du enig/uenig i følgende påstander?" så vil man få et problem. Det kan løses ved å være mer spesifikk i påstanden ("... følgende påstander om din arbeidssituasjon?"), eller at man separerer batteriene også på @sec-variabelnavn eller datatype.
+
+# Datatyper
+
+Saros vil etter hvert inneholde flere kontrollsjekker av variabler, men inntil videre sjekk at datatypen er slik en ønsker at Saros skal håndtere dem. Mulige måter å vise frem variablene finnes [her](../For_prosjektledere/Mulige_element_typer.qmd).
+
+## Kategoriske variabler
+
+Denne datatypen er særlig viktig i samfunnsvitenskapen, og trenger ekstra oppmerksomhet i Saros og R.
+
+-   Når du laster inn data i formatene Stata, SPSS eller SAS med `haven::read_*` så vet ikke R hvordan den skal håndtere de potensielle mulighetene for *ulike typer missing* (f.eks. ikke administrert, hoppet over, ikke nådd, uleselig skrift, osv). I R finnes det bare en type missing (NA). Kategoriske variabler fra Stata/SPSS/SAS-data blir dermed satt med en midlertidig {labelled}-datatype. Det kan være fristende å la de være slike da det virker pent og oversiktlig når man printer ut variablene til konsollen:
+
+    ```{r}
+    saros::ex_survey1 |>   
+      dplyr::mutate(b_1 = labelled::to_labelled(b_1)) |>
+      dplyr::count(b_1)
+    ```
+
+    Men denne variabeltypen er ikke ment å brukes mer enn i starten. Den vil garantert skape trøbbel generelt i R, og også i Saros. For eksempel vil det tilsynelatende fine oversikten man ser ovenfor ikke være mulig å vise frem i tabeller eller i et Quarto-dokument som dette.
+
+    Bruk i stedet factor-typen i R. Man konverterer alle kategoriske variabler i et SPSS/Stata/SAS fra `labelled`-typen til `factor`-typen slik:
+
+    ```{r}
+    #| eval: false 
+    #| echo: true 
+    library(tidyverse) 
+    mine_data <-    
+      read_stata("mine_data_fra_stata.dta") %>%    
+      labelled::unlabelled()  
+    # Dersom nærmest alt er ordinale variabler, sett ordered=TRUE og omgjør de få som er nominelle med  
+    mine_data <-   mine_data %>% mutate(across(matches("nominelle"), ~factor(.x, ordered=FALSE))) 
+    ```
+
+-   Å skille mellom nominelle (unordered factor) og ordinale (ordered factor) variabler er særlig nyttig i Saros, da de kan få separate fargeskalaer, samt at enkelte sorteringsalgoritmer ikke bryter opp ordinale skalaer (under utvikling).
+
+    -   Men NIFU har per 14.mars 2024 ikke en fullgod ordinal skala som tilfredsstiller kravene for fargeskalaer.
+
+-   Aldri lag dummy-variabler for Saros. Dersom Saros i fremtiden skulle trenge det for regresjon, etc så ordnes det automatisk.
+
+-   Sjekk at rekkefølgen på alle kategoriske variabler er korrekt. Kan gjøres med følgende kode. Sjekk kolonnen values.
+
+    ```{r}
+    data %>% labelled::lookfor(details=TRUE) %>% View()
+    # Alternativt
+    data %>% select(where(~is.factor(.x))) %>% purrr::map(~levels(.x))
+    ```
+
+-   Alle kategoriske variabler bør stå som factor-typen med alle mulige svaralternativer som dens kategoriske nivåer (levels). Det gjør grafene og tabellene mest mulige korrekte. Se eksempel nedenfor for å korrigere dette dersom du mottar dataene som f.eks. `character()` eller `integer()` (noe man absolutt bør unngå for enhver pris da det er tidkrevende å gjenopprette dataene.
+
+    ```{r}
+    data <-   
+      data %>%  
+      mutate(across(matches("s_"),
+                    ~factor(.x, levels=c("Helt uenig",
+                                         "Litt uenig",
+                                         "Litt enig",
+                                         "Helt enig"),
+                            ordered=TRUE))) # FALSE om nominell
+    ```
+
+## Tekstvariabler (character, string, åpne tekstfelt)
+
+-   Brukes for åpne tekstfelt, navn, osv der det er normalt mer enn 20 varianter.
+
+-   Du har ansvar for avidentifisering/anonymisering! Verken Saros eller dens utviklere tar ansvar for dette. Saros gir mulighet for å dele data (Mikro), eller lage en app hvor leseren/besøkende selv setter sammen sine figurer. Saros vil kun vise frem variabler som du har eksplisitt bedt om å gjøre tilgjengelig - resten vil alltid droppes. Men for å unngå feil bruk kan det være ok å fjerne de mest personidentifiserende opplysningene - for å være på den trygge siden.
+
+-   Bruk as.character() for å konvertere f.eks. kategoriske data (factor/ordered) til tekst. Bruk `{stringr}`-pakken til å jobbe med slike data.
+
+-   IKKE FULLSTENDIG IMPLEMENTERT ENDA: Saros vil gi advarsel dersom en tekstvariabel inneholder færre enn 10 unike verdier, dersom alle disse har stringlengder på færre enn 40 tegn, og det finnes flere duplikater av en av verdiene. Den vil også gi advarsel dersom det er mulig å konvertere tekstvariabelen til tall uten at alt blir missing. Kriteriene for disse advarslene kan man justere/skru av.
+
+### Mesos-variabel
+
+-   For å kunne lage mesos-rapporter må en variabel som identifiserer mesos-gruppene (dvs. skolenavn, institusjonsnavn) vaskes. Pga. filbanelengde og brukernavn-generering så bør disse ha korte navn og helst uten mellomrom (Universitetet i Stavanger =\> UiS, Romolslia skole =\> Romolslia). Bruk understrek fremfor mellomrom eller spesialtegn. Aller best også uten æøå. Navnene bør også være konsekvente på tvers av rapporter ettersom institusjonen vil få brukernavn for hver unike skrivemåte ("NHH_og_BI" i en rapport og "NHH" i en annen rapport vil medføre to ulike sett med brukernavn/passord).
+
+## Tallvariabler
+
+-   R tillater to typer tallvariabler: heltall (integer) og reelle tall (numeric/double). Saros skiller foreløpig ikke mellom disse to typene. Det er foreløpig lite som er implementert for kontinuerlige variabler da det ikke har vært prioritert.
+
+# Lagring av data
+
+R håndterer alle slags dataformater.
+
+| Format      | Etiketter             | Lagringsplass | Hastighet  | Lese/skrive i Stata? | Lese/skrive i SPSS? | Åpen standard | Unicode?    |
+|-------------|-----------------------|---------------|------------|----------------------|---------------------|---------------|-------------|
+| sav (SPSS)  | Begrensning på lengde |               |            | Ja                   | Ja                  | Nei           |             |
+| dta (Stata) | Begrensning på lengde |               |            | Ja                   | Ja                  | Nei           |             |
+| Parquet     | God                   | Svært liten   | Svært rask | Nei                  | Nei                 | Ja            |             |
+| qs          | Alt er mulig          | Svært liten   | Svært rask | Nei                  | Nei                 |               |             |
+| Excel       | Nei                   | Dårlig        | Dårlig     | Ja                   | Ja                  | Nei           |             |
+| CSV         | Nei                   | Dårligst      | DÅrligst   | Ja                   | Ja                  | Ja            | Forvirrende |
+|             |                       |               |            |                      |                     |               |             |
+|             |                       |               |            |                      |                     |               |             |
+
+: Fordeler og ulemper ved ulike dataformater
+
+# Komplekse surveydesign
+
+Benyttes utvalgsvekting, stratifiering, klustring eller lignende? Kontakt Stephan i god tid. Saros er ment å fungere også på dette, men er ikke blitt utprøvd enda.
+
+# Prosjektspesifikke dataforberedelser
+
+Beklager, her har vi ikke mye å hjelpe med.

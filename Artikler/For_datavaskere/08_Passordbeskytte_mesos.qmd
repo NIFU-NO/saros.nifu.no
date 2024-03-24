@@ -1,0 +1,10 @@
+---
+title: 'Passordbeskytte sider'
+---
+
+# Passordbeskytte hver Mesos-side (institusjonsspesifikke rapporter)
+Dette settes opp av Saros, og forutsetter en liste (Excel) med institusjonsnavn - som må være identiske med slik de forekommer i mappenavnene - og inneholde `Fornavn`, `Etternavn` og `email` til kontaktpersonene. Det forutsetter også at passordene ligger lagret lokalt - spør Stephan om tilgang til denne master-passordfilen. Saros vil da generere krypterte passord slik at "plaintext"-passordene aldri legges ut på nettsiden på noe vis. Systemet er sånn passe trygt gitt formålet og praktiske hensyn, men er ikke like trygt som f.eks. tofaktorautentisering.
+
+# Passordbeskytte et utkast til vanlig rapport (Makro)
+Prinsippielt det samme som for mesos, men man endrer på mappebanen i `render_and_publish.R`-skriptet. Eventuelt kan man bare legge inn manuelt: (kommer)
+Man vil da få typisk muligheten til å ha ett spesifikt passord for akkurat den rapporten (som man kan gi til eksterne kvalitetssikrere), et til oppdragsgiver, og et for NIFU-ansatte.

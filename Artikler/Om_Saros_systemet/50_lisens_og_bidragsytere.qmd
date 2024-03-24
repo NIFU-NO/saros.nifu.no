@@ -1,0 +1,28 @@
+---
+title: "Rettigheter, lisensiering, bidragsytere"
+---
+
+## Bidragsytere
+
+-   [Stephan Daus](https://www.nifu.no/ansatte/stephan-daus/) har stått for prosjektledelse, teknisk design, visuelt design, programmering, utprøving og dokumentasjon.
+-   [Henrik Karlstrøm](https://www.nifu.no/ansatte/henrik-karlstrom/) har bidratt med råd og veiledning, samt NIFU-mal for Typst (for PDF-generering).
+-   [Siv-Elisabeth Skjelbred](https://www.nifu.no/ansatte/siv-elisabeth-skjelbred/) har bistått med prosjektmidler, tilbakemeldinger, og støtte.
+-   [Cathrine Pedersen](https://www.nifu.no/ansatte/cathrine-pedersen/) har bistått med prosjektmidler, tilbakemeldinger, og støtte.
+-   [Ann Cecilie Bergene](https://www.nifu.no/ansatte/ann-cecilie-bergene/) har bistått med prosjektmidler, utprøving, tilbakemeldinger og støtte.
+-   [Cay Gjerustad](https://www.nifu.no/ansatte/cay-gjerustad) har bidratt med mye prosjektmidler, tillit og innovasjonsrettet lederstil.
+-   [Torstein de Besche](https://www.nifu.no/ansatte/torstein-de-besche/) har bistått med maler for metodekapitler og databearbeiding i ulike prosjekter som har vært brukt for utprøving.
+
+### Testkaniner
+
+-   [Hajra Tahir](https://www.nifu.no/ansatte/hajra-tahir)
+-   [Ørjan Arnevig Samuelsen](https://www.nifu.no/ansatte/orjan-arnevig-samuelsen/)
+-   [Maria Njølstad Vonen](https://www.nifu.no/ansatte/maria-njolstad-vonen/)
+-   [Christina Vogsted Drange](https://www.nifu.no/ansatte/christina-vogsted-drange/)
+
+## Rettigheter og bruk
+
+I Norge er Saros forbeholdt NIFU, og ikke tillatt å benyttes av andre aktører i den samfunnsvitenskapelige instituttsektoren eller UH-sektoren uten tillatelse fra NIFU.
+
+## Design
+
+-   Kommer mer senere

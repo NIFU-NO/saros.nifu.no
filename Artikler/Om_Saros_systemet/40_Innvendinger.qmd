@@ -1,0 +1,44 @@
+---
+title: 'Innvendinger og bekymringer'
+---
+
+# Men vår rapport skal også inneholde noen kapitler som ikke omhandler spørreundersøkelser?
+
+-   Ingen problem, bare la kapitlene stå uten noe på dep-kolonnen i kapitteloversikten. Da teller de med, men Saros genererer bare et tomt dokument. Man kan også fint senere legge til ikke-survey-kapitler, men må da justere kapittelnummereringen litt.
+
+# Blir det ikke sårbart om alle må bruke RStudio?
+
+-   R er langt mer populært enn f.eks. Stata, og populariteten øker
+    -   R er internasjonalt og nasjonalt sett langt mer populært enn Stata og SPSS
+    -   Også innenfor samfunnsvitenskapelige fag som helhet
+-   Dokumentasjon/nettressurser og funksjonalitet langt bedre
+    -   Konvertere mellom R-Stata-SPSS-SAS: Notat fra Kristian Lønø, SSB, 2023
+-   Rstudio er gratis i all anskuelig fremtid
+-   Flere på NIFU kan/bruker R eller lærer seg R: Henrik, Torstein, Ann Cecilie, Christina, Jannike, Ørjan, Ragnar, Otto, Rønnaug, Maria, Hajra, Siv-Elisabeth, Cathrine, Karl, Silje
+-   Systemet er modulbasert så i verste fall kan f.eks. datavask gjøres uten R
+-   Fungerer systemet som det skal er det lite behov for statistiske programmer i kapittelskrivingen
+-   Umulig å ha noe nærliggende SAROS-system kun i Stata, SPSS, etc.
+-   Backupsystem basert på Python kan derimot integreres i SAROS i fremtiden
+
+# Hva med Tableau?
+
+-   Ikke fullstendig løsning
+    -   Ikke helhetlig publikasjonssystem
+    -   Ikke godt integrert med andre teknologier
+-   9000kr per bruker per år?
+-   Laster tregt/henger
+-   Datadeling
+-   Skalering av innhold til nettsiden
+-   Mangler dynamisk oppdatering?
+
+# Fjerner vi de artige oppgavene? Gjør vi oss selv arbeidsledige?
+
+-   Absolutt ikke, se [fordeler med Saros](Suksesskriterier_for_saros.qmd) om du ikke alt har innsett det.
+
+-   Alltid nok for oss å gjøre. Hør med områdeleder, direktør eller Saros-utviklerne om du kjeder deg...
+
+-   Selv statistiske/tekniske oppgaver vil ikke forsvinne helt
+
+# Låser vi oss til en måte å vise frem dataene på?
+
+Nei, Saros bare hjelper kapittelforfatterne en del på veien. Går fint å lage egne avanserte ting i dokumentet om man ønsker det.

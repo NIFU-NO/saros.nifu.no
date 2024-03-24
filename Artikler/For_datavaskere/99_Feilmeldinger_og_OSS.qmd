@@ -1,0 +1,13 @@
+---
+title: "Feilmeldinger og Ofte Stilte Spørsmål"
+---
+
+# Rendering
+
+> Quarto stopper opp midt i rendering og klager på at den ikke finner en figur eller en annen fil.
+
+Dette skyldes mest sannsynlig at du har kjørt Render mens du er i en mappe som har for lang stibane, på en Sharepoint/Teams-mappe. Flytt alt sammen til f.eks. `C:/users/py128/AppData/temp/Saros/SSN/` og prøv igjen.
+
+> Quarto finner ikke R?
+
+Du har R installert i en AppData-mappebane. Avinstaller R, gjør deg til administrator, åpne R-installasjonsfila som administrator og installer heller i Programfiler eller Program Files.

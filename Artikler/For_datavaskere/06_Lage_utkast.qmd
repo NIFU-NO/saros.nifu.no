@@ -1,0 +1,23 @@
+---
+title: Lage utkast
+---
+
+Etter at alle dataene er vasket, kapitteloversikten er laget, og eventuelle justeringer i malene i `52_ressurser` er gjort så kan vi endelig lage rapportutkast!
+
+1.  Det er naturlig å sette opp et RStudio Project (\*.rproj) for Saros-mappen som husker ulagrede R-filer, noen personlige preferanser for prosjektet, osv. Men unngå å lagre arbeidsminnet (Environment) til disk (.RData), så den funksjonaliteten kan skrus av i Project options... Grunnen er at over tid kan det bli mange store objekter, og mest mulig bør kunne kjøres fra scratch når man trenger det.
+
+2.  Gitt at alt er satt opp riktig er det egentlig kun 2-3 syntaksfiler man skal trenge å jobbe med hver gjennomføring.
+
+    0.  config_project.R: Etablerer globale stibaner, og lister som skal fylles med datasett, etc for hvert år. Opplegget er satt opp slik at man skal enkelt kunne håndtere flere årganger (gjennomføringer) uten at man uheldigvis overskriver hverandre. Man er faktisk garantert at våren 2024 alltid vil være våren 2024 når man looper over flere år - gitt at datasettene er lagret i riktige mapper.
+    1.  config_report.R: Denne fila er på sett og vis hovedfila man styrer det aller meste fra. Fra denne kan men velge seg ut en årgang/gjennomføring man ønsker å kjøre, eller loope samtidig over flere (til og med flere respondentgrupper, slik som i Deltakerundersøkelsene). Den første loopen er ment å kjøres for å generere utkast. Lengre nede er ferdige skript for å kompilere nettsidene/PDF-filene, samt generere tilgangsbeskyttelse og sende ut passordtilgang til institusjoner.
+    2.  specify_params.R: Lite brukt enn så lenge. Brukes som lagring av årgangspesifikk informasjon som kan brukes til å fylle ut rapportens faste punkter, slik som rapportnummer, spørreundersøkelsens åpningsperiode, osv.
+    3.  get_paths.R: Her skal man sjelden trenge å endre noe, så fremt det ikke er rare unntak et år.
+    4.  prepare_data\_{AARGANG}.R: Man kan velge om man ønsker å gjøre all vasking av post-datainnsamlingdata utenfor Sarosprosessen, eller inni.
+        1.  Ønsker man å gjøre all datavaskingen før Saros involveres (for eksempel at det gjøres av en Stata-bruker) bør man likevel beholde dette R-skriptet for å lese inn igjen de faktiske variabel-lablene fra rådataene ettersom Stata og SPSS kutter av variabel-labels. Dessuten oppdager man en del ting når man holder på å kjøre saros, som er enklest å fikse i dette skriptet. Typisk gjelder det variabel-labels og lignende "estetikk".
+
+        2.  Ønsker man å gjøre alt i Saros-prosessen kan det være naturlig å dele opp data-preppingen i flere skript og legge i en undermappe for den gitte årgangen/gjennomføringen slik at man holder orden (må da oppdatere i get_paths-skriptet).
+
+            *Uansett hvilken retning bør man holde muligheten åpen for at det ved en gjennomføring kan veksles mellom de to, for økt robusthet. Dessuten er det viktig å lagre datasettene mellom hvert steg for dokumentasjon, praktiske hensyn (en kapittelforfatter ønsker alle dataene, etc).*
+    5.  draft_saros_reports.R: Her innhentes kapitteloversikten og innstillinger man har i `_report_generation_setup.yaml` (som kan overstyres for en spesifikk gjennomføring, eller for bare mesos-rapportene).
+    6.  render_and_publish.R: I dette skriptet flyttes alt fra mappen med ferdige utkast til en midlertidig mappe (temp). Sistnevnte mappe bør ikke ligge på OneDrive/skyløsning/Sharepoint da det er mange filer som kopieres og lages som går tregt når OneDrive skal synkronisere underveis. MEN ENDA VIKTIGERE ER AT SHAREPOINT HAR EN BEGRENSNING PÅ ANTALL TEGN I STIBANENE SOM GJØR AT FILER PLUTSELIG IKKE KAN FINNES OG GIR RARE FEILMELDINGER.
+    7.  email_credentials.R: Dette er kun for mesos-rapporter. Med en oversikt over epostinformasjon til kontaktpersoner ved institusjonene som skal ha hver sin rapport kan disse få tilsendt brukernavn/passord. Sett `send_emails <- FALSE` for å bare lage utkast i din Outlook-mappe for dette. Sett som `TRUE` for å faktisk sende ut med det samme (påvirker ikke utkastene du måtte ha allerede lagd i Outlook-mappen).

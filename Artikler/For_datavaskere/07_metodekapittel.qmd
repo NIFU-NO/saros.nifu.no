@@ -1,0 +1,7 @@
+---
+title: Metodekapittel
+---
+
+Du kan selvsagt skrive metodekapittelet manuelt selv i Quarto.
+
+Saros-teamet er derimot ute etter å lage generiske funksjoner og maler for dette da mye går igjen på tvers av rapporter og prosjekter. Dersom Spørringenes mal for 'Beskrivelse av utvalg og gjennomføring' passer eller ikke, kontakt gjerne Stephan for å se på potensialet for synergieffekter.

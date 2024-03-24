@@ -1,0 +1,22 @@
+---
+title: "Mulige elementtyper"
+---
+
+| Elementnavn          | dep | indep | Beskrivelse                                                                                  |
+|----------------------|-----|-------|----------------------------------------------------------------------------------------------|
+| uni_cat_prop_plot    | x   |       | Søylediagram, andeler                                                                        |
+| uni_cat_freq_plot    | x   |       | Søylediagram, frekvenser                                                                     |
+| bi_catcat_prop_plot  | x   | x     | Søylediagram, andeler                                                                        |
+| bi_catcat_prop_plot2 | x   | x     | Søylediagram, andeler, pivotert                                                              |
+| bi_catcat_freq_plot  | x   | x     | Søylediagram, frekvenser                                                                     |
+| bi_catcat_freq_plot2 | x   | x     | Søylediagram, frekvenser, pivotert                                                           |
+| uni_chr_table        | x   |       | Tabell for åpne svar                                                                         |
+| uni_cat_table        | x   |       | Tabell med andeler (eller frekvenser)                                                        |
+| bi_catcat_table      | x   | x     | Tabell med andeler                                                                           |
+| bi_sigtest           | x   | x     | Tabell med signifikanstesting, og type test som er automatisk valgt basert på variabeltypene |
+| uni_chr_plot         | x   |       | Ordsky (ikke enda tilgjengelig)                                                              |
+| uni_int_plot         | x   |       | Histogram med smoothing                                                                      |
+| bi_intcat_plot       | x   | x     | Violin/dot-plot som viser distribusjonene og lokasjon, per gruppe                            |
+|                      |     |       |                                                                                              |
+
+: Argumentet `element_names` i funksjonen draft_report().

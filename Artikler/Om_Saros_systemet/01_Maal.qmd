@@ -1,0 +1,70 @@
+---
+title: Mål
+---
+
+# Formål
+
+> Å tilby NIFU (og samarbeidspartnere) et publiseringssystem som er innovativt i formidlingsform, metodisk kvalitetssikring og arbeidsmåte/-effektivitet.
+
+# Målsettinger
+
+-   Øke brukeropplevelsen for oppdragsgivere og andre brukere (særlig skoler og institusjoner som deltar i forskningsprosjekter)
+
+    -   Institusjonsspesifikke rapporter (mesos)
+
+    -   Interaktivitet i figurer og tabeller (ekstra informasjon om man ønsker)
+
+    -   Forenkle videre bruk:
+
+        -   Direkte URL-referanser til konkrete figurer/underoverskrifter
+
+        -   Både PDF og HTML/nettsideversjon (samt DOCX og EPUB senere)
+
+        -   Anonymiserte data
+
+        -   App for å lage egne figurer. Dette eksisterer allerede, og er løftet ut av Saros. Se <https://nifu.shinyapps.io/nifusarosflexi/>
+
+    -   Bedre mobilversjon enn hva PDF noen gang vil kunne tilby
+
+    -   Potensielt raskere tilbakemeldinger til brukergrupper
+
+    -   Potensiale for fremvisning av trend-analyser
+
+    -   NIFUs Word-rapportmal er begrenset til en fargepalett, Saros åpner for en for nominelle variabler, en for ordinale, osv.
+
+    -   Potensiale for kommentarfelt på nettsiden - la leserne komme med innspill, tolkninger, påpeke skrivefeil, osv.
+
+-   Styrke kvalitetssikring av data-relatert arbeid
+
+    -   Redusere noen av de mange valgene man må gjøre (maler)
+    -   Samkjøre prosjektoppsett
+
+-   Styrke transparens og reproduserbarhet
+
+    -   Artikkelpublikasjoner + Sikts Surveybanken
+
+    -   Arkivering av data
+
+    -   Mulighet for å legge ut mer informasjon om prosjektet/dataene enn hva en rapport eller en vanlig prosjektnettside tilbyr.
+
+        -   CRediT: Bidragsytere/prosjektmedlemmer som ikke har skrevet publikasjoner men likevel bidratt, og hvordan de har bidratt
+
+-   Redusere risiko for "disrupsjon" fra konkurrenter (inkl. oppdragsgiver)
+
+-   Mer robust gjennomføring: Ikke like avhengig av høy kvant-kompetanse
+
+-   Åpner for raskere skriving der formatering og innsetting av figurer/elementer/etc bare er noen tastetrykk unna.
+
+-   Spare tid på rutinearbeid, som frigjør tid til
+
+    -   Kvalitetssikring av design/instrumenter/data/analyse/formidling
+
+    -   Artikkelskriving i (og utenfor) oppdragsprosjektet
+
+-   Motivasjon: Redusere rutinepregede oppgaver og derav turn-over
+
+    -   La flere kunne ta del i kvantitativ rapportering som et ledd i kompetanseheving, ved å senke terskelen for å lage/analysere data.
+
+-   Flere oppgaver knyttet til det å lage dokumenter er langt enklere og mer oversiktlig enn i LaTeX og Word.
+
+-   Lisensieringsmuligheter

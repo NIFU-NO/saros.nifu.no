@@ -1,0 +1,58 @@
+---
+title: "Komponenter i Saros"
+editor: visual
+---
+
+Saros bygger helt i bunnen på en rekke teknologier og pakker, rettet mot ulike biter av puslespillet.
+
+![](/_images/SAROS_logo.png){width="481"}
+
+-   [{saros}](www.github.com/NIFU-NO/saros)-pakken i R inneholder en rekke funksjoner for å generere rapportkapittelutkast i Quarto-format, samt verktøy for å publisere de ferdige rapportene. Se også [Github Pages-siden](https://nifu-no.github.io/saros/) (engelsk). Pakken er utviklet av og vedlikeholdes av Stephan Daus. Pakken vil i løpet av 2024 deles opp i mindre pakker med ulike arbeidsfokus:
+
+    -   sarosverse: En samlepakke bestående av alle de andre pakkene.
+
+    -   saros.base: De mest grunnleggende funksjonene for å lage kapittelutkast.
+
+    -   saros.structure: Skreddersydd standardoppsett av mapper og filer for samfunnsvitenskapelige forskningsprosjekter.
+
+    -   saros.psych
+
+    -   saros.causal
+
+    -   saros.text
+
+    -   saros.qual
+
+    -   saros.docx
+
+    -   remove_empty_headings: Et lite Lua-filter som fjerner tomme overskrifter fra qmd-utkast generert av saros før kompilering.
+
+## Pakker og verktøy laget spesielt for NIFU
+
+-   For å konvertere NIFU-rapporter fra Quarto-format til pdf med riktig NIFU-layout benyttes [nifutypst](www.github.com/NIFU-NO/nifutypst)-malen for Quarto. Den er utviklet og vedlikeholdt av Henrik Karlstrøm, med bidrag fra Stephan Daus.
+
+-   For å konvertere fra Quarto-format til docx med riktig NIFU-layout benyttes [nifudocx](www.github.com/NIFU-NO/nifudocx)-malen for Quarto (under utvikling), utviklet og vedlikeholdt av Stephan Daus.
+
+-   For å kunne anvende riktige NIFU-fargepaletter og andre grafiske elementer korrekt i R har Henrik Karlstrøm utviklet [{nifuthemes}](www.github.com/NIFU-NO/nifutheme)-pakken.
+
+-   For å kunne bygge opp et NIFU-rapportnettsted raskt og konsistent samles mange andre generelle nødvendige filer, maler og bilder i [{nifutemplates}](www.github.com/NIFU-NO/nifutemplates)-pakken i R.
+
+## Andre teknologier som systemet bygger på
+
+Følgende teknologier er free open source software, og utvikles av andre enn NIFU. Enten det er Quarto, Pandoc eller Typst er formatene alltid åpne tekstfiler som kan åpnes i en hvilken som helst notepad-lignende program.
+
+-   [Quarto](www.quarto.org), en videreføring av RMarkdown, lar en kunne sy sammen vanlig formatert tekst med bilder, tabeller, R-kode, Python-kode, osv mens man enkelt justerer innstillinger for hele dokumentet (eller hele prosjektet) på ett sted. (Saros bruker kun R-syntaksen men man kan selv legge til Python om man ønsker det). Det er veldig enkelt å formatere tekst (slik som i Markdown), og like enkelt å forstå og endre innstillinger for dokumentet eller prosjektet.
+
+-   [Pandoc](www.pandoc.org) er en universal translatør av ulike filtyper. Quarto benytter denne for å generere alt av HTML, docx, pptx, PDF, osv.
+
+-   [Typst](typst.app) er en genial erstatter for den eldgamle LaTeX-systemet for å sette sammen PDF-filer med korrekt og pen formatering av matematiske formler, tabeller, figurer, osv. Der LaTeX var veldig tungvint å forstå for nybegynnere, treg å kompilere og hadde rare feilmeldinger, så tilbyr Typst øyeblikkelig kompilering av endringer, forståelige feilmeldinger, og en langt enklere syntaks.
+
+-   [R](www.r-project.org) er motoren som lar en produsere alt man kan drømme om.
+
+-   [RStudio](www.posit.co) er det grafiske brukergrensesnittet som syr sammen alt ovenfor.
+
+-   [Github](www.github.com) benyttes for versjonskontroll av flere av Saros-komponentene, og kan/bør også benyttes for prosjekter som anvender Saros - for å lagre R-filer og ressurser man har brukt tid på å sette opp, samt kanskje qmd-filene man selv har skrevet på. Man skal ikke trenge å sette det opp for andre ting i prosjektet.
+
+## Mulige utvidelser etter hvert
+
+-   For prosessene som innebærer R kan man også anvende [{renv}](https://rstudio.github.io/renv/articles/renv.html)-pakken slik at alle installerte pakker er "fryste". Det innebærer at man har mer kontroll med oppdateringer av pakker i prosessen slik at en oppdatering ikke kludrer til noe som allerede fungerte bra. Man får altså versjonskontroll på programvarepakkene man benytter.

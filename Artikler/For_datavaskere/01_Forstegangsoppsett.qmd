@@ -1,0 +1,93 @@
+---
+format: html
+title: "Førstegangsoppsett (teknisk gjennomføring)"
+---
+
+# To strategier
+
+Alternativ A: Ta gjerne utgangspunkt i et eksisterende prosjekt, og helst et som ligner i struktur mtp mesos-rapporter. Kopier alt av filer fra Saros-mappen til ditt eget prosjekt. Gå gjennom alle R-filer i `51_skript` og YAML-filer i `52_ressurser/YAML` for å justere det man måtte ønske.
+
+Alternativ B: Kjør alt fra scratch (se @sec-opprette-prosjekt-fra-scratch nedenfor).
+
+## Anbefaling
+
+Ta utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes. Det sparer man en del tid på. Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_config_project.R
+
+# Alternativ B: Opprette prosjekt fra scratch {#sec-opprette-prosjekt-fra-scratch}
+
+Disse funksjonene er dessverre under utvikling!
+
+saros.struct-pakken inneholder funksjoner for å sette opp prosjektmappestruktur og laste inn generiske filer basert på maler. nifutemplates-pakken inneholder de faktiske NIFU-relevante malene og vanlige innstillingene.
+
+1.  Innstaller pakker du trenger for å gjøre resten. Om installasjon ikke fungerer mangler du sannsynligvis Rtools som trengs for å kompilere pakkene fra kildekodedokumentene på Github.
+
+```{r}
+# Trengs egentlig kun for førstegangsoppsett og kan fjernes etterpå om ønskelig
+devtools::install_github("NIFU-NO/saros.structure")
+devtools::install_github("NIFU-NO/nifutemplates")
+```
+
+2.  Sett opp mappestruktur for prosjektet ditt. I eksempelet nedenfor er det Spørsmål til Skole-Norge (forkortet SSN) som settes opp.
+
+```{r}
+library(saros.structure)
+
+prosjektmappe <- 
+  fs::path("C:", "users","StephanDaus","NIFU", "21206 Utdanningsdirektoratets spørringer - General")
+prosjekt_initialer <- "SSN"
+
+initialize_saros_project(path = prosjektmappe, 
+                         structure_path = system.file("templates", "YAML", "_project_structure_nb.yaml", package="nifutemplates"), 
+                         replacement_list = c("prosjekt_initialer" = prosjekt_initialer),
+                         numbering_prefix = "global_max",
+                         numbering_inheritance = TRUE,
+                         word_separator = NULL,
+                         numbering_name_separator = " ",
+                         numbering_parent_child_separator = word_separator,
+                         case = "asis",
+                         count_existing_folders = FALSE,
+                         r_files_out_path = 
+                         r_files_out_path = fs::path(prosjektmappe, paste0("5_saros_", prosjekt_initialer), "51_skript", "Skriptmaler"), 
+                         create = FALSE) # SET create = TRUE when you are satisfied with the folder structure
+
+nifutemplates::configure_saros_for_nifu(path = fs::path(prosjektmappe, paste0("5_saros_", prosjekt_initialer), "52_ressurser"))
+
+```
+
+1.  Sett opp en god mappestruktur for prosjektets data, Saros-rapporter, osv.
+
+    ```{r}
+    saros.struct::create_directory_structure()
+    ```
+
+    Uansett system bør man absolutt skille mellom
+
+    1.  mappen der rapportgenereringer legges (her må man aldri lagre sitt eget arbeid, da det kan bli overskrevet av Saros).
+
+    2.  mappen der man jobber i ro og mak med å skrive i sine kapitler. Saros vil aldri røre denne mappen.
+
+    3.  mappen der ferdige utkast til kvalitetssikring legges. Saros vil aldri røre denne mappen.
+
+    4.  mappen der helt ferdige kapitler legges for publisering på nettsiden. Saros vil kun lese fra denne mappen.
+
+        (2.-4. kan så klart gjøres i enda flere runder om man har behov for det).
+
+# Tilpasse innstillinger for Saros
+
+Generelle innstillinger som gjøres på tvers av flere årganger kan lagres i konfigurasjonsfiler. Ønsker man å avvike fra disse global innstillingene gjør man det i R-skriptene for hver gjennomføring.
+
+1.  Særlig filbaner må strømlinjeformes på tvers av år. Unngå at hver gjennomføring har sin egen mappe i prosjektets hovedmappe - erfaring tilsier at det er svært vanskelig å holde konsistente mappestrukturer på tvers av år når man sjelden konfronteres med hvordan ting er gjort tidligere. Prøv så godt det lar seg gjøre å ha årstall-mappen lengst nede i hierarkiet.
+
+2.  I filen `52_ressurser/YAML/_report_generation_setup.yaml` ligger det øverst følgende argumenter som bør diskuteres i prosjektgruppen. Forklaring på disse finnes på saros-pakkens hjelpeside. Fila brukes av `saros::draft_report()`
+
+    -   element_names
+    -   variables_always_at_bottom
+    -   variables_always_at_top
+    -   auxiliary_variables
+    -   categories_treated_as_na
+
+3.  I mappen `52_ressurser/QMD/` ligger `_nifu_start_section.qmd` og `_nifu_end_section.qmd`: her spesifiseres innhold (tekst, kode, etc) som skal med i starten/slutten av hvert kapittel som genereres.
+
+4.  I `52_ressurser/YAML/` ligger `kapittel_hode.yaml`, `index_hode.yaml`, og `rapport_hode.yaml`: YAML-innstillinger som plasseres øverst i henholdsvis hvert kapittel, index-filen for hver rapports HTML-side, eller den sammensydde rapporten (PDF, DOCX). Benyttes av `saros::draft_report()`.
+
+5.  `_quarto.yaml` og `_nifu_global.yaml`: Global konfigurasjoner for hele prosjektets nettsted. Forskjellen mellom de to er bare at `_nifu_global.yaml` er for innstillinger som man ikke skal trenge å endre så ofte, mens `_quarto.yaml` har innstillinger som typisk endres oftere på tvers av prosjekter. Begge brukes av Render Website-funksjonaliteten i Quarto.

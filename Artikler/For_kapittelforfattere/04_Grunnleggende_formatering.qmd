@@ -1,0 +1,47 @@
+---
+title: "Grunnleggende formatering"
+editor: visual
+eval: true
+echo: false
+---
+
+# Oppsummeringsbokser (på slutten av kapittelet)
+
+I Visual-modus, klikk Insert ➠ Callout... ➠ Velg tip, og overskrift "Oppsummering". Ev. se også [her](https://quarto.org/docs/authoring/callouts.html).
+
+# Stavekontroll
+
+Husk å skru på norsk stavekontroll! Tools =\> Global options =\> Spellchecking. Må installere norsk språk. Etter du har endret, lukk RStudio og åpne det igjen.
+
+
+# Kryssreferanser
+
+-   Man kan enkelt referere til overskrifter, figurer, tabeller, siteringer, osv.
+    -   <https://quarto.org/docs/authoring/cross-references.html>
+-   Fotnoter likeså
+    -   <https://quarto.org/docs/authoring/footnotes-and-citations.html>
+-   Alt kan enten gjøres gjennom det grafiske brukergrensesnittet i Visual editor, eller gjennom tastatursnarveier (både i Source og i Visual editor).
+-   Bruk {{< kbd @ + Tab >}} aktivt.
+
+```{r}
+#| label: Oversikt over noen måter å kryssreferere på
+tbl1 <-
+  tibble::tribble(~`Formål`, ~Ankeret, ~`Sitere i tekst`,
+                "Bilde i en mappe", "`(Bilde av NIFU)[bilder/bilde_av_nifu.png]{#fig-bilde_av_nifu}{#fig-bilde_av_nifu}`",
+                "`@fig-bilde_av_nifu`",
+                
+                "Figur lagd i R", "`#| label: nifus_publikasjoner`<br>`nifu_publikasjon_graf <- embed_cat_prop_plot(data, cols=b_1)`",
+                "`@fig-nifus_publikasjoner`",
+                
+                "Tabell lagd manuelt", "`: Andeler per land {#tbl-andel_per_land}`", "`@tbl-andel_per_land`",
+                
+                "Tabell lagd i R", "`#| label: andeler_per_ansatt`<br>`Nifu_publikasjon_per_ansatt <- data.frame(a=1, b=2)`", "`@tbl-andeler_per_ansatt`",
+                
+                "Overskrift", "`## Bakgrunn for studien{#sec-bakgrunn}`", "`@sec-bakgrunn`",
+                
+                "Litteraturreferanse", "Spesifiser BibTeX eller Zotero-biblioteket ditt i YAML-hodet:<br>`---`<br>`bibliography: referanser.bib`<br>`---`", "`@daus2023 og [@daus2023]`")
+tbl1 <- gt::gt(tbl1)
+tbl1 <- gt::fmt_markdown(tbl1)
+tbl1 <- gt::cols_width(tbl1, `Formål` ~ "20%")
+tbl1
+```
