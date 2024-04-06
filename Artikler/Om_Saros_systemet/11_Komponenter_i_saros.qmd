@@ -1,11 +1,34 @@
 ---
 title: "Komponenter i Saros"
 editor: visual
+eval: true
 ---
 
-Saros bygger helt i bunnen på en rekke teknologier og pakker, rettet mot ulike biter av puslespillet.
+Saros er egentlig bare en første del av prosessen. Saros bygger helt i bunnen på en rekke teknologier og pakker, rettet mot ulike biter av puslespillet.
 
-![](/_images/SAROS_logo.png){width="481"}
+```{mermaid}
+flowchart LR
+  datasett --> saros
+  kapitteloversikt --> saros
+  innstillinger --> saros
+  saros --> qmd
+  qmd --> knitr_for_R
+  qmd --> Jupyter_for_Python
+  qmd --> IJulia_for_Julia
+  qmd --> Markdown_for_annet
+  knitr_for_R --> md
+  Jupyter_for_Python --> md
+  IJulia_for_Julia --> md
+  Markdown_for_annet --> md
+  md --> Pandoc
+  Pandoc --> docx
+  Pandoc --> html
+  Pandoc --> LaTeX_pdf
+  Pandoc --> Beamer
+  Pandoc --> Typst_pdf
+  Pandoc --> ePub
+  Pandoc --> pptx
+```
 
 -   [{saros}](www.github.com/NIFU-NO/saros)-pakken i R inneholder en rekke funksjoner for å generere rapportkapittelutkast i Quarto-format, samt verktøy for å publisere de ferdige rapportene. Se også [Github Pages-siden](https://nifu-no.github.io/saros/) (engelsk). Pakken er utviklet av og vedlikeholdes av Stephan Daus. Pakken vil i løpet av 2024 deles opp i mindre pakker med ulike arbeidsfokus:
 
