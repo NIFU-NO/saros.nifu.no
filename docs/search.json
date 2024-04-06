@@ -399,7 +399,7 @@
     "href": "Artikler/For_datavaskere/01_Forstegangsoppsett.html",
     "title": "Førstegangsoppsett (teknisk gjennomføring)",
     "section": "",
-    "text": "Alternativ A: Ta gjerne utgangspunkt i et eksisterende prosjekt, og helst et som ligner i struktur mtp mesos-rapporter. Kopier alt av filer fra Saros-mappen til ditt eget prosjekt. Gå gjennom alle R-filer i 51_skript og YAML-filer i 52_ressurser/YAML for å justere det man måtte ønske.\nAlternativ B: Kjør alt fra scratch (se Seksjon 2 nedenfor).\n\n\nTa utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes. Det sparer man en del tid på. Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_config_project.R",
+    "text": "Uansett hvilke av følgende steg du ønsker må du synkronisere prosjektet til din lokale maskin. Se hvordan du synkroniserer fra Teams. Se oversikten til høyre hvilke steg du ønsker.",
     "crumbs": [
       "Artikler",
       "For datavasker",
@@ -407,11 +407,35 @@
     ]
   },
   {
-    "objectID": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#anbefaling",
-    "href": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#anbefaling",
+    "objectID": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#bruk-en-god-mappestruktur-for-prosjektets-data-saros-rapporter-osv.",
+    "href": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#bruk-en-god-mappestruktur-for-prosjektets-data-saros-rapporter-osv.",
     "title": "Førstegangsoppsett (teknisk gjennomføring)",
-    "section": "",
-    "text": "Ta utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes. Det sparer man en del tid på. Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_config_project.R",
+    "section": "1.1 Bruk en god mappestruktur for prosjektets data, Saros-rapporter, osv.",
+    "text": "1.1 Bruk en god mappestruktur for prosjektets data, Saros-rapporter, osv.\nUansett alternativ nedenfor (A eller B) bør man definintivt skille mellom\n\nmappen der rapportgenereringer legges (her må man aldri lagre sitt eget arbeid, da det kan bli overskrevet av Saros).\nmappen for hvert kapittel der man jobber i ro og mak med å skrive, lage versjoner for kvalitetssikring, osv. Saros vil aldri røre slike mapper.\nmappen der helt ferdige kapitler legges for publisering på nettsiden. Quarto Website Project leser fra denne og genererer nettsted, rapport i PDF, DOCX, osv.",
+    "crumbs": [
+      "Artikler",
+      "For datavasker",
+      "Førstegangsoppsett (teknisk gjennomføring)"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#alternativ-a-bruk-noen-funksjoner-og-en-mappestruktur-fil-for-å-generere-mapper-og-filer",
+    "href": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#alternativ-a-bruk-noen-funksjoner-og-en-mappestruktur-fil-for-å-generere-mapper-og-filer",
+    "title": "Førstegangsoppsett (teknisk gjennomføring)",
+    "section": "1.2 Alternativ A: Bruk noen funksjoner og en mappestruktur-fil for å generere mapper og filer",
+    "text": "1.2 Alternativ A: Bruk noen funksjoner og en mappestruktur-fil for å generere mapper og filer\nI eksempelet nedenfor er det Spørsmål til Skole-Norge (forkortet SSN) som settes opp. NB: Viktig at du har synkronisert Teams-prosjektet ditt til din lokale maskin. Vi bruker {saros.structure}-pakken som inneholder funksjoner for å sette opp prosjektmappestruktur og laste inn generiske filer basert på maler.\n\n# Trengs egentlig kun for førstegangsoppsett og kan avinstalleres etterpå om ønskelig\ninstall.packages(\"devtools\") # Om du ikke får installert denne/neste så mangler du Rtools: https://cran.r-project.org/bin/windows/Rtools/\ndevtools::install_github(\"NIFU-NO/saros.structure\")\n\n# Endre disse linjene etter hva som passer deg:\nprosjektmappe &lt;- \n  fs::path(Sys.getenv(\"USERPROFILE\"), \"NIFU\", \"21206 Utdanningsdirektoratets spørringer - General\")\nprosjekt_initialer &lt;- \"SSN\"\nsaros_mappenavn &lt;- \"Saros\"\nprosjektstruktur_yaml &lt;- \"Prosjektstruktur.yaml\"\n\n# Se funksjonshjelpesiden for mer info!\nsaros.structure::initialize_saros_project(path = prosjektmappe, \n                         structure_path = prosjektstruktur_fil, \n                         replacement_list = c(\"prosjekt_initialer\" = prosjekt_initialer),\n                         numbering_prefix = \"global_max\",\n                         numbering_inheritance = TRUE,\n                         word_separator = NULL,\n                         numbering_name_separator = \" \",\n                         numbering_parent_child_separator = word_separator,\n                         case = \"asis\",\n                         count_existing_folders = FALSE,\n                         r_files_out_path = \n                         r_files_out_path = fs::path(prosjektmappe, paste0(saros_mappenavn, prosjekt_initialer), \"01_script\", \"script_templates\"), \n                         create = FALSE) # SET create = TRUE when you are satisfied with the folder structure\n\n\n1.2.1 Alternativ B: Kopier kun mapper (uten innhold) fra et annet prosjekt\n\nTa gjerne utgangspunkt i et eksisterende prosjekt, og helst et som ligner i struktur mtp saros-rapporter. Kopier alt av filer fra Saros-mappen til ditt eget prosjekt.\n\n\nsaros.structure::copy_folder_contents_to_dir(\n  from, \n  to = getwd(),\n  only_copy_folders = FALSE)",
+    "crumbs": [
+      "Artikler",
+      "For datavasker",
+      "Førstegangsoppsett (teknisk gjennomføring)"
+    ]
+  },
+  {
+    "objectID": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#steg-2-å-opprette-kun-saros-delen-i-et-eksisterende-forskningsprosjekt",
+    "href": "Artikler/For_datavaskere/01_Forstegangsoppsett.html#steg-2-å-opprette-kun-saros-delen-i-et-eksisterende-forskningsprosjekt",
+    "title": "Førstegangsoppsett (teknisk gjennomføring)",
+    "section": "1.3 Steg 2: Å opprette kun Saros-delen i et eksisterende forskningsprosjekt",
+    "text": "1.3 Steg 2: Å opprette kun Saros-delen i et eksisterende forskningsprosjekt\n\nVi antar at du ikke har gjort noe på forhånd, annet enn å fylle ut dette skjemaet.\nSynkronisert Teams-prosjektet til din lokale maskin (du må kunne se filene i Windows Utforsker).\n\n\n1.3.1 Alternativ A: Generer Saros-relaterte ting prosjektet trenger fra RStudio\n\nÅpne RStudio (ikke i et prosjekt). Bytt ut prosjektnavnet nedenfor med din egen.\n\nMÅ undermappen hete Saros? Nei, egentlig ikke. Men enn så lenge kan det være greit å følge standard oppsett.\ngithub_zip_url lar du stå. overwrite = TRUE wil overskrive eksisterende filer som heter det samme som de du finner her. Annet vil bestå.\n\n\n\n# Dette første er det samme som i kodeeksempelet ovenfor\nprosjektmappe &lt;- \n  fs::path(Sys.getenv(\"USERPROFILE\"), \"NIFU\", \"21206 Utdanningsdirektoratets spørringer - General\")\nprosjekt_initialer &lt;- \"SSN\"\nsaros_mappenavn &lt;- \"Saros\"\n\n# install.packages(\"saros.structure\")\nsaros.structure::download_zip_to_folder(\n  out_path = file.path(prosjektmappe, saros_mappenavn), \n  github_zip_url = \"https://github.com/NIFU-NO/nifutemplates/archive/refs/heads/main.zip\", \n  prompt = FALSE, overwrite = TRUE, open_project = TRUE, newSession = FALSE)\n\n\nEn del filer vil lastes ned og kopieres til Saros-mappen.",
     "crumbs": [
       "Artikler",
       "For datavasker",
@@ -697,7 +721,7 @@
     "href": "Artikler/Om_Saros_systemet/11_Komponenter_i_saros.html",
     "title": "Komponenter i Saros",
     "section": "",
-    "text": "Saros bygger helt i bunnen på en rekke teknologier og pakker, rettet mot ulike biter av puslespillet.",
+    "text": "Saros er egentlig bare en første del av prosessen. Saros bygger helt i bunnen på en rekke teknologier og pakker, rettet mot ulike biter av puslespillet.\nflowchart LR\n  datasett --&gt; saros\n  kapitteloversikt --&gt; saros\n  innstillinger --&gt; saros\n  saros --&gt; qmd\n  qmd --&gt; knitr_for_R\n  qmd --&gt; Jupyter_for_Python\n  qmd --&gt; IJulia_for_Julia\n  qmd --&gt; Markdown_for_annet\n  knitr_for_R --&gt; md\n  Jupyter_for_Python --&gt; md\n  IJulia_for_Julia --&gt; md\n  Markdown_for_annet --&gt; md\n  md --&gt; Pandoc\n  Pandoc --&gt; docx\n  Pandoc --&gt; html\n  Pandoc --&gt; LaTeX_pdf\n  Pandoc --&gt; Beamer\n  Pandoc --&gt; Typst_pdf\n  Pandoc --&gt; ePub\n  Pandoc --&gt; pptx\n\n\n\n\nflowchart LR\n  datasett --&gt; saros\n  kapitteloversikt --&gt; saros\n  innstillinger --&gt; saros\n  saros --&gt; qmd\n  qmd --&gt; knitr_for_R\n  qmd --&gt; Jupyter_for_Python\n  qmd --&gt; IJulia_for_Julia\n  qmd --&gt; Markdown_for_annet\n  knitr_for_R --&gt; md\n  Jupyter_for_Python --&gt; md\n  IJulia_for_Julia --&gt; md\n  Markdown_for_annet --&gt; md\n  md --&gt; Pandoc\n  Pandoc --&gt; docx\n  Pandoc --&gt; html\n  Pandoc --&gt; LaTeX_pdf\n  Pandoc --&gt; Beamer\n  Pandoc --&gt; Typst_pdf\n  Pandoc --&gt; ePub\n  Pandoc --&gt; pptx",
     "crumbs": [
       "Artikler",
       "Om Saros-systemet",

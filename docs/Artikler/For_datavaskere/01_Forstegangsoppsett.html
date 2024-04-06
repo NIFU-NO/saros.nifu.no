@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="nb" xml:lang="nb"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.25">
+<meta name="generator" content="quarto-1.5.28">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -405,12 +405,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">På denne siden</h2>
    
   <ul>
-  <li><a href="#to-strategier" id="toc-to-strategier" class="nav-link active" data-scroll-target="#to-strategier">To strategier</a>
+  <li><a href="#steg-1-å-opprette-et-forskningsprosjekt-fra-scratch-uferdig" id="toc-steg-1-å-opprette-et-forskningsprosjekt-fra-scratch-uferdig" class="nav-link active" data-scroll-target="#steg-1-å-opprette-et-forskningsprosjekt-fra-scratch-uferdig"><span class="header-section-number">1</span> Steg 1: Å opprette et forskningsprosjekt fra scratch (uferdig)</a>
   <ul class="collapse">
-  <li><a href="#anbefaling" id="toc-anbefaling" class="nav-link" data-scroll-target="#anbefaling">Anbefaling</a></li>
+  <li><a href="#bruk-en-god-mappestruktur-for-prosjektets-data-saros-rapporter-osv." id="toc-bruk-en-god-mappestruktur-for-prosjektets-data-saros-rapporter-osv." class="nav-link" data-scroll-target="#bruk-en-god-mappestruktur-for-prosjektets-data-saros-rapporter-osv."><span class="header-section-number">1.1</span> Bruk en god mappestruktur for prosjektets data, Saros-rapporter, osv.</a></li>
+  <li><a href="#alternativ-a-bruk-noen-funksjoner-og-en-mappestruktur-fil-for-å-generere-mapper-og-filer" id="toc-alternativ-a-bruk-noen-funksjoner-og-en-mappestruktur-fil-for-å-generere-mapper-og-filer" class="nav-link" data-scroll-target="#alternativ-a-bruk-noen-funksjoner-og-en-mappestruktur-fil-for-å-generere-mapper-og-filer"><span class="header-section-number">1.2</span> Alternativ A: Bruk noen funksjoner og en mappestruktur-fil for å generere mapper og filer</a>
+  <ul class="collapse">
+  <li><a href="#alternativ-b-kopier-kun-mapper-uten-innhold-fra-et-annet-prosjekt" id="toc-alternativ-b-kopier-kun-mapper-uten-innhold-fra-et-annet-prosjekt" class="nav-link" data-scroll-target="#alternativ-b-kopier-kun-mapper-uten-innhold-fra-et-annet-prosjekt"><span class="header-section-number">1.2.1</span> Alternativ B: Kopier kun mapper (uten innhold) fra et annet prosjekt</a></li>
   </ul></li>
-  <li><a href="#sec-opprette-prosjekt-fra-scratch" id="toc-sec-opprette-prosjekt-fra-scratch" class="nav-link" data-scroll-target="#sec-opprette-prosjekt-fra-scratch">Alternativ B: Opprette prosjekt fra scratch</a></li>
-  <li><a href="#tilpasse-innstillinger-for-saros" id="toc-tilpasse-innstillinger-for-saros" class="nav-link" data-scroll-target="#tilpasse-innstillinger-for-saros">Tilpasse innstillinger for Saros</a></li>
+  <li><a href="#steg-2-å-opprette-kun-saros-delen-i-et-eksisterende-forskningsprosjekt" id="toc-steg-2-å-opprette-kun-saros-delen-i-et-eksisterende-forskningsprosjekt" class="nav-link" data-scroll-target="#steg-2-å-opprette-kun-saros-delen-i-et-eksisterende-forskningsprosjekt"><span class="header-section-number">1.3</span> Steg 2: Å opprette kun Saros-delen i et eksisterende forskningsprosjekt</a>
+  <ul class="collapse">
+  <li><a href="#alternativ-a-generer-saros-relaterte-ting-prosjektet-trenger-fra-rstudio" id="toc-alternativ-a-generer-saros-relaterte-ting-prosjektet-trenger-fra-rstudio" class="nav-link" data-scroll-target="#alternativ-a-generer-saros-relaterte-ting-prosjektet-trenger-fra-rstudio"><span class="header-section-number">1.3.1</span> Alternativ A: Generer Saros-relaterte ting prosjektet trenger fra RStudio</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#alternativ-b-kopier-fra-et-eksisterende-prosjekt-som-benytter-saros" id="toc-alternativ-b-kopier-fra-et-eksisterende-prosjekt-som-benytter-saros" class="nav-link" data-scroll-target="#alternativ-b-kopier-fra-et-eksisterende-prosjekt-som-benytter-saros"><span class="header-section-number">2</span> Alternativ B: Kopier fra et eksisterende prosjekt som benytter Saros</a></li>
+  <li><a href="#steg-3-tilpasse-innstillinger-for-saros" id="toc-steg-3-tilpasse-innstillinger-for-saros" class="nav-link" data-scroll-target="#steg-3-tilpasse-innstillinger-for-saros"><span class="header-section-number">3</span> Steg 3: Tilpasse innstillinger for Saros</a></li>
   </ul>
 </nav>
     </div>
@@ -436,74 +444,109 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="to-strategier" class="level1">
-<h1>To strategier</h1>
-<p>Alternativ A: Ta gjerne utgangspunkt i et eksisterende prosjekt, og helst et som ligner i struktur mtp mesos-rapporter. Kopier alt av filer fra Saros-mappen til ditt eget prosjekt. Gå gjennom alle R-filer i <code>51_skript</code> og YAML-filer i <code>52_ressurser/YAML</code> for å justere det man måtte ønske.</p>
-<p>Alternativ B: Kjør alt fra scratch (se <a href="#sec-opprette-prosjekt-fra-scratch" class="quarto-xref">Seksjon&nbsp;2</a> nedenfor).</p>
-<section id="anbefaling" class="level2">
-<h2 class="anchored" data-anchor-id="anbefaling">Anbefaling</h2>
-<p>Ta utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes. Det sparer man en del tid på. Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_config_project.R</p>
-</section>
-</section>
-<section id="sec-opprette-prosjekt-fra-scratch" class="level1">
-<h1>Alternativ B: Opprette prosjekt fra scratch</h1>
-<p>Disse funksjonene er dessverre under utvikling!</p>
-<p>saros.struct-pakken inneholder funksjoner for å sette opp prosjektmappestruktur og laste inn generiske filer basert på maler. nifutemplates-pakken inneholder de faktiske NIFU-relevante malene og vanlige innstillingene.</p>
-<ol type="1">
-<li>Innstaller pakker du trenger for å gjøre resten. Om installasjon ikke fungerer mangler du sannsynligvis Rtools som trengs for å kompilere pakkene fra kildekodedokumentene på Github.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trengs egentlig kun for førstegangsoppsett og kan fjernes etterpå om ønskelig</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"NIFU-NO/saros.structure"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"NIFU-NO/nifutemplates"</span>)</span></code><button title="Kopier til utklipstavle" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="2" type="1">
-<li>Sett opp mappestruktur for prosjektet ditt. I eksempelet nedenfor er det Spørsmål til Skole-Norge (forkortet SSN) som settes opp.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(saros.structure)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>prosjektmappe <span class="ot">&lt;-</span> </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  fs<span class="sc">::</span><span class="fu">path</span>(<span class="st">"C:"</span>, <span class="st">"users"</span>,<span class="st">"StephanDaus"</span>,<span class="st">"NIFU"</span>, <span class="st">"21206 Utdanningsdirektoratets spørringer - General"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>prosjekt_initialer <span class="ot">&lt;-</span> <span class="st">"SSN"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">initialize_saros_project</span>(<span class="at">path =</span> prosjektmappe, </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">structure_path =</span> <span class="fu">system.file</span>(<span class="st">"templates"</span>, <span class="st">"YAML"</span>, <span class="st">"_project_structure_nb.yaml"</span>, <span class="at">package=</span><span class="st">"nifutemplates"</span>), </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                         <span class="at">replacement_list =</span> <span class="fu">c</span>(<span class="st">"prosjekt_initialer"</span> <span class="ot">=</span> prosjekt_initialer),</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">numbering_prefix =</span> <span class="st">"global_max"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">numbering_inheritance =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">word_separator =</span> <span class="cn">NULL</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                         <span class="at">numbering_name_separator =</span> <span class="st">" "</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">numbering_parent_child_separator =</span> word_separator,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                         <span class="at">case =</span> <span class="st">"asis"</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">count_existing_folders =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                         <span class="at">r_files_out_path =</span> </span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                         <span class="at">r_files_out_path =</span> fs<span class="sc">::</span><span class="fu">path</span>(prosjektmappe, <span class="fu">paste0</span>(<span class="st">"5_saros_"</span>, prosjekt_initialer), <span class="st">"51_skript"</span>, <span class="st">"Skriptmaler"</span>), </span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                         <span class="at">create =</span> <span class="cn">FALSE</span>) <span class="co"># SET create = TRUE when you are satisfied with the folder structure</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>nifutemplates<span class="sc">::</span><span class="fu">configure_saros_for_nifu</span>(<span class="at">path =</span> fs<span class="sc">::</span><span class="fu">path</span>(prosjektmappe, <span class="fu">paste0</span>(<span class="st">"5_saros_"</span>, prosjekt_initialer), <span class="st">"52_ressurser"</span>))</span></code><button title="Kopier til utklipstavle" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol type="1">
-<li><p>Sett opp en god mappestruktur for prosjektets data, Saros-rapporter, osv.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>saros.struct<span class="sc">::</span><span class="fu">create_directory_structure</span>()</span></code><button title="Kopier til utklipstavle" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Uansett system bør man absolutt skille mellom</p>
+<p>Uansett hvilke av følgende steg du ønsker må du synkronisere prosjektet til din lokale maskin. Se <a href="">hvordan du synkroniserer fra Teams</a>. Se oversikten til høyre hvilke steg du ønsker.</p>
+<section id="steg-1-å-opprette-et-forskningsprosjekt-fra-scratch-uferdig" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Steg 1: Å opprette et forskningsprosjekt fra scratch (uferdig)</h1>
+<ul>
+<li>Følgende er ment å hjelpe med god mappestruktur, basert på noen internasjonale “standarder”.</li>
+<li>Har du allerede kommet et stykke på vei med datainnsamling og du bare ønsker Saros-delen så hopp til steg 2.</li>
+</ul>
+<section id="bruk-en-god-mappestruktur-for-prosjektets-data-saros-rapporter-osv." class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="bruk-en-god-mappestruktur-for-prosjektets-data-saros-rapporter-osv."><span class="header-section-number">1.1</span> Bruk en god mappestruktur for prosjektets data, Saros-rapporter, osv.</h2>
+<p>Uansett alternativ nedenfor (A eller B) bør man definintivt skille mellom</p>
 <ol type="1">
 <li><p>mappen der rapportgenereringer legges (her må man aldri lagre sitt eget arbeid, da det kan bli overskrevet av Saros).</p></li>
-<li><p>mappen der man jobber i ro og mak med å skrive i sine kapitler. Saros vil aldri røre denne mappen.</p></li>
-<li><p>mappen der ferdige utkast til kvalitetssikring legges. Saros vil aldri røre denne mappen.</p></li>
-<li><p>mappen der helt ferdige kapitler legges for publisering på nettsiden. Saros vil kun lese fra denne mappen.</p>
-<p>(2.-4. kan så klart gjøres i enda flere runder om man har behov for det).</p></li>
-</ol></li>
+<li><p>mappen for hvert kapittel der man jobber i ro og mak med å skrive, lage versjoner for kvalitetssikring, osv. Saros vil aldri røre slike mapper.</p></li>
+<li><p>mappen der helt ferdige kapitler legges for publisering på nettsiden. Quarto Website Project leser fra denne og genererer nettsted, rapport i PDF, DOCX, osv.</p></li>
 </ol>
 </section>
-<section id="tilpasse-innstillinger-for-saros" class="level1">
-<h1>Tilpasse innstillinger for Saros</h1>
-<p>Generelle innstillinger som gjøres på tvers av flere årganger kan lagres i konfigurasjonsfiler. Ønsker man å avvike fra disse global innstillingene gjør man det i R-skriptene for hver gjennomføring.</p>
+<section id="alternativ-a-bruk-noen-funksjoner-og-en-mappestruktur-fil-for-å-generere-mapper-og-filer" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="alternativ-a-bruk-noen-funksjoner-og-en-mappestruktur-fil-for-å-generere-mapper-og-filer"><span class="header-section-number">1.2</span> Alternativ A: Bruk noen funksjoner og en mappestruktur-fil for å generere mapper og filer</h2>
+<p>I eksempelet nedenfor er det Spørsmål til Skole-Norge (forkortet SSN) som settes opp. NB: Viktig at du har synkronisert Teams-prosjektet ditt til din lokale maskin. Vi bruker <a href="https://github.com/NIFU-NO/saros.structure/">{saros.structure}</a>-pakken som inneholder funksjoner for å sette opp prosjektmappestruktur og laste inn generiske filer basert på maler.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trengs egentlig kun for førstegangsoppsett og kan avinstalleres etterpå om ønskelig</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>) <span class="co"># Om du ikke får installert denne/neste så mangler du Rtools: https://cran.r-project.org/bin/windows/Rtools/</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"NIFU-NO/saros.structure"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Endre disse linjene etter hva som passer deg:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>prosjektmappe <span class="ot">&lt;-</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  fs<span class="sc">::</span><span class="fu">path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"USERPROFILE"</span>), <span class="st">"NIFU"</span>, <span class="st">"21206 Utdanningsdirektoratets spørringer - General"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>prosjekt_initialer <span class="ot">&lt;-</span> <span class="st">"SSN"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>saros_mappenavn <span class="ot">&lt;-</span> <span class="st">"Saros"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>prosjektstruktur_yaml <span class="ot">&lt;-</span> <span class="st">"Prosjektstruktur.yaml"</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Se funksjonshjelpesiden for mer info!</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>saros.structure<span class="sc">::</span><span class="fu">initialize_saros_project</span>(<span class="at">path =</span> prosjektmappe, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">structure_path =</span> prosjektstruktur_fil, </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                         <span class="at">replacement_list =</span> <span class="fu">c</span>(<span class="st">"prosjekt_initialer"</span> <span class="ot">=</span> prosjekt_initialer),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">numbering_prefix =</span> <span class="st">"global_max"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                         <span class="at">numbering_inheritance =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                         <span class="at">word_separator =</span> <span class="cn">NULL</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                         <span class="at">numbering_name_separator =</span> <span class="st">" "</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                         <span class="at">numbering_parent_child_separator =</span> word_separator,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                         <span class="at">case =</span> <span class="st">"asis"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                         <span class="at">count_existing_folders =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                         <span class="at">r_files_out_path =</span> </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                         <span class="at">r_files_out_path =</span> fs<span class="sc">::</span><span class="fu">path</span>(prosjektmappe, <span class="fu">paste0</span>(saros_mappenavn, prosjekt_initialer), <span class="st">"01_script"</span>, <span class="st">"script_templates"</span>), </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                         <span class="at">create =</span> <span class="cn">FALSE</span>) <span class="co"># SET create = TRUE when you are satisfied with the folder structure</span></span></code><button title="Kopier til utklipstavle" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="alternativ-b-kopier-kun-mapper-uten-innhold-fra-et-annet-prosjekt" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="alternativ-b-kopier-kun-mapper-uten-innhold-fra-et-annet-prosjekt"><span class="header-section-number">1.2.1</span> Alternativ B: Kopier kun mapper (uten innhold) fra et annet prosjekt</h3>
+<ul>
+<li>Ta gjerne utgangspunkt i et eksisterende prosjekt, og helst et som ligner i struktur mtp saros-rapporter. Kopier alt av filer fra Saros-mappen til ditt eget prosjekt.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>saros.structure<span class="sc">::</span><span class="fu">copy_folder_contents_to_dir</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  from, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">to =</span> <span class="fu">getwd</span>(),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">only_copy_folders =</span> <span class="cn">FALSE</span>)</span></code><button title="Kopier til utklipstavle" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="steg-2-å-opprette-kun-saros-delen-i-et-eksisterende-forskningsprosjekt" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="steg-2-å-opprette-kun-saros-delen-i-et-eksisterende-forskningsprosjekt"><span class="header-section-number">1.3</span> Steg 2: Å opprette kun Saros-delen i et eksisterende forskningsprosjekt</h2>
+<ul>
+<li>Vi antar at du ikke har gjort noe på forhånd, annet enn å fylle ut <a href="https://nifueu.qualtrics.com/jfe/form/SV_00PwJYAvrXbgOLs">dette skjemaet</a>.</li>
+<li>Synkronisert Teams-prosjektet til din lokale maskin (du må kunne se filene i Windows Utforsker).</li>
+</ul>
+<section id="alternativ-a-generer-saros-relaterte-ting-prosjektet-trenger-fra-rstudio" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="alternativ-a-generer-saros-relaterte-ting-prosjektet-trenger-fra-rstudio"><span class="header-section-number">1.3.1</span> Alternativ A: Generer Saros-relaterte ting prosjektet trenger fra RStudio</h3>
+<ul>
+<li>Åpne RStudio (ikke i et prosjekt). Bytt ut prosjektnavnet nedenfor med din egen.
+<ul>
+<li>MÅ undermappen hete Saros? Nei, egentlig ikke. Men enn så lenge kan det være greit å følge standard oppsett.</li>
+<li><code>github_zip_url</code> lar du stå. <code>overwrite = TRUE</code> wil overskrive eksisterende filer som heter det samme som de du finner <a href="https://github.com/NIFU-NO/nifutemplates/">her</a>. Annet vil bestå.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dette første er det samme som i kodeeksempelet ovenfor</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>prosjektmappe <span class="ot">&lt;-</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  fs<span class="sc">::</span><span class="fu">path</span>(<span class="fu">Sys.getenv</span>(<span class="st">"USERPROFILE"</span>), <span class="st">"NIFU"</span>, <span class="st">"21206 Utdanningsdirektoratets spørringer - General"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>prosjekt_initialer <span class="ot">&lt;-</span> <span class="st">"SSN"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>saros_mappenavn <span class="ot">&lt;-</span> <span class="st">"Saros"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("saros.structure")</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>saros.structure<span class="sc">::</span><span class="fu">download_zip_to_folder</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">out_path =</span> <span class="fu">file.path</span>(prosjektmappe, saros_mappenavn), </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">github_zip_url =</span> <span class="st">"https://github.com/NIFU-NO/nifutemplates/archive/refs/heads/main.zip"</span>, </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">prompt =</span> <span class="cn">FALSE</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>, <span class="at">open_project =</span> <span class="cn">TRUE</span>, <span class="at">newSession =</span> <span class="cn">FALSE</span>)</span></code><button title="Kopier til utklipstavle" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>En del filer vil lastes ned og kopieres til Saros-mappen.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="alternativ-b-kopier-fra-et-eksisterende-prosjekt-som-benytter-saros" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Alternativ B: Kopier fra et eksisterende prosjekt som benytter Saros</h1>
+<p>Dette er konseptuelt ganske likt alternativ B i steg 1. - Ta utgangspunkt i et eksisterende prosjekt der mappestruktur, konfigurasjonsfiler, osv. finnes, og kopier over. - Det går selvsagt an å avvike fra foreslått mappestruktur, men det er langt enklere for Saros-forfatterne å bistå dersom ganske mye er likt på tvers av prosjekter. Avviker man må man bare spesifisere mappebanene i 000_initialize_project.R og 003_get_report_cycle_paths.R.</p>
+</section>
+<section id="steg-3-tilpasse-innstillinger-for-saros" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Steg 3: Tilpasse innstillinger for Saros</h1>
+<p>Siste steg er å tilpasse til ditt prosjekt. Generelle innstillinger som gjøres på tvers av flere årganger kan lagres i konfigurasjonsfiler. Ønsker man å avvike fra disse global innstillingene gjør man det i R-skriptene for hver gjennomføring.</p>
 <ol type="1">
-<li><p>Særlig filbaner må strømlinjeformes på tvers av år. Unngå at hver gjennomføring har sin egen mappe i prosjektets hovedmappe - erfaring tilsier at det er svært vanskelig å holde konsistente mappestrukturer på tvers av år når man sjelden konfronteres med hvordan ting er gjort tidligere. Prøv så godt det lar seg gjøre å ha årstall-mappen lengst nede i hierarkiet.</p></li>
-<li><p>I filen <code>52_ressurser/YAML/_report_generation_setup.yaml</code> ligger det øverst følgende argumenter som bør diskuteres i prosjektgruppen. Forklaring på disse finnes på saros-pakkens hjelpeside. Fila brukes av <code>saros::draft_report()</code></p>
+<li><p>Særlig filbaner må strømlinjeformes på tvers av år. Unngå at hver gjennomføring har sin egen mappe i prosjektets hovedmappe - erfaring tilsier at det er svært vanskelig å holde konsistente mappestrukturer på tvers av år når man sjelden konfronteres med hvordan ting er gjort tidligere. Prøv så godt det lar seg gjøre å ha årstall-mappen lengst nede i hierarkiet - selv om det medfører at man hvert år må kopiere en del undermapper.</p></li>
+<li><p>I filen <code>02_resources/YAML/_report_generation_setup.yaml</code> ligger det øverst følgende argumenter som bør diskuteres i prosjektgruppen. Forklaring på disse finnes på saros-pakkens hjelpeside. Fila brukes av <code>saros::draft_report()</code></p>
 <ul>
 <li>element_names</li>
 <li>variables_always_at_bottom</li>
@@ -511,9 +554,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>auxiliary_variables</li>
 <li>categories_treated_as_na</li>
 </ul></li>
-<li><p>I mappen <code>52_ressurser/QMD/</code> ligger <code>_nifu_start_section.qmd</code> og <code>_nifu_end_section.qmd</code>: her spesifiseres innhold (tekst, kode, etc) som skal med i starten/slutten av hvert kapittel som genereres.</p></li>
-<li><p>I <code>52_ressurser/YAML/</code> ligger <code>kapittel_hode.yaml</code>, <code>index_hode.yaml</code>, og <code>rapport_hode.yaml</code>: YAML-innstillinger som plasseres øverst i henholdsvis hvert kapittel, index-filen for hver rapports HTML-side, eller den sammensydde rapporten (PDF, DOCX). Benyttes av <code>saros::draft_report()</code>.</p></li>
-<li><p><code>_quarto.yaml</code> og <code>_nifu_global.yaml</code>: Global konfigurasjoner for hele prosjektets nettsted. Forskjellen mellom de to er bare at <code>_nifu_global.yaml</code> er for innstillinger som man ikke skal trenge å endre så ofte, mens <code>_quarto.yaml</code> har innstillinger som typisk endres oftere på tvers av prosjekter. Begge brukes av Render Website-funksjonaliteten i Quarto.</p></li>
+<li><p>I mappen <code>02_resources/QMD/</code> ligger <code>_start_section.qmd</code> og <code>_end_section.qmd</code>: her spesifiseres innhold (tekst, kode, etc) som skal med i starten/slutten av hvert kapittel som genereres. Anbefaler at det i <code>_start_section.qmd</code> kun lastes inn et R-skript med felles variabler og funksjoner som er nyttige på tvers av kapitler og år. Dersom det står følgende kan man legge nevnte R-skript i en mappe lengre oppe i hierarkiet, så slipper man å gjenta seg med flere filer. Per 2024-04-06 må R-skriptet foreløpig legges manuelt i de mappene det trengs.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../../../general_formatting.R"</span>) <span class="co"># Denne fila må ligge tre trinn opp fra qmd-filen.</span></span></code><button title="Kopier til utklipstavle" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="1">
+<li><p>I <code>02_resources/YAML/</code> ligger <code>chapter_header.yaml</code>, <code>index_header.yaml</code>, og <code>report_header.yaml</code>: YAML-innstillinger som plasseres øverst i henholdsvis hvert kapittel, index-filen for hver rapports HTML-side, eller den sammensydde rapporten (PDF, DOCX). Benyttes av <code>saros::draft_report()</code>. Dersom man bare lager mesos-rapporter trenger det ikke å stå så mye i <code>chapter_header.yaml</code> siden Quarto-prosjektet arver innstillinger fra _global.yaml og <code>report_header.yaml</code></p></li>
+<li><p><code>_quarto.yaml</code> og <code>_global.yaml</code>: Global konfigurasjoner for hele prosjektets nettsted. Forskjellen mellom de to er bare at <code>_global.yaml</code> er for innstillinger som man ikke skal trenge å endre så ofte i institusjonen, mens <code>_quarto.yaml</code> har innstillinger som typisk endres oftere mellom prosjekter. Begge brukes av Render Website-funksjonaliteten i Quarto.</p></li>
 </ol>
 
 

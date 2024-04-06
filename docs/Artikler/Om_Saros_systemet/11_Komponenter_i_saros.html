@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="nb" xml:lang="nb"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.25">
+<meta name="generator" content="quarto-1.5.28">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -74,6 +108,9 @@ ul.task-list li input[type="checkbox"] {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../nifu.css">
@@ -399,8 +436,60 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Saros bygger helt i bunnen på en rekke teknologier og pakker, rettet mot ulike biter av puslespillet.</p>
-<p><img src="../..\_images/SAROS_logo.png" class="img-fluid" width="481"></p>
+<p>Saros er egentlig bare en første del av prosessen. Saros bygger helt i bunnen på en rekke teknologier og pakker, rettet mot ulike biter av puslespillet.</p>
+<div class="cell" data-layout-align="default">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>flowchart LR</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  datasett --&gt; saros</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  kapitteloversikt --&gt; saros</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  innstillinger --&gt; saros</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  saros --&gt; qmd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  qmd --&gt; knitr_for_R</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  qmd --&gt; Jupyter_for_Python</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  qmd --&gt; IJulia_for_Julia</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  qmd --&gt; Markdown_for_annet</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  knitr_for_R --&gt; md</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  Jupyter_for_Python --&gt; md</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  IJulia_for_Julia --&gt; md</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  Markdown_for_annet --&gt; md</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  md --&gt; Pandoc</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  Pandoc --&gt; docx</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  Pandoc --&gt; html</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  Pandoc --&gt; LaTeX_pdf</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  Pandoc --&gt; Beamer</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  Pandoc --&gt; Typst_pdf</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  Pandoc --&gt; ePub</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  Pandoc --&gt; pptx</span></code><button title="Kopier til utklipstavle" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  datasett --&gt; saros
+  kapitteloversikt --&gt; saros
+  innstillinger --&gt; saros
+  saros --&gt; qmd
+  qmd --&gt; knitr_for_R
+  qmd --&gt; Jupyter_for_Python
+  qmd --&gt; IJulia_for_Julia
+  qmd --&gt; Markdown_for_annet
+  knitr_for_R --&gt; md
+  Jupyter_for_Python --&gt; md
+  IJulia_for_Julia --&gt; md
+  Markdown_for_annet --&gt; md
+  md --&gt; Pandoc
+  Pandoc --&gt; docx
+  Pandoc --&gt; html
+  Pandoc --&gt; LaTeX_pdf
+  Pandoc --&gt; Beamer
+  Pandoc --&gt; Typst_pdf
+  Pandoc --&gt; ePub
+  Pandoc --&gt; pptx
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <ul>
 <li><p><a href="www.github.com/NIFU-NO/saros">{saros}</a>-pakken i R inneholder en rekke funksjoner for å generere rapportkapittelutkast i Quarto-format, samt verktøy for å publisere de ferdige rapportene. Se også <a href="https://nifu-no.github.io/saros/">Github Pages-siden</a> (engelsk). Pakken er utviklet av og vedlikeholdes av Stephan Daus. Pakken vil i løpet av 2024 deles opp i mindre pakker med ulike arbeidsfokus:</p>
 <ul>
